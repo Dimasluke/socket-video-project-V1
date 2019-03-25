@@ -1,0 +1,19 @@
+.register-container {
+    width: 60vw;
+    margin-top: 5vh;
+}
+
+.register-container .email-input {
+    margin-top: 2vh;
+}
+
+.register-container .span-register {
+    margin-right: .5vw;
+}
+
+.register-container .error-span {
+    display: flex;
+    justify-content: center;
+    margin: 0 auto;
+    color:red;
+}
