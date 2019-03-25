@@ -2,7 +2,7 @@ import React, { Component} from 'react';
 import socketIo from 'socket.io-client';
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
-const io = socketIo('http://localhost:4000')
+const io = socketIo()
 
 class Messenger extends Component {
     constructor(props){
@@ -14,7 +14,9 @@ class Messenger extends Component {
         }
 
         io.on('message from server', data => {
-            console.log(data)
+            this.setState({
+                messages: [...this.state.messages, data]
+            })
         })
 
         io.on('join room', data => {
@@ -24,35 +26,30 @@ class Messenger extends Component {
     }
 
     componentDidMount(){
-        
+        console.log(this.props.match.params.roomId)
         const selectedRoom = this.props.rooms.filter(room => {
             return room.id == this.props.match.params.roomId
         })
-        console.log(selectedRoom)
         this.setState({
             selectedRoom: selectedRoom[0]
         })
+        io.emit('join room', {room: this.props.match.params.roomId, user: this.props.user})
     }
 
     sendMessage = () => {
         io.emit('message sent', {
             user: this.props.user,
             message: this.state.messageText,
-            room: this.state.selectedRoom.roomName
-        })
-    }
-
-    receiveMessage = () => {
-        io.on('message from server', (data) => {
-            console.log(data)
+            room: this.props.match.params.roomId
         })
     }
 
     render(){
+        console.log(this.state.messages)
         const mappedMessages = this.state.messages.map(message => {
             return(
                 <div>
-                    this is a message
+                    {message.message}
                 </div>
             )
         })

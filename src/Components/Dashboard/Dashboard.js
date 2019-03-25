@@ -12,12 +12,13 @@ class Dashboard extends Component {
 
             console.log(room)
             return (
-                <Link to={`/${room.id}`} key={index}>
-                    <div>{room.roomName}</div>
-                    <div>{room.description}</div>
-                    <div>{room.owner}</div>
-                    <RoomCard roomName={room.roomName}/>  
-                </Link>
+                <div key={index}>
+                    <RoomCard 
+                        roomName={room.roomName}
+                        owner={room.owner}
+                        description={room.description}
+                        id={room.id}/> 
+                </div>
             )
         })
         return(

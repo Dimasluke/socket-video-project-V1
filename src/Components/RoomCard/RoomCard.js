@@ -1,24 +1,24 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom'
 import io from 'socket.io-client'
 
 class RoomCard extends Component {
+    constructor(props){
+        super(props)
+        this.state = {
 
-    componentDidMount(){
-
-    }
-
-    joinRoom = () => {
-        io().emit('join room', {
-            user: this.props.user,
-            room: this.props.roomName
-        })
+        }
     }
 
     render(){
+        const { roomName, owner, description, id } = this.props
         return(
             <div>
-                <button onClick={this.joinRoom}>Join Room</button>
+                <div>{roomName}</div>
+                <div>{description}</div>
+                <div>{owner}</div>
+                <Link to={`/${id}`}>Join Room</Link>
             </div>
         )
     }
