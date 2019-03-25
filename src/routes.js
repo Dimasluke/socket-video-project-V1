@@ -6,6 +6,7 @@ import Dashboard from './Components/Dashboard/Dashboard';
 import Login from './Components/Login/Login';
 import Register from './Components/Register/Register';
 import ProfilePage from './Components/ProfilePage/ProfilePage';
+import VideoRoom from './Components/VideoRoom/VideoRoom';
 
 export default (
     <Switch>
@@ -14,5 +15,6 @@ export default (
         <Route exact path='/login' component={Login} />
         <Route exact path='/register' component={Register} />
         <Route exact path='/profile' component={ProfilePage} />
+        <Route exact path='/:roomId' component={VideoRoom} />
     </Switch>
 )
