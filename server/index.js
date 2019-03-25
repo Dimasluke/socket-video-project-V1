@@ -42,4 +42,15 @@ const io = socket(app.listen(port, () => {
 
 io.on('connection', socket => {
     console.log('User Connected')
+
+    socket.on('join room', data => {
+        console.log('Data --> ', data)
+        socket.join(data.room)
+        io.in(data.room).emit('join room', data.user)
+    })
+
+    socket.on('message sent', data => {
+        console.log('Data ==> ', data)
+        io.in(data.room).emit('message from server', {user: data.user, message: data.message})
+    })
 })
