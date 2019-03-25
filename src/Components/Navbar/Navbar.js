@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { setUser } from '../../Redux/Reducers/UserReducer'
+import './Navbar.css'
+import axios from 'axios';
 
 class Navbar extends Component {
     constructor(props){
@@ -9,27 +13,68 @@ class Navbar extends Component {
         }
     }
 
+    componentDidMount () {
+        axios.get('/api/sessionInfo').then(response => {
+            this.props.setUser(response.data)
+        })
+    }
+
+    userCheck = () => {
+        if(this.props.user){
+            return (
+                <span className='profile-name'> - {this.props.user}</span>
+            )
+        }
+    }
+
+    logout = () => {
+        axios.post('/api/logout').then(response => {
+            this.props.setUser(response.data)
+        }).catch(err => {
+            console.log(err)
+        })
+    }
+
+    loggedIn = () => {
+        if(this.props.user){
+            return (
+                <li className='nav-item mr-3'>
+                    <Link onClick={this.logout} className='logout-button'>Logout</Link>
+                </li>
+            )
+        } else {
+            return (
+                <li className='nav-item mr-3'>
+                    <Link to='/login'>Login</Link>
+                </li>
+            ) 
+        }
+    }
+
     render(){
+        console.log('this.props.user', this.props.user)
         return(
             <div>
                 <nav className="navbar navbar-expand-lg navbar-light bg-light">
                     <Link to='/dashboard' className="navbar-brand">Perspective</Link>
+                    {this.userCheck()}
                 <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
                 </button>
-                <div className='collapse navbar-collapse' id="navbarSupportedContent">
-                    <form className="form-inline my-2 my-lg-0">
+                <div className='collapse navbar-collapse justify-content-end' id="navbarSupportedContent">
+                    <form className="form-inline my-2 my-lg-0 mr-4">
                         <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" />
                         <button className="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
                     </form>
-                    <div>
+                    <div className=''>
                         <ul className='navbar-nav mr-auto'>
-                            <li className='nav-item'>
+                            <li className='nav-item mr-3'>
                                 <Link to='/createroom' className='nav-item'>Create Room</Link>
                             </li>
-                            <li className='nav-item'>
-                                <Link to='/login'>Login hello</Link>
-                            </li>
+                            {/* <li className='nav-item mr-3'>
+                                <Link to='/login'>Login</Link>
+                            </li> */}
+                            {this.loggedIn()}
                         </ul>
                     </div>
                 </div>
@@ -39,4 +84,11 @@ class Navbar extends Component {
     }
 }
 
-export default Navbar
+const mapStateToProps = state => {
+    console.log(state)
+    return {
+        user: state.user.username
+    }
+}
+
+export default connect(mapStateToProps, {setUser})(Navbar)
