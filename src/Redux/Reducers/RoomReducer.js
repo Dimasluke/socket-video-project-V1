@@ -31,7 +31,7 @@ export default function RoomReducer(state = initialState, action) {
         id: id++,
         roomName: action.payload.title,
         description: action.payload.description,
-        owner: "redux",
+        owner: action.payload.owner || "",
         videoUrl: action.payload.url
       };
       let newRooms = state.rooms.concat(newRoom);
