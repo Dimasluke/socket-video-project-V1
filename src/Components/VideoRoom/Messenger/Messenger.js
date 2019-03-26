@@ -1,7 +1,9 @@
 import React, { Component} from 'react';
 import socketIo from 'socket.io-client';
 import { connect } from 'react-redux'
+import { setGroupUsers } from '../../../Redux/Reducers/UserReducer'
 import { withRouter } from 'react-router-dom'
+import './Messenger.css'
 const io = socketIo()
 
 class Messenger extends Component {
@@ -20,12 +22,29 @@ class Messenger extends Component {
         })
 
         io.on('join room', data => {
-            console.log(data)
+            console.log('data --<', data)
+            this.props.setGroupUsers(data)
+            let messagesCopy = this.state.messages.map(message => {
+                return message
+            })
+            messagesCopy.push(data.user + ' has joined the room.')
+            this.setState({
+                messages: messagesCopy
+            })
         })
         
     }
 
+    scrollToBottom = () => {
+        this.messagesEnd.scrollIntoView({ behavior: "smooth" });
+    }
+      
+    componentDidUpdate() {
+        this.scrollToBottom();
+    }
+
     componentDidMount(){
+        this.scrollToBottom();
         console.log(this.props.match.params.roomId)
         const selectedRoom = this.props.rooms.filter(room => {
             return room.id == this.props.match.params.roomId
@@ -47,19 +66,45 @@ class Messenger extends Component {
     render(){
         console.log(this.state.messages)
         const mappedMessages = this.state.messages.map(message => {
-            return(
-                <div>
-                    {message.message}
-                </div>
-            )
+            console.log(message)
+            if(message.user){
+                return (
+                    <li className='list-group-item'>
+                        {message.user} - {message.message}
+                    </li>
+                )
+            } else {
+                return(
+                    <li className='list-group-item'>
+                        {message}
+                    </li>
+                )
+            }
         })
         return(
-            <div>
-                {mappedMessages}
-                <input type='text' onChange={e => {this.setState({ messageText: e.target.value})}}/>
-                <button onClick={e => {
-                    this.sendMessage()
-                    }}>Send</button>
+            <div className='container message-component-container'>
+                <div className='message-container'>                     
+                    {mappedMessages}
+                    <div ref={(el) => { this.messagesEnd = el; }}></div>    
+                </div>
+                
+                <div className='input-group mb-3'>
+                    <div className='input-group-prepend'>
+                        <button 
+                            className='btn btn-outline-success'
+                            onClick={e => {
+                            this.sendMessage()
+                            this.setState({
+                                messageText: ''
+                            })
+                            }}>Send</button>
+                    </div>
+                    <input 
+                        value={this.state.messageText}
+                        className='form-control'
+                        type='text' 
+                        onChange={e => {this.setState({ messageText: e.target.value})}}/>
+                </div>
             </div>
         )
     }
@@ -67,9 +112,9 @@ class Messenger extends Component {
 
 const mapStateToProps = state => {
     return {
-        user: state.user.username,
+        user: state.user.username || 'Anonymous',
         rooms: state.room.rooms
     }
 }
 
-export default connect(mapStateToProps, null)(withRouter(Messenger))
+export default connect(mapStateToProps, {setGroupUsers})(withRouter(Messenger))

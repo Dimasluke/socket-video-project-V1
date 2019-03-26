@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Navbar from '../Navbar/Navbar';
 import RoomCard from '../RoomCard/RoomCard';
 import { connect } from 'react-redux'
-import { Link } from 'react-router-dom';
+import './Dashboard.css'
 
 class Dashboard extends Component {
 
@@ -24,7 +24,9 @@ class Dashboard extends Component {
         return(
             <div>
                 <Navbar />
-                {mappedRooms}
+                <div className='container room-card-container'>
+                    {mappedRooms}        
+                </div>
             </div>
         )
     }
