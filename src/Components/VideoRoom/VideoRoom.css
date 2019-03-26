@@ -1,0 +1,20 @@
+.messenger-videoplayer-container {
+    margin-top: 5vh;
+    display: flex;
+}
+
+.usercards-videoplayer-container {
+    display:  flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-left: 5vw;
+    width: 35vw;
+}
+
+.video-room-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+

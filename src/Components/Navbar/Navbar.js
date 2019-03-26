@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { setUser } from '../../Redux/Reducers/UserReducer'
+import { setUser } from '../../Redux/Reducers/UserReducer';
 import './Navbar.css'
 import axios from 'axios';
 
@@ -63,17 +63,28 @@ class Navbar extends Component {
                 </button>
                 <div className='collapse navbar-collapse justify-content-end' id="navbarSupportedContent">
                     <form className="form-inline my-2 my-lg-0 mr-4">
-                        <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" />
-                        <button className="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                        <div className="input-group">
+                            <input type="text" className="form-control" aria-label="Text input with segmented dropdown button" placeholder="Search"/>
+                            <div className="input-group-append">
+                                <button type="button" className="btn btn-outline-success">Search</button>
+                                <button type="button" className="btn btn-outline-success dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <span className="sr-only">Toggle Dropdown</span>
+                                </button>
+                                <div className="dropdown-menu">
+                                <a className="dropdown-item" href="#">Action</a>
+                                <a className="dropdown-item" href="#">Another action</a>
+                                <a className="dropdown-item" href="#">Something else here</a>
+                                <div role="separator" className="dropdown-divider"></div>
+                                <a className="dropdown-item" href="#">Separated link</a>
+                                </div>
+                            </div>
+                        </div>
                     </form>
                     <div className=''>
                         <ul className='navbar-nav mr-auto'>
                             <li className='nav-item mr-3'>
                                 <Link to='/createroom' className='nav-item'>Create Room</Link>
                             </li>
-                            {/* <li className='nav-item mr-3'>
-                                <Link to='/login'>Login</Link>
-                            </li> */}
                             {this.loggedIn()}
                         </ul>
                     </div>
@@ -85,7 +96,6 @@ class Navbar extends Component {
 }
 
 const mapStateToProps = state => {
-    console.log(state)
     return {
         user: state.user.username
     }

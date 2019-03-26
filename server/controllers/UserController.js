@@ -4,7 +4,6 @@ const saltRounds = 12;
 module.exports = {
     register: (req, res) => {
         const db = req.app.get('db')
-        console.log(req.body)
         const { username, password, firstName, lastName, email } = req.body
         bcrypt.hash(password, saltRounds).then(hashedPassword => {
             db.create_user([firstName, lastName, email, username, hashedPassword]).then(() => {
