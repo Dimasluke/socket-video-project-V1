@@ -1,0 +1,29 @@
+.profile-container {
+  display: flex;
+  flex-flow: column;
+  margin-top: 5vh;
+  width: 60vw;
+}
+
+.profile-container img {
+  height: 200px;
+  border-radius: 5px;
+  margin-right: 10px;
+}
+
+.profile-container .contact-info {
+  display: flex;
+  flex-direction: column;
+  min-width: 70%;
+  max-width: 70%;
+  float: right;
+}
+
+.profile-container .subscriptions {
+  margin-top: 10px;
+}
+
+.profile-container .btn-outline-danger {
+  float: right;
+  border: none;
+}
