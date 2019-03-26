@@ -5,7 +5,6 @@
 }
 
 .message-container {
-    border:1px solid black;
     height:60vh;
     display: flex;
     flex-direction: column;

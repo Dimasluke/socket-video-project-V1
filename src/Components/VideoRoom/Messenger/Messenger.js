@@ -27,6 +27,7 @@ class Messenger extends Component {
             let messagesCopy = this.state.messages.map(message => {
                 return message
             })
+            console.log('messagesCopy' , messagesCopy)
             messagesCopy.push(data.user + ' has joined the room.')
             this.setState({
                 messages: messagesCopy
@@ -45,10 +46,10 @@ class Messenger extends Component {
 
     componentDidMount(){
         this.scrollToBottom();
-        console.log(this.props.match.params.roomId)
         const selectedRoom = this.props.rooms.filter(room => {
             return room.id == this.props.match.params.roomId
         })
+        console.log(selectedRoom)
         this.setState({
             selectedRoom: selectedRoom[0]
         })
@@ -65,6 +66,10 @@ class Messenger extends Component {
 
     render(){
         console.log(this.state.messages)
+        // let selectedGroupMessages = this.state.messages.filter(message => {
+        //     return message.room = this.state.selectedRoom.id
+        // })
+        // console.log('selectedGroupMessages', selectedGroupMessages)
         const mappedMessages = this.state.messages.map(message => {
             console.log(message)
             if(message.user){
@@ -83,7 +88,7 @@ class Messenger extends Component {
         })
         return(
             <div className='container message-component-container'>
-                <div className='message-container'>                     
+                <div className='message-container border border-primary'>                     
                     {mappedMessages}
                     <div ref={(el) => { this.messagesEnd = el; }}></div>    
                 </div>

@@ -52,6 +52,6 @@ io.on('connection', socket => {
 
     socket.on('message sent', data => {
         console.log('Data ==> ', data)
-        io.in(data.room).emit('message from server', {user: data.user, message: data.message})
+        io.in(data.room).emit('message from server', {user: data.user, message: data.message, room: data.room})
     })
 })
