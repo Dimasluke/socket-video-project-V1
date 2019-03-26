@@ -1,5 +1,5 @@
 const initialState = {
-  //somthing random
+  // id, roomName, description, owner, videoUrl
   rooms: [
     {
       id: 1,
@@ -18,11 +18,29 @@ const initialState = {
   ]
 };
 
-function RoomReducer(state = initialState, action) {
+let id = 3;
+
+const CREATE_ROOM = "CREATE_ROOM";
+
+export default function RoomReducer(state = initialState, action) {
   switch (action.type) {
+    case CREATE_ROOM:
+      console.log(action.payload);
+      return Object.assign({}, state, {
+        id: id++,
+        roomName: action.payload.title,
+        description: action.payload.description,
+        owner: "redux",
+        videoUrl: action.payload.url
+      });
     default:
       return state;
   }
 }
 
-export default RoomReducer;
+export function createRoom(room) {
+  return {
+    type: CREATE_ROOM,
+    payload: room
+  };
+}
