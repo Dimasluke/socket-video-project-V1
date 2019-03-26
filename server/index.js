@@ -5,6 +5,7 @@ const socket = require('socket.io')
 const massive = require('massive')
 const session = require('express-session')
 const userController = require('./controllers/UserController')
+const socketController = require('./controllers/SocketController')
 
 app.use(bodyParser.json())
 require('dotenv').config()

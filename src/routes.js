@@ -9,13 +9,14 @@ import VideoRoom from "./Components/VideoRoom/VideoRoom";
 import CreateRoom from "./Components/CreateRoom/CreateRoom";
 
 export default (
-  <Switch>
-    <Route exact path="/" component={Landing} />
-    <Route exact path="/createroom" component={CreateRoom} />
-    <Route exact path="/dashboard" component={Dashboard} />
-    <Route exact path="/login" component={Login} />
-    <Route exact path="/register" component={Register} />
-    <Route exact path="/profile" component={ProfilePage} />
-    <Route exact path="/:roomId" component={VideoRoom} />
-  </Switch>
-);
+    <Switch>
+        <Route exact path='/' component={Landing} />
+        <Route exact path='/dashboard' component={Dashboard} />
+        <Route exact path='/login' component={Login} />
+        <Route exact path='/register' component={Register} />
+        <Route exact path='/profile' component={ProfilePage} />
+        <Route exact path="/createroom" component={CreateRoom} />
+        <Route exact path='/:roomId' component={VideoRoom} />
+    </Switch>
+)
+
