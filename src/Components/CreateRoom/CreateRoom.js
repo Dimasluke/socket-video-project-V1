@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { createRoom } from "../../Redux/Reducers/RoomReducer"
+import { createRoom } from "../../Redux/Reducers/RoomReducer";
 
 class CreateRoom extends Component {
   constructor(props) {
@@ -149,13 +149,15 @@ class CreateRoom extends Component {
               </div>
             </div>
           </form>
-          <button
-            type="submit"
-            class="btn btn-primary"
-            onClick={() => this.createRoomBtn()}
-          >
-            Create Room
-          </button>
+          <Link to="/dashboard">
+            <button
+              type="submit"
+              class="btn btn-primary"
+              onClick={() => this.createRoomBtn()}
+            >
+              Create Room
+            </button>
+          </Link>
           <Link
             className="btn btn-danger"
             to="/dashboard"
