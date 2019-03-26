@@ -6,8 +6,9 @@
 .usercards-videoplayer-container {
     display:  flex;
     flex-direction: column;
-    border: 1px solid black;
+    justify-content: space-between;
     margin-left: 5vw;
+    width: 35vw;
 }
 
 .video-room-container {

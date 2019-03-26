@@ -20,7 +20,6 @@ class VideoPlayer extends Component {
             selectedRoom: selectedRoom[0]
         })
     }
-    
 
     render(){
         console.log(this.state)

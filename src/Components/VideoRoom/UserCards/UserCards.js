@@ -1,6 +1,17 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import socketIo from 'socket.io-client';
+import { withRouter } from 'react-router-dom'
+const io = socketIo()
 
 class UserCards extends Component {
+    constructor(props){
+        super(props)
+        this.state = {
+            user: []
+        }
+
+    }
+
     render(){
         return (
             <div>
@@ -10,4 +21,4 @@ class UserCards extends Component {
     }
 }
 
-export default UserCards
+export default withRouter(UserCards)

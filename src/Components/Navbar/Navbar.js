@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { setUser } from '../../Redux/Reducers/UserReducer';
-import io from 'socket.io-client';
+import socketIo from 'socket.io-client';
 import './Navbar.css'
 import axios from 'axios';
+const io = socketIo()
 
 class Navbar extends Component {
     constructor(props){
@@ -18,7 +19,6 @@ class Navbar extends Component {
         axios.get('/api/sessionInfo').then(response => {
             this.props.setUser(response.data)
         })
-        this.socket = io();
     }
 
     userCheck = () => {
@@ -87,9 +87,6 @@ class Navbar extends Component {
                             <li className='nav-item mr-3'>
                                 <Link to='/createroom' className='nav-item'>Create Room</Link>
                             </li>
-                            {/* <li className='nav-item mr-3'>
-                                <Link to='/login'>Login</Link>
-                            </li> */}
                             {this.loggedIn()}
                         </ul>
                     </div>
@@ -101,7 +98,6 @@ class Navbar extends Component {
 }
 
 const mapStateToProps = state => {
-    console.log(state)
     return {
         user: state.user.username
     }

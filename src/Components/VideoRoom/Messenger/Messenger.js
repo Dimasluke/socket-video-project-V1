@@ -2,6 +2,7 @@ import React, { Component} from 'react';
 import socketIo from 'socket.io-client';
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
+import './Messenger.css'
 const io = socketIo()
 
 class Messenger extends Component {
@@ -20,7 +21,13 @@ class Messenger extends Component {
         })
 
         io.on('join room', data => {
-            console.log(data)
+            let messagesCopy = this.state.messages.map(message => {
+                return message
+            })
+            messagesCopy.push(data + ' has joined the room.')
+            this.setState({
+                messages: messagesCopy
+            })
         })
         
     }
@@ -47,19 +54,43 @@ class Messenger extends Component {
     render(){
         console.log(this.state.messages)
         const mappedMessages = this.state.messages.map(message => {
-            return(
-                <div>
-                    {message.message}
-                </div>
-            )
+            console.log(message)
+            if(message.user){
+                return (
+                    <li className='list-group-item'>
+                        {message.user} - {message.message}
+                    </li>
+                )
+            } else {
+                return(
+                    <li className='list-group-item'>
+                        {message}
+                    </li>
+                )
+            }
         })
         return(
             <div className='container message-component-container'>
-                {mappedMessages}
-                <input type='text' onChange={e => {this.setState({ messageText: e.target.value})}}/>
-                <button onClick={e => {
-                    this.sendMessage()
-                    }}>Send</button>
+
+                    {mappedMessages}    
+                
+                <div className='input-group mb-3'>
+                    <div className='input-group-prepend'>
+                        <button 
+                            className='btn btn-outline-success'
+                            onClick={e => {
+                            this.sendMessage()
+                            this.setState({
+                                messageText: ''
+                            })
+                            }}>Send</button>
+                    </div>
+                    <input 
+                        value={this.state.messageText}
+                        className='form-control'
+                        type='text' 
+                        onChange={e => {this.setState({ messageText: e.target.value})}}/>
+                </div>
             </div>
         )
     }
@@ -67,7 +98,7 @@ class Messenger extends Component {
 
 const mapStateToProps = state => {
     return {
-        user: state.user.username,
+        user: state.user.username || 'Anonymous',
         rooms: state.room.rooms
     }
 }
