@@ -54,7 +54,7 @@ class Messenger extends Component {
             )
         })
         return(
-            <div>
+            <div className='container message-component-container'>
                 {mappedMessages}
                 <input type='text' onChange={e => {this.setState({ messageText: e.target.value})}}/>
                 <button onClick={e => {

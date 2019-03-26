@@ -5,7 +5,7 @@ const initialState = {
             roomName:'room 1',
             description: 'happy happy joy joy', 
             owner: 'Daniel',
-            videoUrl: 'https://youtu.be/HZFTUtbn1RU'
+            videoUrl: 'https://www.youtube.com/embed/HZFTUtbn1RU'
         },
         {
             id: 2,

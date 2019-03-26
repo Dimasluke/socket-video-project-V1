@@ -1,0 +1,14 @@
+.video-container {
+    height: 90%;
+}
+
+.video-component {
+    border: 1px solid black;
+    width:40vw;
+    height: 60vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-left: 10vw;
+}
