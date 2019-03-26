@@ -37,6 +37,7 @@ export default function RoomReducer(state = initialState, action) {
         dislikes: 0,
         categories: action.payload.categories
       };
+      console.log(newRoom);
       let newRooms = state.rooms.concat(newRoom);
       console.log(newRoom);
       return { ...state, rooms: newRooms };

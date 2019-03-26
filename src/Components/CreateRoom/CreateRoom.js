@@ -16,9 +16,9 @@ class CreateRoom extends Component {
   }
 
   createRoomBtn = () => {
-    let { title, url, owner, description, category } = this.state;
-    console.log(title, url, owner, description);
-    this.props.createRoom({ title, url, owner, description, category });
+    let { title, url, owner, description, categories } = this.state;
+    console.log(title, url, owner, description, categories);
+    this.props.createRoom({ title, url, owner, description, categories });
   };
 
   updateCategories = category => {
@@ -176,7 +176,7 @@ const mapStateToProps = state => {
     description: state.description,
     owner: state.ownder,
     videoUrl: state.videoUrl,
-    category: state.category
+    categories: state.categories
   };
 };
 
