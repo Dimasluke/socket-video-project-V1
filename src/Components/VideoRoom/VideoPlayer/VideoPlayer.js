@@ -12,7 +12,6 @@ class VideoPlayer extends Component {
     }
 
     componentDidMount () {
-        console.log(this.props.match.params.roomId)
         const selectedRoom = this.props.rooms.filter(room => {
             return room.id == this.props.match.params.roomId
         })
@@ -22,7 +21,6 @@ class VideoPlayer extends Component {
     }
 
     render(){
-        console.log(this.state)
         return (
             <div className='video-component'>
                 <iframe src='https://www.youtube.com/embed/HZFTUtbn1RU' className='container video-container' ></iframe>

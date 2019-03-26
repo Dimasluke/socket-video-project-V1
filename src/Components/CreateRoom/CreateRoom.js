@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { createRoom } from "../../Redux/Reducers/RoomReducer";
+import { createRoom } from "../../Redux/Reducers/RoomReducer"
 
 class CreateRoom extends Component {
   constructor(props) {

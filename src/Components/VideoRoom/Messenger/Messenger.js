@@ -1,6 +1,7 @@
 import React, { Component} from 'react';
 import socketIo from 'socket.io-client';
 import { connect } from 'react-redux'
+import { setGroupUsers } from '../../../Redux/Reducers/UserReducer'
 import { withRouter } from 'react-router-dom'
 import './Messenger.css'
 const io = socketIo()
@@ -21,10 +22,12 @@ class Messenger extends Component {
         })
 
         io.on('join room', data => {
+            console.log('data --<', data)
+            this.props.setGroupUsers(data)
             let messagesCopy = this.state.messages.map(message => {
                 return message
             })
-            messagesCopy.push(data + ' has joined the room.')
+            messagesCopy.push(data.user + ' has joined the room.')
             this.setState({
                 messages: messagesCopy
             })
@@ -32,7 +35,16 @@ class Messenger extends Component {
         
     }
 
+    scrollToBottom = () => {
+        this.messagesEnd.scrollIntoView({ behavior: "smooth" });
+    }
+      
+    componentDidUpdate() {
+        this.scrollToBottom();
+    }
+
     componentDidMount(){
+        this.scrollToBottom();
         console.log(this.props.match.params.roomId)
         const selectedRoom = this.props.rooms.filter(room => {
             return room.id == this.props.match.params.roomId
@@ -71,8 +83,10 @@ class Messenger extends Component {
         })
         return(
             <div className='container message-component-container'>
-
-                    {mappedMessages}    
+                <div className='message-container'>                     
+                    {mappedMessages}
+                    <div ref={(el) => { this.messagesEnd = el; }}></div>    
+                </div>
                 
                 <div className='input-group mb-3'>
                     <div className='input-group-prepend'>
@@ -103,4 +117,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps, null)(withRouter(Messenger))
+export default connect(mapStateToProps, {setGroupUsers})(withRouter(Messenger))

@@ -3,3 +3,11 @@
     flex-direction: column;
     justify-content: flex-end;
 }
+
+.message-container {
+    border:1px solid black;
+    height:60vh;
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+}

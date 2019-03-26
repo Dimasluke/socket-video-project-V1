@@ -2,10 +2,8 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { setUser } from '../../Redux/Reducers/UserReducer';
-import socketIo from 'socket.io-client';
 import './Navbar.css'
 import axios from 'axios';
-const io = socketIo()
 
 class Navbar extends Component {
     constructor(props){

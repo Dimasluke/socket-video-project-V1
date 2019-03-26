@@ -47,7 +47,7 @@ io.on('connection', socket => {
     socket.on('join room', data => {
         console.log('Data --> ', data)
         socket.join(data.room)
-        io.in(data.room).emit('join room', data.user)
+        io.in(data.room).emit('join room', {room: data.room, user: data.user})
     })
 
     socket.on('message sent', data => {

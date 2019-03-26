@@ -17,14 +17,6 @@ const initialState = {
     ]
 }
 
-function RoomReducer (state = initialState, action){
-    switch(action.type){
-        default:
-            return state;
-    }
-  ]
-};
-
 let id = 3;
 
 const CREATE_ROOM = "CREATE_ROOM";
