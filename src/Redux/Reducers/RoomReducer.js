@@ -22,6 +22,36 @@ function RoomReducer (state = initialState, action){
         default:
             return state;
     }
+  ]
+};
+
+let id = 3;
+
+const CREATE_ROOM = "CREATE_ROOM";
+
+export default function RoomReducer(state = initialState, action) {
+  switch (action.type) {
+    case CREATE_ROOM:
+      console.log(state);
+      console.log(action.payload);
+      let newRoom = {
+        id: id++,
+        roomName: action.payload.title,
+        description: action.payload.description,
+        owner: "redux",
+        videoUrl: action.payload.url
+      };
+      let newRooms = state.rooms.concat(newRoom);
+      console.log(newRoom);
+      return { ...state, rooms: newRooms };
+    default:
+      return state;
+  }
 }
 
-export default RoomReducer
+export function createRoom(room) {
+  return {
+    type: CREATE_ROOM,
+    payload: room
+  };
+}

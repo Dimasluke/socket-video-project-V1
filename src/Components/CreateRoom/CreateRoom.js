@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
+import { createRoom } from "../../Redux/Reducers/RoomReducer";
 
-export class CreateRoom extends Component {
+class CreateRoom extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -11,6 +12,12 @@ export class CreateRoom extends Component {
       description: ""
     };
   }
+
+  createRoomBtn = () => {
+    let { title, url, description } = this.state;
+    console.log(title, url, description);
+    this.props.createRoom({ title, url, description });
+  };
 
   render() {
     return (
@@ -60,7 +67,11 @@ export class CreateRoom extends Component {
               />
             </div>
           </form>
-          <button type="submit" class="btn btn-primary">
+          <button
+            type="submit"
+            class="btn btn-primary"
+            onClick={() => this.createRoomBtn()}
+          >
             Create Room
           </button>
           <Link
@@ -78,11 +89,20 @@ export class CreateRoom extends Component {
 
 const mapStateToProps = state => {
   return {
-    user: state.user.username
+    id: state.id,
+    roomName: state.roomName,
+    description: state.description,
+    videoUrl: state.videoUrl
   };
+};
+
+const mapDispatchToProps = {
+  createRoom: createRoom
 };
 
 export default connect(
   mapStateToProps,
-  null
+  mapDispatchToProps
 )(CreateRoom);
+
+// export default CreateRoom;
