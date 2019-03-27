@@ -14,11 +14,13 @@ class RoomCard extends Component {
     render(){
         const { roomName, owner, description, id } = this.props
         return(
-            <div>
-                <div>{roomName}</div>
-                <div>{description}</div>
-                <div>{owner}</div>
-                <Link to={`/${id}`}>Join Room</Link>
+            <div className='card dashboard-cards' style={{width: '20rem'}}>
+                <div className='card-body'>
+                    <h5 className='card-title'>{roomName}</h5>
+                    <h6 className='card-subtitle mb-2 text-muted'>{owner}</h6>
+                    <p className='card-text'>{description}</p>
+                    <Link to={`/${id}`}>Join Room</Link>
+                </div>
             </div>
         )
     }

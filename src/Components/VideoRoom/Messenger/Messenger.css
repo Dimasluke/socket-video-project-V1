@@ -1,0 +1,12 @@
+.message-component-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+.message-container {
+    height:60vh;
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+}
