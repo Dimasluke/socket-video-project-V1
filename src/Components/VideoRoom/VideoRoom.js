@@ -17,7 +17,6 @@ class VideoRoom extends Component {
                             <VideoPlayer />
                         </div>
                         <div className='usercards-videoplayer-container'>
-                            <UserCards />
                             <Messenger />
                         </div>  
                     </div>

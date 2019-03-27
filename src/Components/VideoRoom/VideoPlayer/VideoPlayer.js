@@ -20,6 +20,18 @@ class VideoPlayer extends Component {
     });
   }
 
+<<<<<<< HEAD
+    render(){
+        return (
+            <div className='video-component'>
+                <iframe src='https://www.youtube.com/embed/HZFTUtbn1RU' className='container video-container' title='testframe'></iframe>
+                <div>
+                    {/* {this.state.selectedRoom.owner} */}
+                </div>
+            </div>
+        )
+    }
+=======
   render() {
     let { videoUrl } = this.state.selectedRoom;
     console.log(videoUrl);
@@ -30,6 +42,7 @@ class VideoPlayer extends Component {
       </div>
     );
   }
+>>>>>>> fc3e838f958856c203b889ac101e5c9314ca3820
 }
 
 const mapStateToProps = state => {

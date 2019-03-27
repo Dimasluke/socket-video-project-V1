@@ -149,6 +149,17 @@ class CreateRoom extends Component {
               </div>
             </div>
           </form>
+<<<<<<< HEAD
+          <button
+            type="submit"
+            class="btn btn-primary"
+            onClick={() => {
+              this.createRoomBtn()
+              this.props.history.push('/dashboard')}}
+          >
+            Create Room
+          </button>
+=======
           <Link to="/dashboard">
             <button
               type="submit"
@@ -158,6 +169,7 @@ class CreateRoom extends Component {
               Create Room
             </button>
           </Link>
+>>>>>>> fc3e838f958856c203b889ac101e5c9314ca3820
           <Link
             className="btn btn-danger"
             to="/dashboard"
