@@ -1,3 +1,4 @@
 select *
-from friends
-where id = $1
+from users
+    join friends on (friends.friend = users.username)
+where friends.id = 1;

@@ -17,7 +17,7 @@ create table friends
 (
     friend_id serial primary key,
     id integer REFERENCES users(id),
-    friend integer REFERENCES users(id)
+    friend varchar REFERENCES users(username)
 );
 
 insert into users
@@ -31,10 +31,10 @@ values
 insert into friends
     (id, friend)
 values
-    (1, 2),
-    (1, 3),
-    (2, 1),
-    (3, 1);
+    (1, 'dszlauer'),
+    (1, 'Bryce'),
+    (2, 'test'),
+    (3, 'test');
 
 select *
 from users;
