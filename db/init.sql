@@ -1,3 +1,4 @@
+drop table if exists friends;
 drop table if exists users;
 
 create table users
@@ -12,6 +13,13 @@ create table users
     email varchar
 );
 
+create table friends
+(
+    friend_id serial primary key,
+    id integer REFERENCES users(id),
+    friend integer REFERENCES users(id) UNIQUE
+);
+
 insert into users
     ( username, password, firstName, lastName, imageUrl, bio, email)
 values
@@ -21,3 +29,5 @@ values
 
 select *
 from users;
+select *
+from friends;
