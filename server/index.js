@@ -39,7 +39,7 @@ app.post("/api/login", userController.login);
 app.post("/api/logout", userController.logout);
 
 // Friend endpoints
-app.get("/api/friends", friendsController.getFriends);
+app.get("/api/friends/:id", friendsController.getFriends);
 app.post("/api/friend", friendsController.addFriend);
 app.delete("/api/friend/:id/:friend", friendsController.removeFriend);
 

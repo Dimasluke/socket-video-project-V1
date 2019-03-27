@@ -1,8 +1,9 @@
 module.exports = {
   getFriends: (req, res, next) => {
     const db = req.app.get("db");
+    const { id } = req.params;
     console.log("getFriends ===> ");
-    db.get_friends().then(friends => {
+    db.get_friends(id).then(friends => {
       res.status(200).json(friends);
     });
   },
