@@ -1,25 +1,26 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom'
-import './VideoPlayer.css'
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
+import "./VideoPlayer.css";
 
 class VideoPlayer extends Component {
-    constructor(props){
-        super(props)
-        this.state = {
-            selectedRoom: {}
-        }
-    }
+  constructor(props) {
+    super(props);
+    this.state = {
+      selectedRoom: {}
+    };
+  }
 
-    componentDidMount () {
-        const selectedRoom = this.props.rooms.filter(room => {
-            return room.id == this.props.match.params.roomId
-        })
-        this.setState({
-            selectedRoom: selectedRoom[0]
-        })
-    }
+  componentDidMount() {
+    const selectedRoom = this.props.rooms.filter(room => {
+      return room.id == this.props.match.params.roomId;
+    });
+    this.setState({
+      selectedRoom: selectedRoom[0]
+    });
+  }
 
+<<<<<<< HEAD
     render(){
         return (
             <div className='video-component'>
@@ -30,13 +31,28 @@ class VideoPlayer extends Component {
             </div>
         )
     }
+=======
+  render() {
+    let { videoUrl } = this.state.selectedRoom;
+    console.log(videoUrl);
+    return (
+      <div className="video-component">
+        <iframe src={videoUrl} className="container video-container" />
+        <div>{this.state.selectedRoom.owner}</div>
+      </div>
+    );
+  }
+>>>>>>> fc3e838f958856c203b889ac101e5c9314ca3820
 }
 
 const mapStateToProps = state => {
-    return {
-        user: state.user.username,
-        rooms: state.room.rooms
-    }
-}
+  return {
+    user: state.user.username,
+    rooms: state.room.rooms
+  };
+};
 
-export default connect(mapStateToProps, null)(withRouter(VideoPlayer))
+export default connect(
+  mapStateToProps,
+  null
+)(withRouter(VideoPlayer));

@@ -127,7 +127,7 @@ class Messenger extends Component {
     render(){
         console.log(this.state)
         const userList = this.state.users.map(user => {
-            return <div>{user.user}</div>
+            return <UserCard />
         })
         const mappedMessages = this.state.messages.map(message => {     
             if(message.user){
