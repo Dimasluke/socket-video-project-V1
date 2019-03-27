@@ -22,7 +22,10 @@ class Navbar extends Component {
     userCheck = () => {
         if(this.props.user){
             return (
-                <span className='profile-name'> - {this.props.user}</span>
+                <span>
+                    <span className='profile-name'> - {this.props.user}</span> 
+                </span>
+    
             )
         }
     }

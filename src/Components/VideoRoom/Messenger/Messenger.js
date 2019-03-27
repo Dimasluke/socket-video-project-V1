@@ -113,9 +113,9 @@ class Messenger extends Component {
 
     render(){
         const userList = this.state.users.map(user => {
-            return <div>
+            return <li className='list-group-item'>
                         {user}
-                    </div>
+                    </li>
         })
         const mappedMessages = this.state.messages.map(message => {     
             if(message.user){
@@ -134,7 +134,9 @@ class Messenger extends Component {
         })
         return(
             <div className='container message-component-container'>
-                {userList}
+                <ul>
+                    {userList}
+                </ul>
                 <div className='message-container border border-primary'>                     
                     {mappedMessages}
                     <div ref={(el) => { this.messagesEnd = el; }}></div>    
