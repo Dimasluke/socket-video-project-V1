@@ -24,14 +24,8 @@ class Messenger extends Component {
         })
 
         io.on('join room', data => {
-            console.log('join room data', data)
-            // this.props.setGroupUsers(data)
-            let mappedUsers = this.state.users.map(user => {
-                return user
-            })  
-            mappedUsers.push(data)
             this.setState({
-                users: mappedUsers
+                users: data.userList
             })
             let messagesCopy = this.state.messages.map(message => {
                 return message
@@ -85,15 +79,11 @@ class Messenger extends Component {
         console.log(this.state.users)
         console.log(prevState.users)
         if(this.state.users.length > prevState.users.length){
-            
             this.setState({
                 users: this.state.users
             })
         }
         if (this.props.match.params.roomId != prevProps.match.params.roomId){
-            let leftUser = this.props.user.indexOf(prevProps.user)
-            console.log(leftUser)
-            this.props.userLeft(leftUser)
             io.emit('leave room', {room: prevProps.match.params.roomId, user: this.props.user})
         }
     }
@@ -110,9 +100,6 @@ class Messenger extends Component {
     }
 
     componentWillUnmount(){
-        console.log('component will unmount')
-        let leftUser = this.props.user.indexOf(this.props.user)
-        this.props.userLeft(leftUser)
         io.emit('leave room', {room: this.props.match.params.roomId, user: this.props.user})
     }
 
@@ -125,9 +112,10 @@ class Messenger extends Component {
     }
 
     render(){
-        console.log(this.state)
         const userList = this.state.users.map(user => {
-            return <UserCard />
+            return <div>
+                        {user}
+                    </div>
         })
         const mappedMessages = this.state.messages.map(message => {     
             if(message.user){
