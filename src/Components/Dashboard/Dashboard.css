@@ -1,8 +1,9 @@
 .room-card-container {
     display: flex;
     margin-top: 10vh;
+    flex-wrap: wrap;
 }
 
 .dashboard-cards {
-    margin-left: 2vw;
+    margin: 10px;
 }

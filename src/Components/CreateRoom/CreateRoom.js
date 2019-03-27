@@ -7,7 +7,7 @@ class CreateRoom extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      owner: "",
+      owner: this.props.user || "",
       title: "",
       url: "",
       description: "",
@@ -23,7 +23,6 @@ class CreateRoom extends Component {
 
   updateCategories = category => {
     let { categories } = this.state;
-
     if (categories.includes(category)) {
       let newArr = categories.filter(cat => cat !== category);
       this.setState({
@@ -38,7 +37,6 @@ class CreateRoom extends Component {
 
   render() {
     const { categories } = this.state;
-    console.log(categories);
     return (
       <div>
         <div className="container" style={{ marginTop: "100px" }}>
@@ -72,10 +70,10 @@ class CreateRoom extends Component {
                 }
               />
             </div>
-            <div class="form-group">
+            <div className="form-group">
               <label htmlFor="exampleFormControlTextarea1">Description</label>
               <textarea
-                class="form-control"
+                className="form-control"
                 id="exampleFormControlTextarea1"
                 rows="3"
                 placeholder="Description"
@@ -98,7 +96,7 @@ class CreateRoom extends Component {
                     id="gridCheck1"
                     onChange={() => this.updateCategories("music")}
                   />
-                  <label className="form-check-label" for="gridCheck1">
+                  <label className="form-check-label" htmlFor="gridCheck1">
                     Music
                   </label>
                   <div>
@@ -108,7 +106,7 @@ class CreateRoom extends Component {
                       id="gridCheck1"
                       onChange={() => this.updateCategories("gaming")}
                     />
-                    <label className="form-check-label" for="gridCheck1">
+                    <label className="form-check-label" htmlFor="gridCheck1">
                       Gaming
                     </label>
                   </div>{" "}
@@ -119,7 +117,7 @@ class CreateRoom extends Component {
                       id="gridCheck1"
                       onChange={() => this.updateCategories("education")}
                     />
-                    <label className="form-check-label" for="gridCheck1">
+                    <label className="form-check-label" htmlFor="gridCheck1">
                       Education
                     </label>
                   </div>{" "}
@@ -130,7 +128,7 @@ class CreateRoom extends Component {
                       id="gridCheck1"
                       onChange={() => this.updateCategories("comedy")}
                     />
-                    <label className="form-check-label" for="gridCheck1">
+                    <label className="form-check-label" htmlFor="gridCheck1">
                       Comedy
                     </label>
                   </div>
@@ -141,7 +139,7 @@ class CreateRoom extends Component {
                       id="gridCheck1"
                       onChange={() => this.updateCategories("sports")}
                     />
-                    <label className="form-check-label" for="gridCheck1">
+                    <label className="form-check-label" htmlFor="gridCheck1">
                       Sports
                     </label>
                   </div>
@@ -149,19 +147,17 @@ class CreateRoom extends Component {
               </div>
             </div>
           </form>
-
           <Link to="/dashboard">
             <button
               type="submit"
-              class="btn btn-primary"
+              className="btn btn-primary shadow"
               onClick={() => this.createRoomBtn()}
             >
               Create Room
             </button>
           </Link>
-
           <Link
-            className="btn btn-danger"
+            className="btn btn-danger shadow"
             to="/dashboard"
             style={{ marginLeft: "10px" }}
           >
@@ -178,9 +174,10 @@ const mapStateToProps = state => {
     id: state.id,
     roomName: state.roomName,
     description: state.description,
-    owner: state.ownder,
+    owner: state.owner,
     videoUrl: state.videoUrl,
-    categories: state.categories
+    categories: state.categories,
+    user: state.user.username
   };
 };
 
