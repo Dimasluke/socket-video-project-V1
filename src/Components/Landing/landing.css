@@ -1,0 +1,29 @@
+.landing {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.landing video {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    min-width: 100%;
+    min-height: 100%;
+
+}
+
+.jumbo-container {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    padding: 70px;
+    margin-top: 46vh;
+}
+
+#landing-header {
+    color: black;
+}
