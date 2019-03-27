@@ -12,7 +12,8 @@ class Messenger extends Component {
         this.state = {
             messages: [],
             selectedRoom: {},
-            messageText: ''
+            messageText: '',
+            users: []
         }
 
         io.on('message from server', data => {
@@ -24,6 +25,7 @@ class Messenger extends Component {
         io.on('join room', data => {
             console.log('data --<', data)
             this.props.setGroupUsers(data)
+            console.log('this.props', this.props)
             let messagesCopy = this.state.messages.map(message => {
                 return message
             })

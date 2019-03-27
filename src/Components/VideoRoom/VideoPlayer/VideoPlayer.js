@@ -25,7 +25,7 @@ class VideoPlayer extends Component {
             <div className='video-component'>
                 <iframe src='https://www.youtube.com/embed/HZFTUtbn1RU' className='container video-container' ></iframe>
                 <div>
-                    {this.state.selectedRoom.owner}
+                    {/* {this.state.selectedRoom.owner} */}
                 </div>
             </div>
         )

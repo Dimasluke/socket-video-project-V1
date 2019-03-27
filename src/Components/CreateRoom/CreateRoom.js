@@ -152,7 +152,9 @@ class CreateRoom extends Component {
           <button
             type="submit"
             class="btn btn-primary"
-            onClick={() => this.createRoomBtn()}
+            onClick={() => {
+              this.createRoomBtn()
+              this.props.history.push('/dashboard')}}
           >
             Create Room
           </button>
