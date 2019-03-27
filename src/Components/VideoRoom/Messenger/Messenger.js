@@ -73,6 +73,17 @@ class Messenger extends Component {
     scrollToBottom = () => {
         this.messagesEnd.scrollIntoView({ behavior: "smooth" });
     }
+    
+    componentDidMount(){
+        this.scrollToBottom();
+        const selectedRoom = this.props.rooms.filter(room => {
+            return room.id == this.props.match.params.roomId
+        })
+        this.setState({
+            selectedRoom: selectedRoom[0]
+        })
+        io.emit('join room', {room: this.props.match.params.roomId, user: this.props.user})
+    }
       
     componentDidUpdate(prevProps, prevState) {
         this.scrollToBottom();
@@ -88,16 +99,6 @@ class Messenger extends Component {
         }
     }
 
-    componentDidMount(){
-        this.scrollToBottom();
-        const selectedRoom = this.props.rooms.filter(room => {
-            return room.id == this.props.match.params.roomId
-        })
-        this.setState({
-            selectedRoom: selectedRoom[0]
-        })
-        io.emit('join room', {room: this.props.match.params.roomId, user: this.props.user})
-    }
 
     componentWillUnmount(){
         io.emit('leave room', {room: this.props.match.params.roomId, user: this.props.user})
@@ -134,7 +135,7 @@ class Messenger extends Component {
         })
         return(
             <div className='container message-component-container'>
-                <ul>
+                <ul className='list-group list-group-horizontal overflow-auto'>
                     {userList}
                 </ul>
                 <div className='message-container border border-primary'>                     

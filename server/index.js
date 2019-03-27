@@ -6,6 +6,7 @@ const massive = require("massive");
 const session = require("express-session");
 const userController = require("./controllers/UserController");
 const socketController = require("./controllers/SocketController");
+const friendsController = require("./controllers/FriendsController");
 
 app.use(bodyParser.json());
 require("dotenv").config();
@@ -36,6 +37,11 @@ app.get("/api/userInfo/:id", userController.getUserInfo);
 app.post("/api/register", userController.register);
 app.post("/api/login", userController.login);
 app.post("/api/logout", userController.logout);
+
+// Friend endpoints
+app.get("/api/friends", friendsController.getFriends);
+app.post("/api/friend", friendsController.addFriend);
+app.delete("/api/friend/:id/:friend", friendsController.removeFriend);
 
 const port = process.env.PORT || 4000;
 const io = socket(
