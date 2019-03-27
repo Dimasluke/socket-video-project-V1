@@ -53,6 +53,12 @@ io.on("connection", socket => {
     io.in(data.room).emit("join room", { room: data.room, user: data.user });
   });
 
+  socket.on('leave room', data => {
+      console.log(socket.server.clients)
+      io.in(data.room).emit('user left', { room: data.room, user: data.user })
+      socket.leave(data.room).emit('room left', { room: data.room, user: data.user })
+  })
+
   socket.on("message sent", data => {
     console.log("Data ==> ", data);
     io.in(data.room).emit("message from server", {

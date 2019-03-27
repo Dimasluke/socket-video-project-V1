@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-import socketIo from 'socket.io-client';
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
-const io = socketIo()
 
 class UserCards extends Component {
     constructor(props){

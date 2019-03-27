@@ -23,7 +23,7 @@ class VideoPlayer extends Component {
     render(){
         return (
             <div className='video-component'>
-                <iframe src='https://www.youtube.com/embed/HZFTUtbn1RU' className='container video-container' ></iframe>
+                <iframe src='https://www.youtube.com/embed/HZFTUtbn1RU' className='container video-container' title='testframe'></iframe>
                 <div>
                     {/* {this.state.selectedRoom.owner} */}
                 </div>

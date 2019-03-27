@@ -9,8 +9,6 @@ class Dashboard extends Component {
 
     render(){
         const mappedRooms = this.props.rooms.map((room, index) => {
-
-            console.log(room)
             return (
                 <div key={index}>
                     <RoomCard 
