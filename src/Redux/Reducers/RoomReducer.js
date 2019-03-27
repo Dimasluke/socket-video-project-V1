@@ -2,22 +2,50 @@ const initialState = {
   rooms: [
     {
       id: 1,
-      roomName: "room 1",
-      description: "happy happy joy joy",
-      owner: "Daniel",
-      videoUrl: "https://www.youtube.com/embed/HZFTUtbn1RU"
+      roomName: "Lobby",
+      description: "Enjoy time with your peers here!",
+      owner: "Administrator",
+      videoUrl: "https://www.youtube.com/embed/lrX6ktLg8WQ"
     },
     {
       id: 2,
-      roomName: "room2",
-      description: "cats",
-      owner: "Bryce",
+      roomName: "Music",
+      description: "Listen and relax to amazing tunes.",
+      owner: "Administrator",
       videoUrl: "https://www.youtube.com/embed/XJYmyYzuTa8"
+    },
+    {
+      id: 3,
+      roomName: "Gaming",
+      description: "Dive into the world of eSports here.",
+      owner: "Administrator",
+      videoUrl: "https://www.youtube.com/embed/nCSqao5nR_4"
+    },
+    {
+      id: 4,
+      roomName: "Education",
+      description: "Learn about the most recent advancements in the world of technology.",
+      owner: "Administrator",
+      videoUrl: "https://www.youtube.com/embed/fT6mzqBAqmo"
+    },
+    {
+      id: 5,
+      roomName: "Comedy",
+      description: "Take a load off and laugh with your friends.",
+      owner: "Administrator",
+      videoUrl: "https://www.youtube.com/embed/HZFTUtbn1RU"
+    },
+    {
+      id: 6,
+      roomName: "Sports",
+      description: "Watch teams battle for trophies in the world of profession sports.",
+      owner: "Administrator",
+      videoUrl: "https://www.youtube.com/embed/IoN4w2o8AxY"
     }
   ]
 };
 
-let id = 3;
+let id = 7;
 
 const CREATE_ROOM = "CREATE_ROOM";
 
