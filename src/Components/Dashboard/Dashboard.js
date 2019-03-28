@@ -6,7 +6,6 @@ import './Dashboard.css'
 
 class Dashboard extends Component {
 
-
     render(){
         const mappedRooms = this.props.rooms.map((room, index) => {
             return (

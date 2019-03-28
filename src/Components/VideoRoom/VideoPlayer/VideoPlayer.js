@@ -22,8 +22,6 @@ class VideoPlayer extends Component {
 
   render() {
     let { videoUrl, description } = this.state.selectedRoom;
-    console.log(this.state.selectedRoom)
-    console.log(videoUrl);
     return (
       <div className="video-component card mb-3">
         <iframe src={videoUrl} className="video-container card-img-top" />

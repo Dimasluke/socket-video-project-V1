@@ -42,7 +42,7 @@ const initialState = {
       owner: "Administrator",
       videoUrl: "https://www.youtube.com/embed/IoN4w2o8AxY"
     }
-  ]
+  ],
 };
 
 let id = 7;

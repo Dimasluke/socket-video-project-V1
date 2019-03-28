@@ -1,14 +1,18 @@
 const initialState = {
     username: '',
-    users: []
+    users: [],
+    userLogOut: ''
 }
 
 const SET_USER = 'SET_USER'
 const SET_GROUP_USERS = 'SET_GROUP_USERS'
 const USER_LEAVE = 'USER_LEAVE'
+const USER_LOGOUT = 'USER_LOGOUT'
 
 function reducer(state = initialState, action){
     switch(action.type){
+        case USER_LOGOUT:
+            return {...state, userLogOut: action.payload}
         case SET_USER:
             return {...state, username: action.payload}
         case SET_GROUP_USERS:
@@ -16,7 +20,6 @@ function reducer(state = initialState, action){
             return {...state, users: updatedUsers}
         case USER_LEAVE:
             let userLeft = state.users.splice(action.payload, 1)
-            console.log(userLeft)
             return {...state, user: userLeft}
         default:
             return state;
@@ -43,6 +46,13 @@ export function userLeft (index){
     return {
         type: 'USER_LEAVE',
         payload: index
+    }
+}
+
+export function userLogOut (user){
+    return {
+        type: 'USER_LOGOUT',
+        payload: user
     }
 }
 
