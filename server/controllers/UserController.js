@@ -75,5 +75,29 @@ module.exports = {
         res.status(200).json(user[0]);
       })
       .catch(err => console.log("Could not get user:", err));
+  },
+
+  editUserInfo: (req, res) => {
+    const { id } = req.query;
+    const { firstname, lastname, email, bio, imageurl } = req.body;
+    console.log("QUERY", req.query);
+    console.log("BODY", req.body);
+
+    if (!id) {
+      res.status(301).json({ message: "Please add content" });
+      return;
+    }
+    if (!firstname || !lastname || !email || !bio || !imageurl) {
+      res.status(301).json({ message: "Please add content" });
+      return;
+    }
+    req.app
+      .get("db")
+      .edit_user([firstname, lastname, email, bio, imageurl, id])
+      .then(userInfo => {
+        console.log("USERINFO", userInfo);
+        res.status(200).json(userInfo);
+      })
+      .catch(err => console.log("Could not edit user profile", err));
   }
 };
