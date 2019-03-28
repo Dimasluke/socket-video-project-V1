@@ -6,6 +6,7 @@ const massive = require("massive");
 const session = require("express-session");
 const userController = require("./controllers/UserController");
 const socketController = require("./controllers/SocketController");
+const friendsController = require("./controllers/FriendsController");
 
 app.use(bodyParser.json());
 require("dotenv").config();
@@ -38,36 +39,61 @@ app.post("/api/register", userController.register);
 app.post("/api/login", userController.login);
 app.post("/api/logout", userController.logout);
 
+// Friend endpoints
+app.get("/api/friends/:id", friendsController.getFriends);
+app.post("/api/friend", friendsController.addFriend);
+app.delete("/api/friend/:id/:username", friendsController.removeFriend);
+
 const port = process.env.PORT || 4000;
 const io = socket(
   app.listen(port, () => {
     console.log(`Server listening on port ${port}`);
   })
 );
+const roomManagement = {};
 
 io.on("connection", socket => {
   console.log("User Connected");
 
   socket.on("join room", data => {
-    console.log("Data --> ", data);
+    if(data.user){
+        if(roomManagement[data.room]){
+            roomManagement[data.room].push(data.user)
+        } else {
+            roomManagement[data.room] = []
+            roomManagement[data.room].push(data.user)
+        }
+
+    }
+    console.log(roomManagement)
     socket.join(data.room);
-    io.in(data.room).emit("join room", { room: data.room, user: data.user });
+    io.in(data.room).emit("join room", { room: data.room, user: data.user, userList: roomManagement[data.room] || []});
   });
 
-  socket.on("leave room", data => {
-    console.log(socket.server.clients);
-    io.in(data.room).emit("user left", { room: data.room, user: data.user });
-    socket
-      .leave(data.room)
-      .emit("room left", { room: data.room, user: data.user });
-  });
+
+  socket.on('leave room', data => {
+      if(data.user){
+        if (roomManagement[data.room]){
+            let userIndex = roomManagement[data.room].indexOf(data.user)
+            roomManagement[data.room].splice(userIndex, 1)
+          }
+      }
+      io.in(data.room).emit('user left', { room: data.room, user: data.user, userList: roomManagement[data.room] })
+      socket.leave(data.room).emit('room left', { room: data.room, user: data.user, userList: roomManagement[data.room] })
+  })
+
+
 
   socket.on("message sent", data => {
-    console.log("Data ==> ", data);
     io.in(data.room).emit("message from server", {
       user: data.user,
       message: data.message,
       room: data.room
     });
   });
+
+  socket.on('new room', data => {
+      console.log(data)
+      socket.broadcast.emit('add new room', data.newRoom)
+  })
 });

@@ -21,12 +21,15 @@ class VideoPlayer extends Component {
   }
 
   render() {
-    let { videoUrl } = this.state.selectedRoom;
-    console.log(videoUrl);
+
+    let { videoUrl, description } = this.state.selectedRoom;
     return (
-      <div className="video-component">
-        <iframe src={videoUrl} className="container video-container" />
-        <div>{this.state.selectedRoom.owner}</div>
+      <div className="video-component card mb-3">
+        <iframe src={videoUrl} className="video-container card-img-top" />
+        <div className="card-body">
+          <h5 className="card-title">{this.state.selectedRoom.owner}</h5>
+          <p className="card-text">{description}</p>
+        </div>
       </div>
     );
   }

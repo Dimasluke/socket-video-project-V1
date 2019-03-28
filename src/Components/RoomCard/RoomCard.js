@@ -26,7 +26,6 @@ class RoomCard extends Component {
 }
 
 const mapStateToProps = state => {
-    console.log(state)
     return {
         user: state.user.username,
         room: state.room.rooms

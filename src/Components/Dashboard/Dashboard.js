@@ -6,11 +6,10 @@ import './Dashboard.css'
 
 class Dashboard extends Component {
 
-
     render(){
         const mappedRooms = this.props.rooms.map((room, index) => {
             return (
-                <div key={index}>
+                <div key={index} className='dashboard-room-card'>
                     <RoomCard 
                         roomName={room.roomName}
                         owner={room.owner}
