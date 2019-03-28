@@ -1,9 +1,11 @@
+
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { setUser, userLogOut } from '../../Redux/Reducers/UserReducer';
 import './Navbar.css'
 import axios from 'axios';
+
 
 class Navbar extends Component {
   constructor(props) {
@@ -52,6 +54,7 @@ class Navbar extends Component {
             return (
                 <li className='nav-item mr-3'>
                     <Link  
+                        to='/dashboard'
                         onClick={() => {
                             this.props.userLogOut(this.props.user)
                             this.logout()}} 
@@ -65,8 +68,9 @@ class Navbar extends Component {
                 </li>
             ) 
         }
+
     }
- 
+
 
   render() {
     return (
@@ -153,4 +157,7 @@ const mapStateToProps = state => {
   };
 };
 
+
+
 export default connect(mapStateToProps, {setUser, userLogOut})(Navbar)
+
