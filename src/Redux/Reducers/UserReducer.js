@@ -1,7 +1,8 @@
 const initialState = {
     username: '',
     users: [],
-    userLogOut: ''
+    userLogOut: '',
+    userId: null,
 }
 
 const SET_USER = 'SET_USER'
@@ -14,7 +15,7 @@ function reducer(state = initialState, action){
         case USER_LOGOUT:
             return {...state, userLogOut: action.payload}
         case SET_USER:
-            return {...state, username: action.payload}
+            return {...state, username: action.payload.username, userId: action.payload.userId}
         case SET_GROUP_USERS:
             let updatedUsers = state.users.concat(action.payload)
             return {...state, users: updatedUsers}
@@ -24,29 +25,29 @@ function reducer(state = initialState, action){
         default:
             return state;
     }
+};
+
+export function setUser(user) {
+  return {
+    type: "SET_USER",
+    payload: user
+  };
 }
 
-export function setUser(user){
-    return {
-        type: 'SET_USER',
-        payload: user
-    }
-} 
-
-export function setGroupUsers(user){
-    console.log(user)
-    return {
-        type: 'SET_GROUP_USERS',
-        payload: user
-    }
+export function setGroupUsers(user) {
+  console.log(user);
+  return {
+    type: "SET_GROUP_USERS",
+    payload: user
+  };
 }
 
-export function userLeft (index){
-    console.log(index)
-    return {
-        type: 'USER_LEAVE',
-        payload: index
-    }
+export function userLeft(index) {
+  console.log(index);
+  return {
+    type: "USER_LEAVE",
+    payload: index
+  };
 }
 
 export function userLogOut (user){
