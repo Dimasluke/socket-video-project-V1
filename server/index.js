@@ -34,6 +34,7 @@ massive(process.env.CONNECTION_STRING)
 
 app.get("/api/sessionInfo", userController.sessionInfo);
 app.get("/api/userInfo/:id", userController.getUserInfo);
+app.put("/api/userInfo", userController.editUserInfo);
 app.post("/api/register", userController.register);
 app.post("/api/login", userController.login);
 app.post("/api/logout", userController.logout);
@@ -69,6 +70,7 @@ io.on("connection", socket => {
     io.in(data.room).emit("join room", { room: data.room, user: data.user, userList: roomManagement[data.room] || []});
   });
 
+
   socket.on('leave room', data => {
       if(data.user){
         if (roomManagement[data.room]){
@@ -79,6 +81,7 @@ io.on("connection", socket => {
       io.in(data.room).emit('user left', { room: data.room, user: data.user, userList: roomManagement[data.room] })
       socket.leave(data.room).emit('room left', { room: data.room, user: data.user, userList: roomManagement[data.room] })
   })
+
 
 
   socket.on("message sent", data => {

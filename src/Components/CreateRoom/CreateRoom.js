@@ -161,8 +161,7 @@ class CreateRoom extends Component {
           <Link
             className="btn btn-danger shadow"
             to="/dashboard"
-            style={{ marginLeft: "10px" }}
-          >
+            style={{ marginLeft: "10px" }}>
             Cancel
           </Link>
         </div>
