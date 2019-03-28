@@ -55,38 +55,31 @@ io.on("connection", socket => {
   console.log("User Connected");
 
   socket.on("join room", data => {
-    if (roomManagement[data.room]) {
-      roomManagement[data.room].push(data.user);
-    } else {
-      roomManagement[data.room] = [];
-      roomManagement[data.room].push(data.user);
+    if(data.user){
+        if(roomManagement[data.room]){
+            roomManagement[data.room].push(data.user)
+        } else {
+            roomManagement[data.room] = []
+            roomManagement[data.room].push(data.user)
+        }
+
     }
+    console.log(roomManagement)
     socket.join(data.room);
-    io.in(data.room).emit("join room", {
-      room: data.room,
-      user: data.user,
-      userList: roomManagement[data.room]
-    });
+    io.in(data.room).emit("join room", { room: data.room, user: data.user, userList: roomManagement[data.room] || []});
   });
 
-  socket.on("leave room", data => {
-    if (roomManagement[data.room]) {
-      let userIndex = roomManagement[data.room].indexOf(data.user);
-      roomManagement[data.room].splice(userIndex, 1);
-    }
-    let userIndex = roomManagement[data.room].indexOf(data.user);
-    roomManagement[data.room].splice(userIndex, 1);
-    io.in(data.room).emit("user left", {
-      room: data.room,
-      user: data.user,
-      userList: roomManagement[data.room]
-    });
-    socket.leave(data.room).emit("room left", {
-      room: data.room,
-      user: data.user,
-      userList: roomManagement[data.room]
-    });
-  });
+  socket.on('leave room', data => {
+      if(data.user){
+        if (roomManagement[data.room]){
+            let userIndex = roomManagement[data.room].indexOf(data.user)
+            roomManagement[data.room].splice(userIndex, 1)
+          }
+      }
+      io.in(data.room).emit('user left', { room: data.room, user: data.user, userList: roomManagement[data.room] })
+      socket.leave(data.room).emit('room left', { room: data.room, user: data.user, userList: roomManagement[data.room] })
+  })
+
 
   socket.on("message sent", data => {
     io.in(data.room).emit("message from server", {
@@ -95,4 +88,9 @@ io.on("connection", socket => {
       room: data.room
     });
   });
+
+  socket.on('new room', data => {
+      console.log(data)
+      socket.broadcast.emit('add new room', data.newRoom)
+  })
 });

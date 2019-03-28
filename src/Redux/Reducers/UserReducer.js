@@ -1,32 +1,31 @@
 const initialState = {
-  username: "",
-  userId: null,
-  users: []
-};
+    userId: null,
+    username: '',
+    users: [],
+    userLogOut: ''
+}
 
-const SET_USER = "SET_USER";
-const SET_GROUP_USERS = "SET_GROUP_USERS";
-const USER_LEAVE = "USER_LEAVE";
+const SET_USER = 'SET_USER'
+const SET_GROUP_USERS = 'SET_GROUP_USERS'
+const USER_LEAVE = 'USER_LEAVE'
+const USER_LOGOUT = 'USER_LOGOUT'
 
-function reducer(state = initialState, action) {
-  switch (action.type) {
-    case SET_USER:
-      console.log(action.payload.username, action.payload.userId);
-      return {
-        ...state,
-        username: action.payload.username,
-        userId: action.payload.userId
-      };
-    case SET_GROUP_USERS:
-      let updatedUsers = state.users.concat(action.payload);
-      return { ...state, users: updatedUsers };
-    case USER_LEAVE:
-      let userLeft = state.users.splice(action.payload, 1);
-      console.log(userLeft);
-      return { ...state, user: userLeft };
-    default:
-      return state;
-  }
+function reducer(state = initialState, action){
+    switch(action.type){
+        case USER_LOGOUT:
+            return {...state, userLogOut: action.payload}
+        case SET_USER:
+            return {...state, username: action.payload.username, userId: action.payload.userId}
+        case SET_GROUP_USERS:
+            let updatedUsers = state.users.concat(action.payload)
+            return {...state, users: updatedUsers}
+        case USER_LEAVE:
+            let userLeft = state.users.splice(action.payload, 1)
+            return {...state, user: userLeft}
+        default:
+            return state;
+    }
+
 }
 
 export function setUser(user) {
@@ -52,4 +51,11 @@ export function userLeft(index) {
   };
 }
 
-export default reducer;
+export function userLogOut (user){
+    return {
+        type: 'USER_LOGOUT',
+        payload: user
+    }
+}
+
+export default reducer
