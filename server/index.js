@@ -39,9 +39,9 @@ app.post("/api/login", userController.login);
 app.post("/api/logout", userController.logout);
 
 // Friend endpoints
-app.get("/api/friends", friendsController.getFriends);
+app.get("/api/friends/:id", friendsController.getFriends);
 app.post("/api/friend", friendsController.addFriend);
-app.delete("/api/friend/:id/:friend", friendsController.removeFriend);
+app.delete("/api/friend/:id/:username", friendsController.removeFriend);
 
 const port = process.env.PORT || 4000;
 const io = socket(
@@ -49,13 +49,12 @@ const io = socket(
     console.log(`Server listening on port ${port}`);
   })
 );
-const roomManagement = {}
+const roomManagement = {};
 
 io.on("connection", socket => {
   console.log("User Connected");
 
   socket.on("join room", data => {
-
     if(data.user){
         if(roomManagement[data.room]){
             roomManagement[data.room].push(data.user)
@@ -63,6 +62,7 @@ io.on("connection", socket => {
             roomManagement[data.room] = []
             roomManagement[data.room].push(data.user)
         }
+
     }
     console.log(roomManagement)
     socket.join(data.room);
@@ -79,6 +79,7 @@ io.on("connection", socket => {
       io.in(data.room).emit('user left', { room: data.room, user: data.user, userList: roomManagement[data.room] })
       socket.leave(data.room).emit('room left', { room: data.room, user: data.user, userList: roomManagement[data.room] })
   })
+
 
   socket.on("message sent", data => {
     io.in(data.room).emit("message from server", {
