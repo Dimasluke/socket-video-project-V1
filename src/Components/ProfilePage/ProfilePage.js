@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
+import { connect } from "react-redux";
 import axios from "axios";
 
 import "./Profile.css";
@@ -9,226 +10,190 @@ class ProfilePage extends Component {
     super(props);
 
     this.state = {
-      user: {}
+      id: null,
+      username: "",
+      firstname: "",
+      lastname: "",
+      email: "",
+      bio: "",
+      imageurl: ""
     };
   }
 
   componentDidMount() {
     const userProfile = this.props.match.params.id;
+
     axios.get(`/api/userInfo/${userProfile}`).then(getUserInfo => {
-      //   console.log(getUserInfo.data);
+      // console.log("GETUSERINFO", getUserInfo.data);
       this.setState({
-        user: getUserInfo.data
+        id: getUserInfo.data.id,
+        username: getUserInfo.data.username,
+        firstname: getUserInfo.data.firstname,
+        lastname: getUserInfo.data.lastname,
+        email: getUserInfo.data.email,
+        bio: getUserInfo.data.bio,
+        imageurl: getUserInfo.data.imageurl
       });
     });
   }
 
-  render() {
-    const {
-      username,
-      firstname,
-      lastname,
-      imageurl,
-      email,
-      bio
-    } = this.state.user;
-    // console.log("userInfo ===> ", this.state.user);
+  userCheck = () => {
+    // console.log("USERCHECK", this.props);
+    if (this.props.user === this.props.match.params.id) {
+      return (
+        <div>
+          <div class="input-group mb-3 image-input">
+            <div class="input-group-prepend">
+              <div class="input-group-text" id="image-input">
+                ImageUrl
+              </div>
+            </div>
+            <input
+              onChange={e => this.setState({ imageurl: e.target.value })}
+              type="text"
+              class="form-control"
+              placeholder="Paste your url here"
+              id="basic-url"
+              aria-describedby="basic-addon3"
+            />
+          </div>
 
+          <div>
+            <button
+              onClick={this.editUserInfo}
+              type="button"
+              class="btn btn-danger btn-sm">
+              Edit
+            </button>
+          </div>
+        </div>
+      );
+    }
+  };
+
+  editUserInfo = () => {
+    const { firstname, lastname, email, bio, imageurl, id } = this.state;
+    axios
+      .put(`/api/userInfo?id=${id}`, {
+        firstname,
+        lastname,
+        email,
+        bio,
+        imageurl,
+        id
+      })
+      .then(userInfo => {
+        this.setState({
+          username: userInfo.data.username,
+          firstname: userInfo.data.firstname,
+          lastname: userInfo.data.lastname,
+          email: userInfo.data.email,
+          bio: userInfo.data.bio,
+          imageurl: userInfo.data.imageurl,
+          id: userInfo.data.id
+        });
+      });
+  };
+
+  render() {
+    // console.log("STATE", this.state);
+    // console.log("PROPS", this.props);
+    const { username, firstname, lastname, email, bio, imageurl } = this.state;
+    // console.log("userInfo ===> ", this.state.user);
+    // console.log("bio", bio);
     return (
       <div className="container profile-container border border-secondary rounded-sm shadow p-4">
         {/* USER INFO DROPDOWNS */}
-        <div className="bio-info" id="accordionInfo">
-          <img src={imageurl} alt="" />
-          <div className="accordion contact-info">
-            <div className="card">
-              <div className="card-header" id="profileInfo">
-                <h2 className="mb-0">
-                  <button
-                    className="btn btn-link"
-                    type="button"
-                    data-toggle="collapse"
-                    data-target="#collapseName"
-                    aria-expanded="true"
-                    aria-controls="collapseName">
-                    UserName:
-                    {username}
-                  </button>
-                  <button
-                    type="button"
-                    class="btn btn-outline-danger btn-sm"
-                    type="button"
-                    data-toggle="collapse"
-                    data-target="#collapseName"
-                    aria-expanded="true"
-                    aria-controls="collapseName">
-                    Edit
-                  </button>
-                </h2>
-              </div>
-
-              <div
-                id="collapseName"
-                className="collapse show"
-                aria-labelledby=""
-                data-parent="#profileInfo">
-                <div className="card-body">
-                  <form>
-                    <div className="row">
-                      <div className="col">
-                        <label htmlFor="firstNameInput" />
-                        <input
-                          type="text"
-                          className="form-control"
-                          placeholder="First name"
-                          id="firstNameInput"
-                          value={firstname}
-                        />
-                      </div>
-                      <div className="col">
-                        <label htmlFor="lastNameInput" />
-                        <input
-                          type="text"
-                          className="form-control"
-                          placeholder="Last name"
-                          id="lastNameInput"
-                          value={lastname}
-                        />
-                      </div>
-                    </div>
-                  </form>
-                </div>
-              </div>
-            </div>
-            <div className="card">
-              <div className="card-header" id="headingTwo">
-                <h2 className="mb-0">
-                  <button
-                    className="btn btn-link collapsed"
-                    type="button"
-                    data-toggle="collapse"
-                    data-target="#collapseContactInfo"
-                    aria-expanded="false"
-                    aria-controls="collapseContactInfo">
-                    Contact Info
-                  </button>
-                  <button
-                    type="button"
-                    class="btn btn-outline-danger btn-sm"
-                    type="button"
-                    data-toggle="collapse"
-                    data-target="#collapseContactInfo"
-                    aria-expanded="false"
-                    aria-controls="collapseContactInfo">
-                    Edit
-                  </button>
-                </h2>
-              </div>
-              <div
-                id="collapseContactInfo"
-                className="collapse"
-                aria-labelledby="headingTwo"
-                data-parent="#profileInfo">
-                <div className="card-body">
-                  <form>
-                    <div className="row">
-                      <div className="col">
-                        <label htmlFor="email" />
-                        <input
-                          type="text"
-                          className="form-control"
-                          placeholder="Email"
-                          id="email"
-                          value={email}
-                        />
-                      </div>
-                      <div className="col">
-                        <label htmlFor="phoneNumber" />
-                        <input
-                          type="text"
-                          className="form-control"
-                          placeholder="Phone Number"
-                          id="phoneNumber"
-                        />
-                      </div>
-                    </div>
-                  </form>
-                </div>
-              </div>
-            </div>
-            <div className="card">
-              <div className="card-header" id="headingThree">
-                <h2 className="mb-0">
-                  <button
-                    className="btn btn-link collapsed"
-                    type="button"
-                    data-toggle="collapse"
-                    data-target="#collapseBio"
-                    aria-expanded="false"
-                    aria-controls="collapseBio">
-                    Bio
-                  </button>
-                  <button
-                    type="button"
-                    class="btn btn-outline-danger btn-sm"
-                    type="button"
-                    data-toggle="collapse"
-                    data-target="#collapseBio"
-                    aria-expanded="false"
-                    aria-controls="collapseBio">
-                    Edit
-                  </button>
-                </h2>
-              </div>
-              <div
-                id="collapseBio"
-                className="collapse"
-                aria-labelledby="headingThree"
-                data-parent="#profileInfo">
-                <div className="card-body">{bio}</div>
-              </div>
-            </div>
+        <div className="accordion profile-dropdown">
+          <div class="media">
+            <img src={imageurl} alt="" class="mr-3" />
           </div>
+          <button
+            class="btn btn-secondary col"
+            type="button"
+            data-toggle="collapse"
+            data-target="#collapseExample"
+            aria-expanded="true"
+            aria-controls="collapseExample">
+            Show profile: {username}
+          </button>
+          <form className="form-profile">
+            <div class="collapse show" id="collapseExample">
+              <div class="card card-body">
+                <div className="card-body">
+                  <div className="row">
+                    <div className="col">
+                      <label htmlFor="firstName">First Name</label>
+                      <input
+                        onChange={e =>
+                          this.setState({ firstname: e.target.value })
+                        }
+                        type="text"
+                        className="form-control"
+                        placeholder="First name"
+                        id="firstName"
+                        value={firstname}
+                      />
+                    </div>
+                    <div className="col">
+                      <label htmlFor="lastName">Last Name</label>
+                      <input
+                        onChange={e =>
+                          this.setState({ lastname: e.target.value })
+                        }
+                        type="text"
+                        className="form-control"
+                        placeholder="Last Name"
+                        id="lastName"
+                        value={lastname}
+                      />
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col">
+                      <label htmlFor="email">Email</label>
+                      <input
+                        onChange={e => this.setState({ email: e.target.value })}
+                        type="text"
+                        className="form-control"
+                        placeholder="Email"
+                        id="email"
+                        value={email}
+                      />
+                    </div>
+                    <div className="col">
+                      <label htmlFor="phoneNumber">Phone Number</label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        placeholder="Phone Number"
+                        id="phoneNumber"
+                      />
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleFormControlTextarea1">Bio</label>
+                    <textarea
+                      onChange={e => this.setState({ bio: e.target.value })}
+                      class="form-control"
+                      id="exampleFormControlTextarea1"
+                      rows="3"
+                      value={bio}
+                    />
+                  </div>
+                  {this.userCheck()}
+                </div>
+              </div>
+            </div>
+          </form>
         </div>
         {/* SUBSCRIPTION, FRIENDS, VIDEOS DROPDOWNS */}
-        <div className="accordion subscriptions" id="subscriptions">
+        <div className="accordion friends " id="dropDownFriends">
           <div className="card">
-            <div className="card-header" id="headingOne">
+            <div className="card-header" id="friends">
               <h2 className="mb-0">
                 <button
                   className="btn btn-link"
-                  type="button"
-                  data-toggle="collapse"
-                  data-target="#collapseSubscriptions"
-                  aria-expanded="true"
-                  aria-controls="collapseSubscriptions">
-                  Subscriptions
-                </button>
-                <button
-                  type="button"
-                  class="btn btn-outline-danger btn-sm"
-                  type="button"
-                  data-toggle="collapse"
-                  data-target="#collapseSubscriptions"
-                  aria-expanded="true"
-                  aria-controls="collapseSubscriptions">
-                  Edit
-                </button>
-              </h2>
-            </div>
-
-            <div
-              id="collapseSubscriptions"
-              className="collapse show"
-              aria-labelledby="headingOne"
-              data-parent="#subscriptions">
-              <div className="card-body">Subscriptions Data</div>
-            </div>
-          </div>
-          <div className="card">
-            <div className="card-header" id="headingTwo">
-              <h2 className="mb-0">
-                <button
-                  className="btn btn-link collapsed"
                   type="button"
                   data-toggle="collapse"
                   data-target="#collapseFriends"
@@ -236,28 +201,18 @@ class ProfilePage extends Component {
                   aria-controls="collapseFriends">
                   Friends
                 </button>
-                <button
-                  type="button"
-                  class="btn btn-outline-danger btn-sm"
-                  type="button"
-                  data-toggle="collapse"
-                  data-target="#collapseFriends"
-                  aria-expanded="false"
-                  aria-controls="collapseFriends">
-                  Edit
-                </button>
               </h2>
             </div>
             <div
               id="collapseFriends"
               className="collapse"
-              aria-labelledby="headingTwo"
-              data-parent="#subscriptions">
-              <div className="card-body">Friends Data</div>
+              aria-labelledby=""
+              data-parent="#friends">
+              <div className="card-body">Friends</div>
             </div>
           </div>
           <div className="card">
-            <div className="card-header" id="headingThree">
+            <div className="card-header" id="videos">
               <h2 className="mb-0">
                 <button
                   className="btn btn-link collapsed"
@@ -273,8 +228,8 @@ class ProfilePage extends Component {
             <div
               id="collapseVideos"
               className="collapse"
-              aria-labelledby="headingThree"
-              data-parent="#subscriptions">
+              aria-labelledby=""
+              data-parent="#dropDownFriends">
               <div className="card-body">Watched Videos Data</div>
             </div>
           </div>
@@ -284,4 +239,14 @@ class ProfilePage extends Component {
   }
 }
 
-export default withRouter(ProfilePage);
+const mapStateToProps = state => {
+  // console.log("STATE", state);
+  return {
+    user: state.user.username
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  null
+)(withRouter(ProfilePage));
