@@ -147,11 +147,13 @@ class CreateRoom extends Component {
               </div>
             </div>
           </form>
-          <Link to="/dashboard">
+          <Link to={`/${this.props.rooms.length + 1}`}>
             <button
               type="submit"
               className="btn btn-primary shadow"
-              onClick={() => this.createRoomBtn()}
+              onClick={() => {
+                this.createRoomBtn()
+                this.props.history.push(`/${this.props.rooms.length + 1}`)}}
             >
               Create Room
             </button>
@@ -171,6 +173,7 @@ class CreateRoom extends Component {
 
 const mapStateToProps = state => {
   return {
+    rooms: state.room.rooms,
     id: state.id,
     roomName: state.roomName,
     description: state.description,
