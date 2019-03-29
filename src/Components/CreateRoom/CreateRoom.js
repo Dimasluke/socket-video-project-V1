@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { createRoom } from "../../Redux/Reducers/RoomReducer";
 
+import "./CreateRoom.css";
+
 class CreateRoom extends Component {
   constructor(props) {
     super(props);
@@ -39,7 +41,7 @@ class CreateRoom extends Component {
     const { categories } = this.state;
     return (
       <div>
-        <div className="container" style={{ marginTop: "100px" }}>
+        <div className="container  border border-secondary rounded-sm shadow p-4 create-room-container">
           <form>
             <div className="form-group">
               <label htmlFor="formGroupExampleInput">Title</label>
@@ -152,9 +154,9 @@ class CreateRoom extends Component {
               type="submit"
               className="btn btn-primary shadow"
               onClick={() => {
-                this.createRoomBtn()
-                this.props.history.push(`/${this.props.rooms.length + 1}`)}}
-            >
+                this.createRoomBtn();
+                this.props.history.push(`/${this.props.rooms.length + 1}`);
+              }}>
               Create Room
             </button>
           </Link>

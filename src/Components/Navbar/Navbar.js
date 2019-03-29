@@ -1,11 +1,9 @@
-
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { setUser, userLogOut } from '../../Redux/Reducers/UserReducer';
-import './Navbar.css'
-import axios from 'axios';
-
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import { setUser, userLogOut } from "../../Redux/Reducers/UserReducer";
+import "./Navbar.css";
+import axios from "axios";
 
 class Navbar extends Component {
   constructor(props) {
@@ -21,11 +19,14 @@ class Navbar extends Component {
   }
 
   userCheck = () => {
+    // console.log("USER", this.props);
     if (this.props.user) {
       return (
-        <span>
-          <span className="profile-name"> - {this.props.user}</span>
-        </span>
+        <Link to={`/profile/${this.props.user}`}>
+          <span>
+            <span className="profile-name"> - {this.props.user}</span>
+          </span>
+        </Link>
       );
     }
   };
@@ -41,33 +42,37 @@ class Navbar extends Component {
       });
   };
 
-    logout = () => {
-        axios.post('/api/logout').then(response => {
-            this.props.setUser(response.data)
-        }).catch(err => {
-            console.log(err)
-        })
-    }
+  logout = () => {
+    axios
+      .post("/api/logout")
+      .then(response => {
+        this.props.setUser(response.data);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
 
-    loggedIn = () => {
-        if(this.props.user){
-            return (
-                <li className='nav-item mr-3'>
-                    <Link  
-                        onClick={() => {
-                            this.props.userLogOut(this.props.user)
-                            this.logout()}} 
-                        className='logout-button'>Logout</Link>
-                </li>
-            )
-        } else {
-            return (
-                <li className='nav-item mr-3'>
-                    <Link to='/login'>Login</Link>
-                </li>
-            ) 
-        }
-
+  loggedIn = () => {
+    if (this.props.user) {
+      return (
+        <li className="nav-item mr-3">
+          <Link
+            onClick={() => {
+              this.props.userLogOut(this.props.user);
+              this.logout();
+            }}
+            className="logout-button">
+            Logout
+          </Link>
+        </li>
+      );
+    } else {
+      return (
+        <li className="nav-item mr-3">
+          <Link to="/login">Login</Link>
+        </li>
+      );
     }
   };
 
@@ -86,14 +91,12 @@ class Navbar extends Component {
             data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent"
             aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
+            aria-label="Toggle navigation">
             <span className="navbar-toggler-icon" />
           </button>
           <div
             className="collapse navbar-collapse justify-content-end"
-            id="navbarSupportedContent"
-          >
+            id="navbarSupportedContent">
             <form className="form-inline my-2 my-lg-0 mr-4">
               <div className="input-group">
                 <input
@@ -111,8 +114,7 @@ class Navbar extends Component {
                     className="btn btn-outline-success dropdown-toggle dropdown-toggle-split"
                     data-toggle="dropdown"
                     aria-haspopup="true"
-                    aria-expanded="false"
-                  >
+                    aria-expanded="false">
                     <span className="sr-only">Toggle Dropdown</span>
                   </button>
                   <div className="dropdown-menu">
@@ -156,7 +158,7 @@ const mapStateToProps = state => {
   };
 };
 
-
-
-export default connect(mapStateToProps, {setUser, userLogOut})(Navbar)
-
+export default connect(
+  mapStateToProps,
+  { setUser, userLogOut }
+)(Navbar);
