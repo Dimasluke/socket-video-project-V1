@@ -1,11 +1,9 @@
-
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { setUser, userLogOut } from '../../Redux/Reducers/UserReducer';
-import './Navbar.css'
-import axios from 'axios';
-
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import { setUser, userLogOut } from "../../Redux/Reducers/UserReducer";
+import "./Navbar.css";
+import axios from "axios";
 
 class Navbar extends Component {
   constructor(props) {
@@ -41,33 +39,38 @@ class Navbar extends Component {
       });
   };
 
-    logout = () => {
-        axios.post('/api/logout').then(response => {
-            this.props.setUser(response.data)
-        }).catch(err => {
-            console.log(err)
-        })
-    }
+  logout = () => {
+    axios
+      .post("/api/logout")
+      .then(response => {
+        this.props.setUser(response.data);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
 
-    loggedIn = () => {
-        if(this.props.user){
-            return (
-                <li className='nav-item mr-3'>
-                    <Link  
-                        onClick={() => {
-                            this.props.userLogOut(this.props.user)
-                            this.logout()}} 
-                        className='logout-button'>Logout</Link>
-                </li>
-            )
-        } else {
-            return (
-                <li className='nav-item mr-3'>
-                    <Link to='/login'>Login</Link>
-                </li>
-            ) 
-        }
-
+  loggedIn = () => {
+    if (this.props.user) {
+      return (
+        <li className="nav-item mr-3">
+          <Link
+            onClick={() => {
+              this.props.userLogOut(this.props.user);
+              this.logout();
+            }}
+            className="logout-button"
+          >
+            Logout
+          </Link>
+        </li>
+      );
+    } else {
+      return (
+        <li className="nav-item mr-3">
+          <Link to="/login">Login</Link>
+        </li>
+      );
     }
   };
 
@@ -156,7 +159,7 @@ const mapStateToProps = state => {
   };
 };
 
-
-
-export default connect(mapStateToProps, {setUser, userLogOut})(Navbar)
-
+export default connect(
+  mapStateToProps,
+  { setUser, userLogOut }
+)(Navbar);
