@@ -104,13 +104,13 @@ class ProfilePage extends Component {
     // console.log("userInfo ===> ", this.state.user);
     // console.log("bio", bio);
     return (
-      <div>
+      <div className="profile-container">
         <Link to="/dashboard">
-          <button type="button" class="btn btn-link back-to-dashboard">
+          <button type="button" className="btn btn-link back-to-dashboard">
             {"< < < Back to dashboard"}
           </button>
         </Link>
-        <div className="container  border border-secondary rounded-sm shadow p-4 profile-container">
+        <div className="container  border border-secondary rounded-sm shadow p-4">
           {/* USER INFO DROPDOWNS */}
           <div className="accordion profile-dropdown">
             <div class="media">

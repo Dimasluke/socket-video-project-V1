@@ -2,9 +2,10 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { setUser, userLogOut } from "../../Redux/Reducers/UserReducer";
-import "./Navbar.css";
 import axios from "axios";
 
+import Search from "../Search/Search";
+import "./Navbar.css";
 class Navbar extends Component {
   constructor(props) {
     super(props);
@@ -13,7 +14,7 @@ class Navbar extends Component {
 
   componentDidMount() {
     axios.get("/api/sessionInfo").then(response => {
-      console.log(response.data);
+      // console.log(response.data);
       this.props.setUser(response.data);
     });
   }
@@ -97,46 +98,9 @@ class Navbar extends Component {
           <div
             className="collapse navbar-collapse justify-content-end"
             id="navbarSupportedContent">
-            <form className="form-inline my-2 my-lg-0 mr-4">
-              <div className="input-group">
-                <input
-                  type="text"
-                  className="form-control"
-                  aria-label="Text input with segmented dropdown button"
-                  placeholder="Search"
-                />
-                <div className="input-group-append">
-                  <button type="button" className="btn btn-outline-success">
-                    Search
-                  </button>
-                  <button
-                    type="button"
-                    className="btn btn-outline-success dropdown-toggle dropdown-toggle-split"
-                    data-toggle="dropdown"
-                    aria-haspopup="true"
-                    aria-expanded="false">
-                    <span className="sr-only">Toggle Dropdown</span>
-                  </button>
-                  <div className="dropdown-menu">
-                    <a className="dropdown-item" href="#">
-                      Action
-                    </a>
-                    <a className="dropdown-item" href="#">
-                      Another action
-                    </a>
-                    <a className="dropdown-item" href="#">
-                      Something else here
-                    </a>
-                    <div role="separator" className="dropdown-divider" />
-                    <a className="dropdown-item" href="#">
-                      Separated link
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </form>
             <div className="">
               <ul className="navbar-nav mr-auto">
+                <Search />
                 <li className="nav-item mr-3">
                   <Link to="/createroom" className="nav-item">
                     Create Room

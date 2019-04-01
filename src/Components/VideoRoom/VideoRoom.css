@@ -1,20 +1,31 @@
-.messenger-videoplayer-container {
-    margin-top: 5vh;
-    display: flex;
+.chat-room {
+  display: flex;
+  flex-direction: column;
 }
 
-.usercards-videoplayer-container {
-    display:  flex;
-    flex-direction: column;
-    justify-content: space-between;
-    margin-left: 5vw;
-    width: 35vw;
+.chat-room .messenger-videoplayer-container {
+  margin-top: 5vh;
+  display: flex;
 }
 
-.video-room-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.chat-room .usercards-videoplayer-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-left: 5vw;
+  width: 35vw;
 }
 
+.chat-room .video-room-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
+.chat-room .back-to-dashboard {
+  position: fixed;
+  top: 10vh;
+  left: 0;
+  margin: 10px;
+  text-decoration: none;
+}

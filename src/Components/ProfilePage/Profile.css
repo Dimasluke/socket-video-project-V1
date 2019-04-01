@@ -1,6 +1,6 @@
 .profile-container {
   display: flex;
-  flex-flow: column;
+  margin: 0 auto;
   margin-top: 5vh;
   max-width: 60vw;
 }
@@ -23,7 +23,7 @@
   margin-top: 10px;
 }
 
-.back-to-dashboard {
+.profile-container .back-to-dashboard {
   position: fixed;
   top: 0;
   left: 0;

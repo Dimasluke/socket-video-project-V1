@@ -99,5 +99,15 @@ module.exports = {
         res.status(200).json(userInfo);
       })
       .catch(err => console.log("Could not edit user profile", err));
+  },
+
+  getAllUsers: (req, res) => {
+    req.app
+      .get("db")
+      .get_all_users()
+      .then(users => {
+        res.status(200).json(users);
+      })
+      .catch(err => console.log("Could not get all users", err));
   }
 };
