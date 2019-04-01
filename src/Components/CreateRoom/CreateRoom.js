@@ -2,7 +2,9 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { createRoom, setRooms } from "../../Redux/Reducers/RoomReducer";
-import axios from 'axios'
+import axios from "axios";
+
+import "./CreateRoom.css";
 
 class CreateRoom extends Component {
   constructor(props) {
@@ -19,33 +21,35 @@ class CreateRoom extends Component {
   }
 
   componentDidMount = () => {
-    axios.get('/api/rooms').then(response => {
-      console.log(response.data)
+    axios.get("/api/rooms").then(response => {
+      console.log(response.data);
       this.setState({
         rooms: response.data
-      })
-    })
-    this.roomCheck()
-  }
+      });
+    });
+    this.roomCheck();
+  };
 
   createRoomBtn = () => {
     let { title, url, owner, description, categories } = this.state;
-    console.log(title, url, owner, description, categories)
-    axios.post('/api/rooms', { title, url, owner, description, categories }).then(response => {
-      console.log(response.data)
-      this.props.setRooms(response.data)
-      this.props.history.push(`/${this.props.user}`)
-    })
+    console.log(title, url, owner, description, categories);
+    axios
+      .post("/api/rooms", { title, url, owner, description, categories })
+      .then(response => {
+        console.log(response.data);
+        this.props.setRooms(response.data);
+        this.props.history.push(`/${this.props.user}`);
+      });
   };
 
   roomCheck = () => {
-    console.log(this.props.user)
-    console.log(this.state.rooms)
+    console.log(this.props.user);
+    console.log(this.state.rooms);
     let roomExists = this.state.rooms.filter(room => {
-      return room.owner === this.props.user
-    })
-    console.log(roomExists)
-  }
+      return room.owner === this.props.user;
+    });
+    console.log(roomExists);
+  };
 
   updateCategories = category => {
     let { categories } = this.state;
@@ -63,10 +67,10 @@ class CreateRoom extends Component {
 
   render() {
     const { categories } = this.state;
-    console.log(this.props)
+    console.log(this.props);
     return (
       <div>
-        <div className="container" style={{ marginTop: "100px" }}>
+        <div className="container  border border-secondary rounded-sm shadow p-4 create-room-container">
           <form>
             <div className="form-group">
               <label htmlFor="formGroupExampleInput">Title</label>
@@ -174,15 +178,14 @@ class CreateRoom extends Component {
               </div>
             </div>
           </form>
-            <button
-              type="submit"
-              className="btn btn-primary shadow"
-              onClick={() => {
-                this.createRoomBtn()
-                }}
-            >
-              Create Room
-            </button>
+          <button
+            type="submit"
+            className="btn btn-primary shadow"
+            onClick={() => {
+              this.createRoomBtn();
+            }}>
+            Create Room
+          </button>
           <Link
             className="btn btn-danger shadow"
             to="/dashboard"
@@ -196,7 +199,7 @@ class CreateRoom extends Component {
 }
 
 const mapStateToProps = state => {
-  console.log(state)
+  console.log(state);
   return {
     rooms: state.room.rooms,
     id: state.user.userId,
