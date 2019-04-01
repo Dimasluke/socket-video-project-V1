@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import axios from "axios";
 import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
 import { setUser } from "../../Redux/Reducers/UserReducer";
+import { Link } from "react-router-dom";
 import "./friendsList.css";
 
 export class FriendsList extends Component {
@@ -16,16 +18,15 @@ export class FriendsList extends Component {
       console.log(response.data);
       this.props.setUser(response.data);
     });
-    axios.get(`/api/friends/${this.props.userId}`).then(friends => {
+    axios.get(`/api/friends/${this.props.match.params.id}`).then(friends => {
       this.setState({
         friends: friends.data
       });
     });
   }
   componentDidUpdate(prevProps) {
-    console.log(this.props.userId);
-    if (this.props.userId !== prevProps.userId) {
-      axios.get(`/api/friends/${this.props.userId}`).then(friends => {
+    if (this.props.match.params.id !== prevProps.match.params.id) {
+      axios.get(`/api/friends/${this.props.match.params.id}`).then(friends => {
         this.setState({
           friends: friends.data
         });
@@ -43,60 +44,51 @@ export class FriendsList extends Component {
   };
 
   render() {
-    console.log(this.props.userId);
+    console.log(this.props.username);
+    let { username } = this.props;
+    let { id } = this.props.match.params;
     let { friends } = this.state;
-    let { userId } = this.props;
+    // let { username } = this.props;
     const mappedFriends = friends.map(friend => {
       return (
-        <div key={friends.id} className="col-sm">
-          <div className="card mb-3" style={{ maxWidth: "540px" }}>
-            <div
-              className="row no-gutters"
-              style={{ maxHeight: "200px", overflow: "auto" }}
-            >
-              <div className="col-md-4">
-                <img src={friend.imageurl} className="card-img" alt="..." />
-              </div>
+        <div key={friends.username}>
+          <Link to={`/profile/${friend.username}`}>
+            {username == id ? (
               <button
                 className="btn btn-sm btn-danger delete-btn shadow"
-                style={{ zIndex: "100" }}
                 onClick={() => {
-                  this.removeFriend(userId, friend.username);
+                  this.removeFriend(id, friend.username);
                 }}
               >
                 X
               </button>
-              <div className="col-md-8">
-                <div className="card-body">
-                  <h5 className="card-title">{friend.username}</h5>
-                  <p className="card-text">{friend.bio}</p>
-                  <p className="card-text">
-                    {/* <small className="text-muted">
-                      Last updated 3 mins ago
-                    </small> */}
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
+            ) : null}
+            <img
+              src={friend.imageurl}
+              style={{
+                width: "100%",
+                height: "180px",
+                boxShadow: "2 1px 1px"
+              }}
+              alt="..."
+            />
+
+            <h5>{friend.username}</h5>
+          </Link>
         </div>
       );
     });
-    return (
-      <div className="container">
-        <div className="row">{mappedFriends}</div>
-      </div>
-    );
+    return <div className="friends-list">{mappedFriends}</div>;
   }
 }
 
 const mapStateToProps = state => {
   return {
-    userId: state.user.userId
+    username: state.user.username
   };
 };
 
 export default connect(
   mapStateToProps,
   { setUser }
-)(FriendsList);
+)(withRouter(FriendsList));

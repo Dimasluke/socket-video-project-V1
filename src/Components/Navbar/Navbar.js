@@ -1,11 +1,9 @@
-
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { setUser, userLogOut } from '../../Redux/Reducers/UserReducer';
-import './Navbar.css'
-import axios from 'axios';
-
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import { setUser, userLogOut } from "../../Redux/Reducers/UserReducer";
+import "./Navbar.css";
+import axios from "axios";
 
 class Navbar extends Component {
   constructor(props) {
@@ -41,13 +39,7 @@ class Navbar extends Component {
       });
   };
 
-    logout = () => {
-        axios.post('/api/logout').then(response => {
-            this.props.setUser(response.data)
-        }).catch(err => {
-            console.log(err)
-        })
-    }
+
 
     loggedIn = () => {
         if(this.props.user){
@@ -68,8 +60,7 @@ class Navbar extends Component {
             ) 
         }
 
-    }
-
+ 
 
   render() {
     console.log(this.props.user)
@@ -151,7 +142,7 @@ const mapStateToProps = state => {
   };
 };
 
-
-
-export default connect(mapStateToProps, {setUser, userLogOut})(Navbar)
-
+export default connect(
+  mapStateToProps,
+  { setUser, userLogOut }
+)(Navbar);
