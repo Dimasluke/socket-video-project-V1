@@ -35,7 +35,7 @@ massive(process.env.CONNECTION_STRING)
 
 app.get("/api/rooms", roomController.getRooms);
 app.post("/api/rooms", roomController.newRoom);
-app.delete("/api/delete", roomController.deleteRoom);
+app.delete("/api/rooms/:id", roomController.deleteRoom);
 
 app.get("/api/sessionInfo", userController.sessionInfo);
 app.get("/api/users", userController.getAllUsers);
@@ -111,4 +111,9 @@ io.on("connection", socket => {
     console.log(data);
     socket.broadcast.emit("add new room", data.newRoom);
   });
+
+  socket.on('owner has left room', data => {
+    console.log(data)
+    io.in(data.room).emit('owner has disconnected')
+  })
 });

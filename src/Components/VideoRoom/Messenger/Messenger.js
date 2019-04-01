@@ -2,9 +2,10 @@ import React, { Component} from 'react';
 import socketIo from 'socket.io-client';
 import { connect } from 'react-redux'
 import { setGroupUsers, userLeft } from '../../../Redux/Reducers/UserReducer'
-import { addRoom } from '../../../Redux/Reducers/RoomReducer'
+import { addRoom, setRooms } from '../../../Redux/Reducers/RoomReducer'
 import { withRouter } from 'react-router-dom'
 import './Messenger.css'
+import axios from 'axios';
 const io = socketIo()
 
 class Messenger extends Component {
@@ -60,6 +61,12 @@ class Messenger extends Component {
                 let findUser = this.state.users.indexOf(data.user)
                 mappedUsers.splice(findUser, 1) 
             }
+            if(data.user === data.room){
+                io.emit('owner has left room', data)
+                axios.delete(`/api/rooms/${data.user}`).then(response => {
+                    this.props.setRooms(response.data)
+                })
+            }
             console.log('mapped users',mappedUsers)
             this.setState({
                 users: mappedUsers
@@ -73,6 +80,10 @@ class Messenger extends Component {
             this.setState({
                 messages: messagesCopy
             })
+        })
+
+        io.on('owner has disconnected', data => {
+            this.props.history.push('/dashboard')
         })
 
         io.on('add new room', data => {
@@ -226,4 +237,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps, {setGroupUsers, userLeft, addRoom})(withRouter(Messenger))
+export default connect(mapStateToProps, {setGroupUsers, userLeft, addRoom, setRooms})(withRouter(Messenger))
