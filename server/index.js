@@ -35,6 +35,7 @@ massive(process.env.CONNECTION_STRING)
 
 app.get('/api/rooms', roomController.getRooms)
 app.post('/api/rooms', roomController.newRoom)
+app.delete('/api/delete', roomController.deleteRoom)
 
 app.get("/api/sessionInfo", userController.sessionInfo);
 app.get("/api/userInfo/:id", userController.getUserInfo);

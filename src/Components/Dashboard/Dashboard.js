@@ -26,7 +26,7 @@ class Dashboard extends Component {
             return (
                 <div key={index} className='dashboard-room-card'>
                     <RoomCard 
-                        roomName={room.roomName}
+                        roomName={room.title || room.roomName}
                         owner={room.owner}
                         description={room.description}
                         id={room.id}/> 

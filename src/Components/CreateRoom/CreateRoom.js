@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { createRoom } from "../../Redux/Reducers/RoomReducer";
+import { createRoom, setRooms } from "../../Redux/Reducers/RoomReducer";
 import axios from 'axios'
 
 class CreateRoom extends Component {
@@ -13,18 +13,39 @@ class CreateRoom extends Component {
       url: "",
       description: "",
       categories: [],
-      id: this.props.user || null
+      id: this.props.user || null,
+      rooms: []
     };
   }
 
-  createRoomBtn = () => {
-    let { id, title, url, owner, description, categories } = this.state;
-    console.log(title, url, owner, description, categories);
+  componentDidMount = () => {
+    axios.get('/api/rooms').then(response => {
+      console.log(response.data)
+      this.setState({
+        rooms: response.data
+      })
+    })
+    this.roomCheck()
+  }
 
+  createRoomBtn = () => {
+    let { title, url, owner, description, categories } = this.state;
+    console.log(title, url, owner, description, categories)
     axios.post('/api/rooms', { title, url, owner, description, categories }).then(response => {
+      console.log(response.data)
+      this.props.setRooms(response.data)
       this.props.history.push(`/${this.props.user}`)
     })
   };
+
+  roomCheck = () => {
+    console.log(this.props.user)
+    console.log(this.state.rooms)
+    let roomExists = this.state.rooms.filter(room => {
+      return room.owner === this.props.user
+    })
+    console.log(roomExists)
+  }
 
   updateCategories = category => {
     let { categories } = this.state;
@@ -153,7 +174,6 @@ class CreateRoom extends Component {
               </div>
             </div>
           </form>
-          <Link to={`/${this.props.user}`}>
             <button
               type="submit"
               className="btn btn-primary shadow"
@@ -163,7 +183,6 @@ class CreateRoom extends Component {
             >
               Create Room
             </button>
-          </Link>
           <Link
             className="btn btn-danger shadow"
             to="/dashboard"
@@ -191,7 +210,8 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = {
-  createRoom: createRoom
+  createRoom: createRoom,
+  setRooms: setRooms
 };
 
 export default connect(
