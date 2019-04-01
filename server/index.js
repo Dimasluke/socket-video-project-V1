@@ -35,6 +35,7 @@ massive(process.env.CONNECTION_STRING)
 
 app.get('/api/rooms', roomController.getRooms)
 app.post('/api/rooms', roomController.newRoom)
+app.delete('/api/delete', roomController.deleteRoom)
 
 app.get("/api/sessionInfo", userController.sessionInfo);
 app.get("/api/userInfo/:id", userController.getUserInfo);
@@ -60,9 +61,10 @@ io.on("connection", socket => {
   console.log("User Connected");
 
   socket.on("join room", data => {
+    console.log('data',data)
     if(data.user){
         if(roomManagement[data.room]){
-            roomManagement[data.room].push(data.user)
+              roomManagement[data.room].push(data.user)
         } else {
             roomManagement[data.room] = []
             roomManagement[data.room].push(data.user)

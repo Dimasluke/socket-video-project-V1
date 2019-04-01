@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
+import { setRooms } from '../../../Redux/Reducers/RoomReducer'
 import "./VideoPlayer.css";
 import axios from "axios";
 
@@ -51,5 +52,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  null
+  {setRooms}
 )(withRouter(VideoPlayer));

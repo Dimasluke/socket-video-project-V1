@@ -58,5 +58,11 @@ const rooms = [
             rooms.push(newRoom)
             console.log(rooms)
             res.status(200).json(rooms)
+          },
+          deleteRoom: (req, res) => {
+            let { id } = req.params
+            let index = rooms.findIndex(id)
+            rooms.splice(index, 1)
+            res.status(200).json(rooms)
           }
       }
