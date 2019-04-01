@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
+import FriendsList from "../FriendsList/FriendsList";
 import axios from "axios";
 
 import "./Profile.css";
@@ -62,7 +63,8 @@ class ProfilePage extends Component {
             <button
               onClick={this.editUserInfo}
               type="button"
-              class="btn btn-danger btn-sm">
+              class="btn btn-danger btn-sm"
+            >
               Edit
             </button>
           </div>
@@ -114,7 +116,8 @@ class ProfilePage extends Component {
             data-toggle="collapse"
             data-target="#collapseExample"
             aria-expanded="true"
-            aria-controls="collapseExample">
+            aria-controls="collapseExample"
+          >
             Show profile: {username}
           </button>
           <form className="form-profile">
@@ -198,7 +201,8 @@ class ProfilePage extends Component {
                   data-toggle="collapse"
                   data-target="#collapseFriends"
                   aria-expanded="false"
-                  aria-controls="collapseFriends">
+                  aria-controls="collapseFriends"
+                >
                   Friends
                 </button>
               </h2>
@@ -207,8 +211,11 @@ class ProfilePage extends Component {
               id="collapseFriends"
               className="collapse"
               aria-labelledby=""
-              data-parent="#friends">
-              <div className="card-body">Friends</div>
+              data-parent="#friends"
+            >
+              <div className="card-body">
+                <FriendsList />
+              </div>
             </div>
           </div>
           <div className="card">
@@ -220,7 +227,8 @@ class ProfilePage extends Component {
                   data-toggle="collapse"
                   data-target="#collapseVideos"
                   aria-expanded="false"
-                  aria-controls="collapseVideos">
+                  aria-controls="collapseVideos"
+                >
                   Recently Watched Videos
                 </button>
               </h2>
@@ -229,7 +237,8 @@ class ProfilePage extends Component {
               id="collapseVideos"
               className="collapse"
               aria-labelledby=""
-              data-parent="#dropDownFriends">
+              data-parent="#dropDownFriends"
+            >
               <div className="card-body">Watched Videos Data</div>
             </div>
           </div>

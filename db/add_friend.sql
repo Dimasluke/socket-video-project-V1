@@ -1,5 +1,5 @@
 insert into friends
-    (id, friend)
+    (username, friend)
 values($1, $2);
 
 select *
