@@ -14,7 +14,7 @@ class Navbar extends Component {
 
   componentDidMount() {
     axios.get("/api/sessionInfo").then(response => {
-      this.props.setUser(response.data.username);
+      this.props.setUser(response.data);
     });
   }
 
@@ -98,6 +98,7 @@ class Navbar extends Component {
   };
 
   render() {
+    console.log(this.props.user)
     return (
       <div>
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
