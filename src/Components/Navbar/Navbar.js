@@ -39,31 +39,31 @@ class Navbar extends Component {
       });
   };
 
-
-
-    loggedIn = () => {
-        if(this.props.user){
-            return (
-                <li className='nav-item mr-3'>
-                    <button  
-                        onClick={() => {
-                            this.props.userLogOut(this.props.user)
-                            this.logout()}} 
-                        className='logout-button'>Logout</button>
-                </li>
-            )
-        } else {
-            return (
-                <li className='nav-item mr-3'>
-                    <Link to='/login'>Login</Link>
-                </li>
-            ) 
-        }
-
- 
-
+  loggedIn = () => {
+    if (this.props.user) {
+      return (
+        <li className="nav-item mr-3">
+          <button
+            onClick={() => {
+              this.props.userLogOut(this.props.user);
+              this.logout();
+            }}
+            className="logout-button"
+          >
+            Logout
+          </button>
+        </li>
+      );
+    } else {
+      return (
+        <li className="nav-item mr-3">
+          <Link to="/login">Login</Link>
+        </li>
+      );
+    }
+  };
   render() {
-    console.log(this.props.user)
+    console.log(this.props.user);
     return (
       <div>
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -108,12 +108,8 @@ class Navbar extends Component {
                     <span className="sr-only">Toggle Dropdown</span>
                   </button>
                   <div className="dropdown-menu">
-                    <button className="dropdown-item">
-                      Friends
-                    </button>
-                    <button className="dropdown-item">
-                      Channels
-                    </button>
+                    <button className="dropdown-item">Friends</button>
+                    <button className="dropdown-item">Channels</button>
                   </div>
                 </div>
               </div>
@@ -136,7 +132,7 @@ class Navbar extends Component {
 }
 
 const mapStateToProps = state => {
-  console.log(state)
+  console.log(state);
   return {
     user: state.user.username
   };
