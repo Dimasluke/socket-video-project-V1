@@ -2,9 +2,10 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { setUser, userLogOut } from "../../Redux/Reducers/UserReducer";
-import "./Navbar.css";
 import axios from "axios";
 
+import Search from "../Search/Search";
+import "./Navbar.css";
 class Navbar extends Component {
   constructor(props) {
     super(props);
@@ -18,11 +19,14 @@ class Navbar extends Component {
   }
 
   userCheck = () => {
+    // console.log("USER", this.props);
     if (this.props.user) {
       return (
-        <span>
-          <span className="profile-name"> - {this.props.user}</span>
-        </span>
+        <Link to={`/profile/${this.props.user}`}>
+          <span>
+            <span className="profile-name"> - {this.props.user}</span>
+          </span>
+        </Link>
       );
     }
   };
@@ -146,9 +150,15 @@ class Navbar extends Component {
                 </div>
               </div>
             </form>
+
             <div className="">
-              <ul className="nav">
-                {this.createAuthority()}
+              <ul className="navbar-nav mr-auto">
+                <Search />
+                <li className="nav-item mr-3">
+                  <Link to="/createroom" className="nav-item">
+                    Create Room
+                  </Link>
+                </li>
                 {this.loggedIn()}
               </ul>
             </div>

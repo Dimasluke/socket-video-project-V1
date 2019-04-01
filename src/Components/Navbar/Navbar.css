@@ -1,14 +1,14 @@
 .profile-name {
-    letter-spacing: .3vw;
+  letter-spacing: 0.3vw;
 }
 
 .logout-button {
-    color: red;
-    border: none;
-    background: none;
+  color: red;
+  border: none;
+  background: none;
 }
 
 .logout-button:hover {
-    text-decoration: underline;
-    color: rgb(255, 0, 0);
+  text-decoration: underline;
+  color: rgb(255, 0, 0);
 }

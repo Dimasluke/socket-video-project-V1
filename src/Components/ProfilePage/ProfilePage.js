@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 import FriendsList from "../FriendsList/FriendsList";
 import axios from "axios";
 
@@ -63,8 +64,7 @@ class ProfilePage extends Component {
             <button
               onClick={this.editUserInfo}
               type="button"
-              class="btn btn-danger btn-sm"
-            >
+              class="btn btn-danger btn-sm">
               Edit
             </button>
           </div>
@@ -104,142 +104,146 @@ class ProfilePage extends Component {
     // console.log("userInfo ===> ", this.state.user);
     // console.log("bio", bio);
     return (
-      <div className="container profile-container border border-secondary rounded-sm shadow p-4">
-        {/* USER INFO DROPDOWNS */}
-        <div className="accordion profile-dropdown">
-          <div class="media">
-            <img src={imageurl} alt="" class="mr-3" />
-          </div>
-          <button
-            class="btn btn-secondary col"
-            type="button"
-            data-toggle="collapse"
-            data-target="#collapseExample"
-            aria-expanded="true"
-            aria-controls="collapseExample"
-          >
-            Show profile: {username}
+      <div className="profile-container">
+        <Link to="/dashboard">
+          <button type="button" className="btn btn-link back-to-dashboard">
+            {"< < < Back to dashboard"}
           </button>
-          <form className="form-profile">
-            <div class="collapse show" id="collapseExample">
-              <div class="card card-body">
+        </Link>
+        <div className="container  border border-secondary rounded-sm shadow p-4">
+          {/* USER INFO DROPDOWNS */}
+          <div className="accordion profile-dropdown">
+            <div class="media">
+              <img src={imageurl} alt="" class="mr-3" />
+            </div>
+            <button
+              class="btn btn-secondary col"
+              type="button"
+              data-toggle="collapse"
+              data-target="#collapseExample"
+              aria-expanded="true"
+              aria-controls="collapseExample">
+              Show profile: {username}
+            </button>
+            <form className="form-profile">
+              <div class="collapse show" id="collapseExample">
+                <div class="card card-body">
+                  <div className="card-body">
+                    <div className="row">
+                      <div className="col">
+                        <label htmlFor="firstName">First Name</label>
+                        <input
+                          onChange={e =>
+                            this.setState({ firstname: e.target.value })
+                          }
+                          type="text"
+                          className="form-control"
+                          placeholder="First name"
+                          id="firstName"
+                          value={firstname}
+                        />
+                      </div>
+                      <div className="col">
+                        <label htmlFor="lastName">Last Name</label>
+                        <input
+                          onChange={e =>
+                            this.setState({ lastname: e.target.value })
+                          }
+                          type="text"
+                          className="form-control"
+                          placeholder="Last Name"
+                          id="lastName"
+                          value={lastname}
+                        />
+                      </div>
+                    </div>
+                    <div className="row">
+                      <div className="col">
+                        <label htmlFor="email">Email</label>
+                        <input
+                          onChange={e =>
+                            this.setState({ email: e.target.value })
+                          }
+                          type="text"
+                          className="form-control"
+                          placeholder="Email"
+                          id="email"
+                          value={email}
+                        />
+                      </div>
+                      <div className="col">
+                        <label htmlFor="phoneNumber">Phone Number</label>
+                        <input
+                          type="text"
+                          className="form-control"
+                          placeholder="Phone Number"
+                          id="phoneNumber"
+                        />
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="exampleFormControlTextarea1">Bio</label>
+                      <textarea
+                        onChange={e => this.setState({ bio: e.target.value })}
+                        class="form-control"
+                        id="exampleFormControlTextarea1"
+                        rows="3"
+                        value={bio}
+                      />
+                    </div>
+                    {this.userCheck()}
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+          {/* SUBSCRIPTION, FRIENDS, VIDEOS DROPDOWNS */}
+          <div className="accordion friends " id="dropDownFriends">
+            <div className="card">
+              <div className="card-header" id="friends">
+                <h2 className="mb-0">
+                  <button
+                    className="btn btn-link"
+                    type="button"
+                    data-toggle="collapse"
+                    data-target="#collapseFriends"
+                    aria-expanded="false"
+                    aria-controls="collapseFriends">
+                    Friends
+                  </button>
+                </h2>
+              </div>
+              <div
+                id="collapseFriends"
+                className="collapse"
+                aria-labelledby=""
+                data-parent="#friends">
                 <div className="card-body">
-                  <div className="row">
-                    <div className="col">
-                      <label htmlFor="firstName">First Name</label>
-                      <input
-                        onChange={e =>
-                          this.setState({ firstname: e.target.value })
-                        }
-                        type="text"
-                        className="form-control"
-                        placeholder="First name"
-                        id="firstName"
-                        value={firstname}
-                      />
-                    </div>
-                    <div className="col">
-                      <label htmlFor="lastName">Last Name</label>
-                      <input
-                        onChange={e =>
-                          this.setState({ lastname: e.target.value })
-                        }
-                        type="text"
-                        className="form-control"
-                        placeholder="Last Name"
-                        id="lastName"
-                        value={lastname}
-                      />
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="col">
-                      <label htmlFor="email">Email</label>
-                      <input
-                        onChange={e => this.setState({ email: e.target.value })}
-                        type="text"
-                        className="form-control"
-                        placeholder="Email"
-                        id="email"
-                        value={email}
-                      />
-                    </div>
-                    <div className="col">
-                      <label htmlFor="phoneNumber">Phone Number</label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        placeholder="Phone Number"
-                        id="phoneNumber"
-                      />
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label for="exampleFormControlTextarea1">Bio</label>
-                    <textarea
-                      onChange={e => this.setState({ bio: e.target.value })}
-                      class="form-control"
-                      id="exampleFormControlTextarea1"
-                      rows="3"
-                      value={bio}
-                    />
-                  </div>
-                  {this.userCheck()}
+                  <FriendsList />
                 </div>
               </div>
             </div>
-          </form>
-        </div>
-        {/* SUBSCRIPTION, FRIENDS, VIDEOS DROPDOWNS */}
-        <div className="accordion friends " id="dropDownFriends">
-          <div className="card">
-            <div className="card-header" id="friends">
-              <h2 className="mb-0">
-                <button
-                  className="btn btn-link"
-                  type="button"
-                  data-toggle="collapse"
-                  data-target="#collapseFriends"
-                  aria-expanded="false"
-                  aria-controls="collapseFriends"
-                >
-                  Friends
-                </button>
-              </h2>
-            </div>
-            <div
-              id="collapseFriends"
-              className="collapse"
-              aria-labelledby=""
-              data-parent="#friends"
-            >
-              <div className="card-body">
-                <FriendsList />
+            <div className="card">
+              <div className="card-header" id="videos">
+                <h2 className="mb-0">
+                  <button
+                    className="btn btn-link collapsed"
+                    type="button"
+                    data-toggle="collapse"
+                    data-target="#collapseVideos"
+                    aria-expanded="false"
+                    aria-controls="collapseVideos">
+                    Recently Watched Videos
+                  </button>
+                </h2>
               </div>
-            </div>
-          </div>
-          <div className="card">
-            <div className="card-header" id="videos">
-              <h2 className="mb-0">
-                <button
-                  className="btn btn-link collapsed"
-                  type="button"
-                  data-toggle="collapse"
-                  data-target="#collapseVideos"
-                  aria-expanded="false"
-                  aria-controls="collapseVideos"
-                >
-                  Recently Watched Videos
-                </button>
-              </h2>
-            </div>
-            <div
-              id="collapseVideos"
-              className="collapse"
-              aria-labelledby=""
-              data-parent="#dropDownFriends"
-            >
-              <div className="card-body">Watched Videos Data</div>
+              <div
+                id="collapseVideos"
+                className="collapse"
+                aria-labelledby=""
+                data-parent="#dropDownFriends">
+                <div className="card-body">Watched Videos Data</div>
+              </div>
             </div>
           </div>
         </div>
