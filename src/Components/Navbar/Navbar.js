@@ -13,7 +13,6 @@ class Navbar extends Component {
 
   componentDidMount() {
     axios.get("/api/sessionInfo").then(response => {
-      console.log(response.data.username);
       this.props.setUser(response.data.username);
     });
   }
@@ -28,6 +27,28 @@ class Navbar extends Component {
     }
   };
 
+  createAuthority = () => {
+    if (this.props.user){
+      return (
+        <li className="nav-item mr-3">
+          <Link to="/createroom" className="nav-item">
+            Create Room
+          </Link>
+        </li>
+      )
+    } else {
+      return(
+        <li className="nav-item mr-3">
+          <button style={{textDecoration: 'none', border: 'none', background: 'none'}} data-toggle='tooltip' data-placement='bottom' title="Must be logged in to do this." >
+            <Link to="/createroom" className="nav-link disabled" >
+              Create Room
+            </Link>
+          </button>
+        </li>
+      )
+    }
+  }
+
   logout = () => {
     axios
       .post("/api/logout")
@@ -41,29 +62,28 @@ class Navbar extends Component {
 
 
 
-    loggedIn = () => {
-        if(this.props.user){
-            return (
-                <li className='nav-item mr-3'>
-                    <button  
-                        onClick={() => {
-                            this.props.userLogOut(this.props.user)
-                            this.logout()}} 
-                        className='logout-button'>Logout</button>
-                </li>
-            )
-        } else {
-            return (
-                <li className='nav-item mr-3'>
-                    <Link to='/login'>Login</Link>
-                </li>
-            ) 
-        }
-
+  loggedIn = () => {
+      if(this.props.user){
+          return (
+              <li className='nav-item mr-3'>
+                  <button  
+                      onClick={() => {
+                          this.props.userLogOut(this.props.user)
+                          this.logout()}} 
+                      className='logout-button'>Logout</button>
+              </li>
+          )
+      } else {
+          return (
+              <li className='nav-item mr-3'>
+                  <Link className='nav-link' to='/login'>Login</Link>
+              </li>
+          ) 
+      }
+    }
  
 
   render() {
-    console.log(this.props.user)
     return (
       <div>
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -119,12 +139,8 @@ class Navbar extends Component {
               </div>
             </form>
             <div className="">
-              <ul className="navbar-nav mr-auto">
-                <li className="nav-item mr-3">
-                  <Link to="/createroom" className="nav-item">
-                    Create Room
-                  </Link>
-                </li>
+              <ul className="nav">
+                {this.createAuthority()}
                 {this.loggedIn()}
               </ul>
             </div>
@@ -136,7 +152,6 @@ class Navbar extends Component {
 }
 
 const mapStateToProps = state => {
-  console.log(state)
   return {
     user: state.user.username
   };

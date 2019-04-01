@@ -117,6 +117,11 @@ class Messenger extends Component {
         if(this.props.newRoom.id != prevProps.newRoom.id){
             io.emit('new room', {newRoom: this.props.rooms})
         }
+        if(this.state.users != prevState.users){
+            console.log(this.state.users)
+            console.log(prevState.users)
+            
+        }
     }
 
 
