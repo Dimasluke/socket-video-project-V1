@@ -122,35 +122,6 @@ class Navbar extends Component {
             className="collapse navbar-collapse justify-content-end"
             id="navbarSupportedContent"
           >
-            <form className="form-inline my-2 my-lg-0 mr-4">
-              <div className="input-group">
-                <input
-                  type="text"
-                  className="form-control"
-                  aria-label="Text input with segmented dropdown button"
-                  placeholder="Search"
-                />
-                <div className="input-group-append">
-                  <button type="button" className="btn btn-outline-success">
-                    Search
-                  </button>
-                  <button
-                    type="button"
-                    className="btn btn-outline-success dropdown-toggle dropdown-toggle-split"
-                    data-toggle="dropdown"
-                    aria-haspopup="true"
-                    aria-expanded="false"
-                  >
-                    <span className="sr-only">Toggle Dropdown</span>
-                  </button>
-                  <div className="dropdown-menu">
-                    <button className="dropdown-item">Friends</button>
-                    <button className="dropdown-item">Channels</button>
-                  </div>
-                </div>
-              </div>
-            </form>
-
             <div className="">
               <ul className="navbar-nav mr-auto">
                 <Search />
