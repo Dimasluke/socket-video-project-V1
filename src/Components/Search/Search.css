@@ -1,7 +1,7 @@
 .search-container img {
   height: 30px;
   margin: 5px;
-  border-radius: 50%;
+  border-radius: 5px;
 }
 .visible {
   padding: 5px;
