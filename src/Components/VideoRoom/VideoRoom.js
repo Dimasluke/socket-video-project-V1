@@ -1,9 +1,8 @@
 import React, { Component } from "react";
 import Messenger from "./Messenger/Messenger";
-import UserCards from "./UserCards/UserCards";
 import VideoPlayer from "./VideoPlayer/VideoPlayer";
-import Navbar from "../Navbar/Navbar";
 import { Link } from "react-router-dom";
+import Navbar from "../Navbar/Navbar";
 import "./VideoRoom.css";
 
 class VideoRoom extends Component {

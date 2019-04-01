@@ -1,6 +1,63 @@
 .delete-btn {
     position: absolute;
-    right: 2vw;
-    margin-top: 10px;
 
+}
+
+.friends-list {
+    display: flex;
+    flex-direction: row;
+    padding: 0 auto;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.friends-list>div {
+    padding: 3px;
+    width: 20%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+
+}
+
+h5 {
+
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    margin-top: 3px;
+
+}
+
+/* 
+@media (min-width: 700px) {
+    .friends-list>div {
+        margin-left: 25px;
+    }
+} */
+
+@media (max-width: 1200px) {
+    .friends-list>div {
+        width: 25%;
+    }
+}
+
+@media (max-width: 945px) {
+    .friends-list>div {
+        width: 33%;
+        height: 30%;
+    }
+}
+
+@media (max-width: 830px) {
+    .friends-list>div {
+        width: 49%;
+        height: 30%;
+    }
+}
+
+@media (max-width: 710px) {
+    .friends-list>div {
+        width: 99%;
+        height: 210px;
+    }
 }

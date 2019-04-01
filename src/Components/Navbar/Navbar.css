@@ -4,8 +4,11 @@
 
 .logout-button {
   color: red;
+  border: none;
+  background: none;
 }
 
 .logout-button:hover {
-  color: red;
+  text-decoration: underline;
+  color: rgb(255, 0, 0);
 }

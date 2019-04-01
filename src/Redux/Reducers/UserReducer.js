@@ -15,7 +15,7 @@ function reducer(state = initialState, action){
         case USER_LOGOUT:
             return {...state, userLogOut: action.payload}
         case SET_USER:
-            return {...state, username: action.payload.username, userId: action.payload.userId}
+            return {...state, username: action.payload}
         case SET_GROUP_USERS:
             let updatedUsers = state.users.concat(action.payload)
             return {...state, users: updatedUsers}

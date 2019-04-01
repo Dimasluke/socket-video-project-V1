@@ -5,6 +5,7 @@ const socket = require("socket.io");
 const massive = require("massive");
 const session = require("express-session");
 const userController = require("./controllers/UserController");
+const roomController = require("./controllers/RoomController");
 const socketController = require("./controllers/SocketController");
 const friendsController = require("./controllers/FriendsController");
 
@@ -32,6 +33,10 @@ massive(process.env.CONNECTION_STRING)
     console.log(err);
   });
 
+app.get("/api/rooms", roomController.getRooms);
+app.post("/api/rooms", roomController.newRoom);
+app.delete("/api/delete", roomController.deleteRoom);
+
 app.get("/api/sessionInfo", userController.sessionInfo);
 app.get("/api/users", userController.getAllUsers);
 app.get("/api/userInfo/:id", userController.getUserInfo);
@@ -41,9 +46,9 @@ app.post("/api/login", userController.login);
 app.post("/api/logout", userController.logout);
 
 // Friend endpoints
-app.get("/api/friends/:id", friendsController.getFriends);
+app.get("/api/friends/:username", friendsController.getFriends);
 app.post("/api/friend", friendsController.addFriend);
-app.delete("/api/friend/:id/:username", friendsController.removeFriend);
+app.delete("/api/friend/:username/:friend", friendsController.removeFriend);
 
 const port = process.env.PORT || 4000;
 const io = socket(
@@ -86,13 +91,11 @@ io.on("connection", socket => {
       user: data.user,
       userList: roomManagement[data.room]
     });
-    socket
-      .leave(data.room)
-      .emit("room left", {
-        room: data.room,
-        user: data.user,
-        userList: roomManagement[data.room]
-      });
+    socket.leave(data.room).emit("room left", {
+      room: data.room,
+      user: data.user,
+      userList: roomManagement[data.room]
+    });
   });
 
   socket.on("message sent", data => {

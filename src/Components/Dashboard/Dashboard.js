@@ -1,17 +1,32 @@
 import React, { Component } from 'react';
 import Navbar from '../Navbar/Navbar';
 import RoomCard from '../RoomCard/RoomCard';
+import { createRoom, setRooms } from '../../Redux/Reducers/RoomReducer'
 import { connect } from 'react-redux'
 import './Dashboard.css'
+import axios from 'axios';
 
 class Dashboard extends Component {
+    constructor(props){
+        super(props)
+        this.state = {
+            rooms: []
+        }
+    }
+
+    componentDidMount(){
+        axios.get('/api/rooms').then(response => {
+            console.log(response.data)
+            this.props.setRooms(response.data)
+        })
+    }
 
     render(){
         const mappedRooms = this.props.rooms.map((room, index) => {
             return (
                 <div key={index} className='dashboard-room-card'>
                     <RoomCard 
-                        roomName={room.roomName}
+                        roomName={room.title || room.roomName}
                         owner={room.owner}
                         description={room.description}
                         id={room.id}/> 
@@ -35,4 +50,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps, null)(Dashboard)
+export default connect(mapStateToProps, {createRoom, setRooms})(Dashboard)

@@ -2,9 +2,9 @@ import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+import FriendsList from "../FriendsList/FriendsList";
 import axios from "axios";
 
-import FriendsList from "../FriendsList/FriendsList";
 import "./Profile.css";
 
 class ProfilePage extends Component {

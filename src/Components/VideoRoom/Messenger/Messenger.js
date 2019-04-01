@@ -1,8 +1,8 @@
 import React, { Component} from 'react';
 import socketIo from 'socket.io-client';
-import UserCard from '../UserCards/UserCards'
 import { connect } from 'react-redux'
-import { setGroupUsers, userLeft, userLogOut } from '../../../Redux/Reducers/UserReducer'
+import { setGroupUsers, userLeft } from '../../../Redux/Reducers/UserReducer'
+import { addRoom } from '../../../Redux/Reducers/RoomReducer'
 import { withRouter } from 'react-router-dom'
 import './Messenger.css'
 const io = socketIo()
@@ -74,6 +74,11 @@ class Messenger extends Component {
                 messages: messagesCopy
             })
         })
+
+        io.on('add new room', data => {
+            console.log(data)
+            // this.props.addRoom(data)
+        })
     }
 
     scrollToBottom = () => {
@@ -89,6 +94,9 @@ class Messenger extends Component {
             selectedRoom: selectedRoom[0]
         })
         io.emit('join room', {room: this.props.match.params.roomId, user: this.props.user})
+        if(this.props.newRoom.id){
+            io.emit('new room', {newRoom: this.props.newRoom})
+        }
     }
       
     componentDidUpdate(prevProps, prevState) {
@@ -106,8 +114,13 @@ class Messenger extends Component {
         if(this.props.userLogOut != prevProps.userLogOut){
             io.emit('leave room', {room: prevProps.match.params.roomId, user: this.props.userLogOut})
         }
-        if(this.props.newRoom != prevProps.newRoom){
-            io.emit('new room', {newRoom: this.props.newRoom})
+        if(this.props.newRoom.id != prevProps.newRoom.id){
+            io.emit('new room', {newRoom: this.props.rooms})
+        }
+        if(this.state.users != prevState.users){
+            console.log(this.state.users)
+            console.log(prevState.users)
+            
         }
     }
 
@@ -155,7 +168,7 @@ class Messenger extends Component {
     }
 
     render(){
-        
+        console.log(this.props)
         const userList = this.state.users.map(user => {
             return <li className='list-group-item'>
                         {user}
@@ -207,10 +220,10 @@ const mapStateToProps = state => {
     return {
         user: state.user.username,
         rooms: state.room.rooms,
-        newRoom: state.room.rooms,
+        newRoom: state.room.newRoom,
         users: state.user.users,
         userLogOut: state.user.userLogOut
     }
 }
 
-export default connect(mapStateToProps, {setGroupUsers, userLeft})(withRouter(Messenger))
+export default connect(mapStateToProps, {setGroupUsers, userLeft, addRoom})(withRouter(Messenger))

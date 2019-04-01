@@ -14,8 +14,7 @@ class Navbar extends Component {
 
   componentDidMount() {
     axios.get("/api/sessionInfo").then(response => {
-      // console.log(response.data);
-      this.props.setUser(response.data);
+      this.props.setUser(response.data.username);
     });
   }
 
@@ -32,15 +31,34 @@ class Navbar extends Component {
     }
   };
 
-  logout = () => {
-    axios
-      .post("/api/logout")
-      .then(response => {
-        this.props.setUser(response.data);
-      })
-      .catch(err => {
-        console.log(err);
-      });
+  createAuthority = () => {
+    if (this.props.user) {
+      return (
+        <li className="nav-item mr-3">
+          <Link to="/createroom" className="nav-item">
+            Create Room
+          </Link>
+        </li>
+      );
+    } else {
+      return (
+        <li className="nav-item mr-3">
+          <button
+            style={{
+              textDecoration: "none",
+              border: "none",
+              background: "none"
+            }}
+            data-toggle="tooltip"
+            data-placement="bottom"
+            title="Must be logged in to do this.">
+            <Link to="/createroom" className="nav-link disabled">
+              Create Room
+            </Link>
+          </button>
+        </li>
+      );
+    }
   };
 
   logout = () => {
@@ -58,20 +76,22 @@ class Navbar extends Component {
     if (this.props.user) {
       return (
         <li className="nav-item mr-3">
-          <Link
+          <button
             onClick={() => {
               this.props.userLogOut(this.props.user);
               this.logout();
             }}
             className="logout-button">
             Logout
-          </Link>
+          </button>
         </li>
       );
     } else {
       return (
         <li className="nav-item mr-3">
-          <Link to="/login">Login</Link>
+          <Link className="nav-link" to="/login">
+            Login
+          </Link>
         </li>
       );
     }

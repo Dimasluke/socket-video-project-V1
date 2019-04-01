@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { createRoom } from "../../Redux/Reducers/RoomReducer";
+import { createRoom, setRooms } from "../../Redux/Reducers/RoomReducer";
+import axios from "axios";
 
 import "./CreateRoom.css";
 
@@ -13,14 +14,41 @@ class CreateRoom extends Component {
       title: "",
       url: "",
       description: "",
-      categories: []
+      categories: [],
+      id: this.props.user || null,
+      rooms: []
     };
   }
+
+  componentDidMount = () => {
+    axios.get("/api/rooms").then(response => {
+      console.log(response.data);
+      this.setState({
+        rooms: response.data
+      });
+    });
+    this.roomCheck();
+  };
 
   createRoomBtn = () => {
     let { title, url, owner, description, categories } = this.state;
     console.log(title, url, owner, description, categories);
-    this.props.createRoom({ title, url, owner, description, categories });
+    axios
+      .post("/api/rooms", { title, url, owner, description, categories })
+      .then(response => {
+        console.log(response.data);
+        this.props.setRooms(response.data);
+        this.props.history.push(`/${this.props.user}`);
+      });
+  };
+
+  roomCheck = () => {
+    console.log(this.props.user);
+    console.log(this.state.rooms);
+    let roomExists = this.state.rooms.filter(room => {
+      return room.owner === this.props.user;
+    });
+    console.log(roomExists);
   };
 
   updateCategories = category => {
@@ -39,6 +67,7 @@ class CreateRoom extends Component {
 
   render() {
     const { categories } = this.state;
+    console.log(this.props);
     return (
       <div>
         <div className="container  border border-secondary rounded-sm shadow p-4 create-room-container">
@@ -149,17 +178,14 @@ class CreateRoom extends Component {
               </div>
             </div>
           </form>
-          <Link to={`/${this.props.rooms.length + 1}`}>
-            <button
-              type="submit"
-              className="btn btn-primary shadow"
-              onClick={() => {
-                this.createRoomBtn();
-                this.props.history.push(`/${this.props.rooms.length + 1}`);
-              }}>
-              Create Room
-            </button>
-          </Link>
+          <button
+            type="submit"
+            className="btn btn-primary shadow"
+            onClick={() => {
+              this.createRoomBtn();
+            }}>
+            Create Room
+          </button>
           <Link
             className="btn btn-danger shadow"
             to="/dashboard"
@@ -173,9 +199,10 @@ class CreateRoom extends Component {
 }
 
 const mapStateToProps = state => {
+  console.log(state);
   return {
     rooms: state.room.rooms,
-    id: state.id,
+    id: state.user.userId,
     roomName: state.roomName,
     description: state.description,
     owner: state.owner,
@@ -186,7 +213,8 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = {
-  createRoom: createRoom
+  createRoom: createRoom,
+  setRooms: setRooms
 };
 
 export default connect(
