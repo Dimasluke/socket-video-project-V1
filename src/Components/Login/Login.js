@@ -21,12 +21,13 @@ class Login extends Component {
     axios
       .post("/api/login", userInfo)
       .then(response => {
-        // console.log(response.data);
-        this.props.setUser(response.data);
+        console.log(response.data);
+        this.props.setUser(response.data.username);
         console.log("this.props.history", this.props.history);
         this.props.history.push("/dashboard");
       })
       .catch(err => {
+        console.log(err)
         this.setState({
           errorMessage: err.response.data.message
         });
@@ -90,14 +91,14 @@ class Login extends Component {
               Show Password
             </label>
           </div>
-          <Link
+          <button
             className="btn btn-primary mr-3 button-container"
             onClick={e => {
               this.loginUser();
             }}
           >
             Submit
-          </Link>
+          </button>
           <Link to="/dashboard" className="btn btn-danger button-container">
             Cancel
           </Link>

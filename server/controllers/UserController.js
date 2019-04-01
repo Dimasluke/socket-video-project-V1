@@ -41,12 +41,12 @@ module.exports = {
               console.log(req.session.user);
               res.status(200).json(req.session.user);
             } else {
-              res.status(403).json({ message: "You fucked up." });
+              res.status(403).json({ message: "An error has occurred. Please try again." });
             }
           });
         } else {
           res.status(403).json({
-            message: "Who the fuck is this?!?!"
+            message: "An error has occurred."
           });
         }
       })
