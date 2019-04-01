@@ -63,10 +63,11 @@ io.on("connection", socket => {
   socket.on("join room", data => {
     if (data.user) {
       if (roomManagement[data.room]) {
+
         roomManagement[data.room].push(data.user);
       } else {
         roomManagement[data.room] = [];
-        roomManagement[data.room].push(data.user);
+        roomManagement[data.room].push(data.user)
       }
     }
     console.log(roomManagement);
