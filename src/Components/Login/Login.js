@@ -21,9 +21,7 @@ class Login extends Component {
     axios
       .post("/api/login", userInfo)
       .then(response => {
-        console.log(response.data);
         this.props.setUser(response.data.username);
-        console.log("this.props.history", this.props.history);
         this.props.history.push("/dashboard");
       })
       .catch(err => {

@@ -98,7 +98,6 @@ class Navbar extends Component {
   };
 
   render() {
-    console.log("NavBar State", this.props);
     return (
       <div>
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
