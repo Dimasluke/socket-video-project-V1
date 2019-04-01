@@ -11,7 +11,7 @@ const initialState = {
       id: 2,
       roomName: "Music",
       description: "Listen and relax to amazing tunes.",
-      owner: "Administrator",
+      owner: "test",
       videoUrl: "https://www.youtube.com/embed/XJYmyYzuTa8"
     },
     {
@@ -24,7 +24,8 @@ const initialState = {
     {
       id: 4,
       roomName: "Education",
-      description: "Learn about the most recent advancements in the world of technology.",
+      description:
+        "Learn about the most recent advancements in the world of technology.",
       owner: "Administrator",
       videoUrl: "https://www.youtube.com/embed/fT6mzqBAqmo"
     },
@@ -38,11 +39,12 @@ const initialState = {
     {
       id: 6,
       roomName: "Sports",
-      description: "Watch teams battle for trophies in the world of profession sports.",
+      description:
+        "Watch teams battle for trophies in the world of profession sports.",
       owner: "Administrator",
       videoUrl: "https://www.youtube.com/embed/IoN4w2o8AxY"
     }
-  ],
+  ]
 };
 
 let id = 7;
