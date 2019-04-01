@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { createRoom } from "../../Redux/Reducers/RoomReducer";
+import axios from 'axios'
 
 class CreateRoom extends Component {
   constructor(props) {
@@ -11,14 +12,18 @@ class CreateRoom extends Component {
       title: "",
       url: "",
       description: "",
-      categories: []
+      categories: [],
+      id: this.props.user || null
     };
   }
 
   createRoomBtn = () => {
-    let { title, url, owner, description, categories } = this.state;
+    let { id, title, url, owner, description, categories } = this.state;
     console.log(title, url, owner, description, categories);
-    this.props.createRoom({ title, url, owner, description, categories });
+
+    axios.post('/api/rooms', { title, url, owner, description, categories }).then(response => {
+      this.props.history.push(`/${this.props.user}`)
+    })
   };
 
   updateCategories = category => {
@@ -37,6 +42,7 @@ class CreateRoom extends Component {
 
   render() {
     const { categories } = this.state;
+    console.log(this.props)
     return (
       <div>
         <div className="container" style={{ marginTop: "100px" }}>
@@ -147,13 +153,13 @@ class CreateRoom extends Component {
               </div>
             </div>
           </form>
-          <Link to={`/${this.props.rooms.length + 1}`}>
+          <Link to={`/${this.props.user}`}>
             <button
               type="submit"
               className="btn btn-primary shadow"
               onClick={() => {
                 this.createRoomBtn()
-                this.props.history.push(`/${this.props.rooms.length + 1}`)}}
+                }}
             >
               Create Room
             </button>
@@ -171,9 +177,10 @@ class CreateRoom extends Component {
 }
 
 const mapStateToProps = state => {
+  console.log(state)
   return {
     rooms: state.room.rooms,
-    id: state.id,
+    id: state.user.userId,
     roomName: state.roomName,
     description: state.description,
     owner: state.owner,

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import "./VideoPlayer.css";
+import axios from "axios";
 
 class VideoPlayer extends Component {
   constructor(props) {
@@ -12,16 +13,22 @@ class VideoPlayer extends Component {
   }
 
   componentDidMount() {
-    const selectedRoom = this.props.rooms.filter(room => {
-      return room.id == this.props.match.params.roomId;
-    });
-    this.setState({
-      selectedRoom: selectedRoom[0]
-    });
+    console.log(this.props.rooms)
+    axios.get('/api/rooms').then(response => {
+      console.log(response)
+      const selectedRoom = response.data.filter(room => {
+        console.log(this.props.match.params.roomId)
+        return room.id == this.props.match.params.roomId
+      })
+      console.log(selectedRoom)
+      this.setState({
+        selectedRoom: selectedRoom[0]
+      });
+    })  
   }
 
   render() {
-
+    console.log(this.state.selectedRoom)
     let { videoUrl, description } = this.state.selectedRoom;
     return (
       <div className="video-component card mb-3">

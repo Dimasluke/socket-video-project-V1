@@ -15,8 +15,8 @@ class Navbar extends Component {
 
   componentDidMount() {
     axios.get("/api/sessionInfo").then(response => {
-      console.log(response.data);
-      this.props.setUser(response.data);
+      console.log(response.data.username);
+      this.props.setUser(response.data.username);
     });
   }
 
@@ -53,11 +53,11 @@ class Navbar extends Component {
         if(this.props.user){
             return (
                 <li className='nav-item mr-3'>
-                    <Link  
+                    <button  
                         onClick={() => {
                             this.props.userLogOut(this.props.user)
                             this.logout()}} 
-                        className='logout-button'>Logout</Link>
+                        className='logout-button'>Logout</button>
                 </li>
             )
         } else {
@@ -72,6 +72,7 @@ class Navbar extends Component {
 
 
   render() {
+    console.log(this.props.user)
     return (
       <div>
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -116,19 +117,12 @@ class Navbar extends Component {
                     <span className="sr-only">Toggle Dropdown</span>
                   </button>
                   <div className="dropdown-menu">
-                    <a className="dropdown-item" href="#">
-                      Action
-                    </a>
-                    <a className="dropdown-item" href="#">
-                      Another action
-                    </a>
-                    <a className="dropdown-item" href="#">
-                      Something else here
-                    </a>
-                    <div role="separator" className="dropdown-divider" />
-                    <a className="dropdown-item" href="#">
-                      Separated link
-                    </a>
+                    <button className="dropdown-item">
+                      Friends
+                    </button>
+                    <button className="dropdown-item">
+                      Channels
+                    </button>
                   </div>
                 </div>
               </div>
@@ -151,6 +145,7 @@ class Navbar extends Component {
 }
 
 const mapStateToProps = state => {
+  console.log(state)
   return {
     user: state.user.username
   };

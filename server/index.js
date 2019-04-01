@@ -5,6 +5,7 @@ const socket = require("socket.io");
 const massive = require("massive");
 const session = require("express-session");
 const userController = require("./controllers/UserController");
+const roomController = require('./controllers/RoomController')
 const socketController = require("./controllers/SocketController");
 const friendsController = require("./controllers/FriendsController");
 
@@ -31,6 +32,9 @@ massive(process.env.CONNECTION_STRING)
   .catch(err => {
     console.log(err);
   });
+
+app.get('/api/rooms', roomController.getRooms)
+app.post('/api/rooms', roomController.newRoom)
 
 app.get("/api/sessionInfo", userController.sessionInfo);
 app.get("/api/userInfo/:id", userController.getUserInfo);

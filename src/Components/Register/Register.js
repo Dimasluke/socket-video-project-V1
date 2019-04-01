@@ -23,6 +23,7 @@ class Register extends Component {
         const { firstName, lastName, email, username, password } = this.state
         const userInfo = { firstName, lastName, email, username, password }
         axios.post('/api/register', userInfo).then(response => {
+            console.log(response.data)
             this.props.setUser(response.data)
             this.props.history.push('/dashboard')
         }).catch(err => {
@@ -51,11 +52,11 @@ class Register extends Component {
         if(this.state.password){
             if(this.state.password === this.state.confirmPassword) {
                 return (
-                    <Link 
+                    <button 
                     className="btn btn-primary mr-3 button-container"
                     onClick={e => {
                         this.registerUser()
-                    }}>Submit</Link>
+                    }}>Submit</button>
                 )
             } else {
                 return (

@@ -1,61 +1,26 @@
 const initialState = {
-  rooms: [
-    {
-      id: 1,
-      roomName: "Lobby",
-      description: "Enjoy time with your peers here!",
-      owner: "Administrator",
-      videoUrl: "https://www.youtube.com/embed/lrX6ktLg8WQ"
-    },
-    {
-      id: 2,
-      roomName: "Music",
-      description: "Listen and relax to amazing tunes.",
-      owner: "Administrator",
-      videoUrl: "https://www.youtube.com/embed/XJYmyYzuTa8"
-    },
-    {
-      id: 3,
-      roomName: "Gaming",
-      description: "Dive into the world of eSports here.",
-      owner: "Administrator",
-      videoUrl: "https://www.youtube.com/embed/nCSqao5nR_4"
-    },
-    {
-      id: 4,
-      roomName: "Education",
-      description: "Learn about the most recent advancements in the world of technology.",
-      owner: "Administrator",
-      videoUrl: "https://www.youtube.com/embed/fT6mzqBAqmo"
-    },
-    {
-      id: 5,
-      roomName: "Comedy",
-      description: "Take a load off and laugh with your friends.",
-      owner: "Administrator",
-      videoUrl: "https://www.youtube.com/embed/HZFTUtbn1RU"
-    },
-    {
-      id: 6,
-      roomName: "Sports",
-      description: "Watch teams battle for trophies in the world of profession sports.",
-      owner: "Administrator",
-      videoUrl: "https://www.youtube.com/embed/IoN4w2o8AxY"
-    }
-  ],
+  newRoom: {},
+  rooms: [],
 };
 
-let id = 7;
 
 const CREATE_ROOM = "CREATE_ROOM";
+const ADD_ROOM = 'ADD_ROOM';
+const SET_ROOMS = 'SET_ROOMS'
 
 export default function RoomReducer(state = initialState, action) {
   switch (action.type) {
+    case SET_ROOMS:
+      return {...state, rooms: action.payload}
+    case ADD_ROOM:
+    let addRoom = action.payload
+    let updatedRooms = state.rooms.concat(addRoom)
+      return {...state, rooms: updatedRooms}
     case CREATE_ROOM:
       console.log(state);
       console.log(action.payload);
       let newRoom = {
-        id: id++,
+        id: action.payload.id,
         roomName: action.payload.title,
         description: action.payload.description,
         owner: action.payload.owner || "",
@@ -66,8 +31,8 @@ export default function RoomReducer(state = initialState, action) {
       };
       console.log(newRoom);
       let newRooms = state.rooms.concat(newRoom);
-      console.log(newRoom);
-      return { ...state, rooms: newRooms };
+      console.log(state.newRoom);
+      return { ...state, rooms: newRooms, newRoom: newRoom };
     default:
       return state;
   }
@@ -78,4 +43,18 @@ export function createRoom(room) {
     type: CREATE_ROOM,
     payload: room
   };
+}
+
+export function addRoom (room) {
+  return {
+    type: ADD_ROOM,
+    payload: room
+  }
+}
+
+export function setRooms (rooms) {
+  return {
+    type: SET_ROOMS,
+    payload: rooms
+  }
 }
