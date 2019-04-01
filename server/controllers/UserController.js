@@ -38,7 +38,9 @@ module.exports = {
               console.log(req.session.user);
               res.status(200).json(req.session.user);
             } else {
-              res.status(403).json({ message: "An error has occurred. Please try again." });
+              res
+                .status(403)
+                .json({ message: "An error has occurred. Please try again." });
             }
           });
         } else {
