@@ -14,7 +14,7 @@ class Navbar extends Component {
 
   componentDidMount() {
     axios.get("/api/sessionInfo").then(response => {
-      this.props.setUser(response.data.username);
+      this.props.setUser(response.data);
     });
   }
 
@@ -35,9 +35,18 @@ class Navbar extends Component {
     if (this.props.user) {
       return (
         <li className="nav-item mr-3">
-          <Link to="/createroom" className="nav-item">
-            Create Room
-          </Link>
+          <button
+            style={{
+              textDecoration: "none",
+              border: "none",
+              background: "none"
+            }}
+            className="nav-link"
+          >
+            <Link to="/createroom" className="nav-item">
+              Create Room
+            </Link>
+          </button>
         </li>
       );
     } else {
@@ -78,11 +87,17 @@ class Navbar extends Component {
       return (
         <li className="nav-item mr-3">
           <button
+            style={{
+              textDecoration: "none",
+              border: "none",
+              background: "none",
+              color: "red"
+            }}
             onClick={() => {
               this.props.userLogOut(this.props.user);
               this.logout();
             }}
-            className="logout-button"
+            className="nav-link"
           >
             Logout
           </button>
@@ -91,9 +106,17 @@ class Navbar extends Component {
     } else {
       return (
         <li className="nav-item mr-3">
-          <Link className="nav-link" to="/login">
-            Login
-          </Link>
+          <button
+            style={{
+              textDecoration: "none",
+              border: "none",
+              background: "none"
+            }}
+          >
+            <Link className="nav-link" to="/login">
+              Login
+            </Link>
+          </button>
         </li>
       );
     }
@@ -123,13 +146,9 @@ class Navbar extends Component {
             id="navbarSupportedContent"
           >
             <div className="">
-              <ul className="navbar-nav mr-auto">
-                <Search />
-                <li className="nav-item mr-3">
-                  <Link to="/createroom" className="nav-item">
-                    Create Room
-                  </Link>
-                </li>
+              <ul className="nav">
+                <Search className="search-nav" />
+                {this.createAuthority()}
                 {this.loggedIn()}
               </ul>
             </div>

@@ -14,9 +14,8 @@ class VideoPlayer extends Component {
     super(props);
     this.state = {
       selectedRoom: {},
-      time: 1,
-      pause: "",
-      userInput: ""
+      time: 0,
+      pause: "autoplay=1&"
     };
   }
 
@@ -34,6 +33,20 @@ class VideoPlayer extends Component {
       });
     });
   }
+
+  // componentDidUpdate(prevState) {
+  //   if (prevState.pause) {
+  //     if (prevState.pause !== this.state.pause) {
+  //       console.log(prevState.pause);
+  //       console.log(this.state.pause);
+  //       console.log("this made it");
+  //       this.setState({
+  //         pause: this.state.pause || "autoplay=1&"
+  //       });
+  //     }
+  //   }
+  // }
+
   sendTime = newTime => {
     this.setState({
       time: newTime
@@ -41,47 +54,35 @@ class VideoPlayer extends Component {
   };
 
   playPauseVideo = () => {
-    // let {} = this.state.selectedRoom;
-    console.log();
-    // io.emit("video", { time: data, room: 1, pause: this.state.pause });
     let { pause } = this.state;
     pause == "autoplay=1&"
       ? this.setState({
-          pause: "",
-          time: this.state.userInput
+          pause: ""
         })
       : this.setState({
-          pause: "autoplay=1&",
-          time: this.state.userInput
+          pause: "autoplay=1&"
         });
   };
 
   render() {
     let { url, description, owner } = this.state.selectedRoom;
-    let { time, pause, userInput } = this.state;
+    let { time, pause } = this.state;
     let { user } = this.props;
-    console.log(this.state.selectedRoom);
+    console.log(time, pause, url + `?${pause}start=${time}`);
     return (
       <div className="video-component card mb-3">
         <iframe
-          src={url + `?${pause}start=${time}`}
+          allow="autoplay"
+          src={url + "?" + `${pause}start=${time}`}
           className="video-container card-img-top"
         />
         {user == owner ? (
           <div className="toolbar">
             <button onClick={() => this.playPauseVideo()}>
-              {pause == "" ? <FaPlay /> : <FaPause />}
+              {pause === "" ? <FaPlay /> : <FaPause />}
             </button>
-            <input
-              placeholder="Start Time"
-              type="text"
-              onChange={event => {
-                this.setState({
-                  userInput: event.target.value
-                });
-              }}
-            />
-            <button onClick={() => this.sendTime(userInput)}>
+            <input placeholder="Start Time" type="text" ref="userInput" />
+            <button onClick={() => this.sendTime(this.refs.userInput.value)}>
               <FaFastForward />
             </button>
           </div>

@@ -34,14 +34,13 @@ module.exports = {
           bcrypt.compare(password, user[0].password).then(passwordMatch => {
             if (passwordMatch) {
               console.log(user[0].id);
-              req.session.user = {
-                username: user[0].username,
-                userId: user[0].id
-              };
+              req.session.user = username;
               console.log(req.session.user);
               res.status(200).json(req.session.user);
             } else {
-              res.status(403).json({ message: "An error has occurred. Please try again." });
+              res
+                .status(403)
+                .json({ message: "An error has occurred. Please try again." });
             }
           });
         } else {
