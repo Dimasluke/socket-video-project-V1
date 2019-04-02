@@ -2,9 +2,11 @@ import React, { Component} from 'react';
 import socketIo from 'socket.io-client';
 import { connect } from 'react-redux'
 import { setGroupUsers, userLeft } from '../../../Redux/Reducers/UserReducer'
-import { addRoom } from '../../../Redux/Reducers/RoomReducer'
+import { sendTime, playPauseVideo } from '../../../Redux/Reducers/timeReducer'
+import { addRoom, setRooms } from '../../../Redux/Reducers/RoomReducer'
 import { withRouter } from 'react-router-dom'
 import './Messenger.css'
+import axios from 'axios';
 const io = socketIo()
 
 class Messenger extends Component {
@@ -60,6 +62,12 @@ class Messenger extends Component {
                 let findUser = this.state.users.indexOf(data.user)
                 mappedUsers.splice(findUser, 1) 
             }
+            if(data.user === data.room){
+                io.emit('owner has left room', data)
+                axios.delete(`/api/rooms/${data.user}`).then(response => {
+                    this.props.setRooms(response.data)
+                })
+            }
             console.log('mapped users',mappedUsers)
             this.setState({
                 users: mappedUsers
@@ -75,9 +83,16 @@ class Messenger extends Component {
             })
         })
 
-        io.on('add new room', data => {
-            console.log(data)
-            // this.props.addRoom(data)
+        io.on('owner has disconnected', data => {
+            this.props.history.push('/dashboard')
+        })
+
+        io.on('room owner has changed the time', data => {
+            this.props.sendTime(data.time)
+        })
+
+        io.on('room owner has paused or resumed the video', data => {
+            this.props.playPauseVideo(data.time)
         })
     }
 
@@ -117,10 +132,15 @@ class Messenger extends Component {
         if(this.props.newRoom.id != prevProps.newRoom.id){
             io.emit('new room', {newRoom: this.props.rooms})
         }
-        if(this.state.users != prevState.users){
-            console.log(this.state.users)
-            console.log(prevState.users)
-            
+        if(this.props.time != prevProps.time){
+            console.log('the time has changed!!')
+            io.emit('update time', {time: this.props.time, room: this.props.match.params.roomId})
+        }
+        if(this.props.pause != prevProps.pause){
+            console.log('the video was paused/resumed', this.props.pause)
+            if (this.props.user === this.props.match.params.roomId){
+                io.emit('pause or play video', {time: this.props.time, pause: this.props.pause, room: this.props.match.params.roomId})
+            }
         }
     }
 
@@ -222,8 +242,10 @@ const mapStateToProps = state => {
         rooms: state.room.rooms,
         newRoom: state.room.newRoom,
         users: state.user.users,
-        userLogOut: state.user.userLogOut
+        userLogOut: state.user.userLogOut,
+        time: state.time.time,
+        pause: state.time.pause
     }
 }
 
-export default connect(mapStateToProps, {setGroupUsers, userLeft, addRoom})(withRouter(Messenger))
+export default connect(mapStateToProps, {setGroupUsers, userLeft, addRoom, setRooms, sendTime, playPauseVideo})(withRouter(Messenger))

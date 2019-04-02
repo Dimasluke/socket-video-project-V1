@@ -61,8 +61,14 @@ const rooms = [
           },
           deleteRoom: (req, res) => {
             let { id } = req.params
-            let index = rooms.findIndex(id)
-            rooms.splice(index, 1)
-            res.status(200).json(rooms)
+            console.log(id)
+            let index = rooms.findIndex(room => id === room.id)
+            console.log('delete route hit with index - ', index)
+            if(index === -1){
+              res.status(200).json(rooms)
+            } else {
+              rooms.splice(index, 1)
+              res.status(200).json(rooms)
+            }
           }
       }
