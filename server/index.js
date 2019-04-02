@@ -108,12 +108,19 @@ io.on("connection", socket => {
   });
 
   socket.on("new room", data => {
-    console.log(data);
     socket.broadcast.emit("add new room", data.newRoom);
   });
 
   socket.on('owner has left room', data => {
-    console.log(data)
     io.in(data.room).emit('owner has disconnected')
+  })
+
+  socket.on('update time', data => {
+    io.in(data.room).emit('room owner has changed the time', {time: data.time})
+  })
+
+  socket.on('pause or play video', data => {
+    console.log(data)
+    socket.in(data.room).emit('room owner has paused or resumed the video', {time: data.time, pause: data.pause})
   })
 });

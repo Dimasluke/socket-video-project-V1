@@ -1,11 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-
 import { setRooms } from '../../../Redux/Reducers/RoomReducer'
-
+import { sendTime, playPauseVideo, updateInput } from '../../../Redux/Reducers/timeReducer'
 import { FaPause, FaPlay, FaFastForward } from "react-icons/fa";
-
 import "./VideoPlayer.css";
 import axios from "axios";
 
@@ -21,6 +19,7 @@ class VideoPlayer extends Component {
   }
 
   componentDidMount() {
+    console.log(this.props)
     console.log(this.props.rooms)
     axios.get('/api/rooms').then(response => {
       console.log(response)
@@ -29,9 +28,14 @@ class VideoPlayer extends Component {
         return room.id == this.props.match.params.roomId
       })
       console.log(selectedRoom)
-      this.setState({
-        selectedRoom: selectedRoom[0]
-      });
+      if(selectedRoom[0]){
+        this.setState({
+          selectedRoom: selectedRoom[0]
+        });
+      } else {
+        this.props.history.push('/dashboard')
+      }
+     
     })  
   }
   sendTime = newTime => {
@@ -58,31 +62,31 @@ class VideoPlayer extends Component {
   };
 
   render() {
-    let { videoUrl, description, owner } = this.state.selectedRoom;
+    let { url, description, owner } = this.state.selectedRoom;
     let { time, pause, userInput } = this.state;
     let { user } = this.props;
+    console.log(this.props.pause)
     console.log(this.state.selectedRoom);
     return (
       <div className="video-component card mb-3">
         <iframe
-          src={videoUrl + `?${pause}start=${time}`}
+          allow='autoplay'
+          src={url + `?${this.props.pause}start=${this.props.time}`}
           className="video-container card-img-top"
         />
         {user == owner ? (
           <div className="toolbar">
-            <button onClick={() => this.playPauseVideo()}>
-              {pause == "" ? <FaPlay /> : <FaPause />}
+            <button onClick={() => this.props.playPauseVideo(this.props.userInput)}>
+              {this.props.pause === "" ? <FaPlay /> : <FaPause />}
             </button>
             <input
               placeholder="Start Time"
               type="text"
               onChange={event => {
-                this.setState({
-                  userInput: event.target.value
-                });
+                this.props.updateInput(event.target.value)
               }}
             />
-            <button onClick={() => this.sendTime(userInput)}>
+            <button onClick={() => this.props.sendTime(this.props.userInput)}>
               <FaFastForward />
             </button>
           </div>
@@ -100,11 +104,14 @@ class VideoPlayer extends Component {
 const mapStateToProps = state => {
   return {
     user: state.user.username,
-    rooms: state.room.rooms
+    rooms: state.room.rooms,
+    time: state.time.time,
+    pause: state.time.pause,
+    userInput: state.time.userInput
   };
 };
 
 export default connect(
   mapStateToProps,
-  {setRooms}
+  {setRooms, sendTime, playPauseVideo, updateInput}
 )(withRouter(VideoPlayer));
