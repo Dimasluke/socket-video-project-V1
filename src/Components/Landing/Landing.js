@@ -19,7 +19,7 @@ function Landing(props) {
         </p>
         <Link
           to="/dashboard"
-          class="btn btn-primary btn-lg shadow-lg"
+          className="btn btn-primary btn-lg shadow-lg"
           href="#"
           role="button"
         >

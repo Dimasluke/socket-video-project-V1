@@ -81,7 +81,7 @@ class Login extends Component {
         {this.errorCheck()}
         <form>
           <div className="form-group">
-            <label for="inputUsername">Username</label>
+            <label htmlFor="inputUsername">Username</label>
             <input
               type="text"
               className="form-control"
@@ -95,10 +95,10 @@ class Login extends Component {
             />
           </div>
           <div className="form-group">
-            <label for="inputPassword">Password</label>
+            <label htmlFor="inputPassword">Password</label>
             <input
               type="password"
-              class="form-control"
+              className="form-control"
               id="inputPassword"
               placeholder="Password"
               onChange={e => {
@@ -115,7 +115,7 @@ class Login extends Component {
               id="showPasswordCheck"
               onClick={this.showPassword}
             />
-            <label className="form-check-label" for="showPasswordCheck">
+            <label className="form-check-label" htmlFor="showPasswordCheck">
               Show Password
             </label>
           </div>

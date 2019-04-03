@@ -32,9 +32,17 @@ class CreateRoom extends Component {
 
   createRoomBtn = () => {
     let { title, url, owner, description, categories } = this.state;
-    console.log(title, url, owner, description, categories);
+    let endOfUrl = this.getId(url);
+    console.log(endOfUrl);
+    let newUrl = "www.youtube.com/embed/" + endOfUrl;
     axios
-      .post("/api/rooms", { title, url, owner, description, categories })
+      .post("/api/rooms", {
+        title,
+        url: newUrl,
+        owner,
+        description,
+        categories
+      })
       .then(response => {
         console.log(response.data);
         this.props.setRooms(response.data);
@@ -62,6 +70,17 @@ class CreateRoom extends Component {
       this.setState({
         categories: [...categories, category]
       });
+    }
+  };
+
+  getId = url => {
+    var regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+    var match = url.match(regExp);
+
+    if (match && match[2].length == 11) {
+      return match[2];
+    } else {
+      return "error";
     }
   };
 
@@ -183,7 +202,8 @@ class CreateRoom extends Component {
             className="btn btn-primary shadow"
             onClick={() => {
               this.createRoomBtn();
-            }}>
+            }}
+          >
             Create Room
           </button>
           <Link
