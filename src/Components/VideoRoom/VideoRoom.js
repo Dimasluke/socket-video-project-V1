@@ -17,7 +17,7 @@ class VideoRoom extends Component {
         </Link>
 
         <div className="video-room-container">
-          <div className="messenger-videoplayer-container">
+          <div className="messenger-videoplayer-container container">
             <div className="video-container">
               <VideoPlayer />
             </div>

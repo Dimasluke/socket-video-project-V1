@@ -68,28 +68,34 @@ class VideoPlayer extends Component {
     console.log(this.props.pause)
     console.log(this.state.selectedRoom);
     return (
-      <div className="video-component card mb-3">
+      <div className="container">
         <iframe
+          width="600" 
+          height="500"
           allow='autoplay'
           src={url + `?${this.props.pause}start=${this.props.time}`}
-          className="video-container card-img-top"
+          className=""
         />
         {user == owner ? (
-          <div className="toolbar">
-            <button onClick={() => this.props.playPauseVideo(this.props.userInput)}>
-              {this.props.pause === "" ? <FaPlay /> : <FaPause />}
-            </button>
+          <form>
+            <div className="form-group row">
+              <button onClick={() => this.props.playPauseVideo(this.props.userInput)}>
+                {this.props.pause === "" ? <FaPlay /> : <FaPause />}
+              </button>
+            </div>
+            <div>
             <input
-              placeholder="Start Time"
-              type="text"
-              onChange={event => {
-                this.props.updateInput(event.target.value)
-              }}
-            />
-            <button onClick={() => this.props.sendTime(this.props.userInput)}>
-              <FaFastForward />
-            </button>
-          </div>
+                placeholder="Start Time"
+                type="text"
+                onChange={event => {
+                  this.props.updateInput(event.target.value)
+                }}
+              />
+              <button onClick={() => this.props.sendTime(this.props.userInput)}>
+                <FaFastForward />
+              </button>
+            </div>
+          </form>   
         ) : null}
 
         <div className="card-body">
