@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { createRoom, setRooms } from "../../Redux/Reducers/RoomReducer";
 import axios from "axios";
@@ -202,8 +202,7 @@ class CreateRoom extends Component {
             className="btn btn-primary shadow"
             onClick={() => {
               this.createRoomBtn();
-            }}
-          >
+            }}>
             Create Room
           </button>
           <Link
@@ -241,6 +240,6 @@ const mapDispatchToProps = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(CreateRoom);
+)(withRouter(CreateRoom));
 
 // export default CreateRoom;

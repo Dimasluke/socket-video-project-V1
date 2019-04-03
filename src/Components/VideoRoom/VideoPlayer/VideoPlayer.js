@@ -81,41 +81,47 @@ class VideoPlayer extends Component {
         <iframe
           width="600"
           height="500"
-
-          allow='autoplay'
-          src={url + `?${this.props.pause}start=${this.props.time}`}
+          allow="autoplay"
+          src={
+            "https://" + url + `?${this.props.pause}start=${this.props.time}`
+          }
           className="shadow"
         />
         {user == owner ? (
-          <div className='btn-toolbar mb-3 mt-3' role='toolbar' aria-label='Toolbar to handle video controls'>
-            <div className="btn-group mr-5" role='group' aria-label='Play/Pause Controls'>
-              <button 
-                type='button'
-                className='btn btn-primary shadow'
+          <div
+            className="btn-toolbar mb-3 mt-3"
+            role="toolbar"
+            aria-label="Toolbar to handle video controls">
+            <div
+              className="btn-group mr-5"
+              role="group"
+              aria-label="Play/Pause Controls">
+              <button
+                type="button"
+                className="btn btn-primary shadow"
                 onClick={() => this.props.playPauseVideo(this.props.userInput)}>
                 {this.props.pause === "" ? <FaPlay /> : <FaPause />}
               </button>
             </div>
-            <div className='btn-group mr-2'>
+            <div className="btn-group mr-2">
               <button
-                type='button'
-                className='btn btn-success shadow'
+                type="button"
+                className="btn btn-success shadow"
                 onClick={() => this.props.sendTime(this.props.userInput)}>
                 <FaFastForward />
               </button>
-              <div className='input-group'>
+              <div className="input-group">
                 <input
-                    className='form-control shadow'
-                    placeholder="Start Time"
-                    type="text"
-                    onChange={event => {
-                      this.props.updateInput(event.target.value)
-                    }}
-                  /> 
-              </div> 
+                  className="form-control shadow"
+                  placeholder="Start Time"
+                  type="text"
+                  onChange={event => {
+                    this.props.updateInput(event.target.value);
+                  }}
+                />
+              </div>
             </div>
-          </div>   
-
+          </div>
         ) : null}
 
         <div className="card-body">
