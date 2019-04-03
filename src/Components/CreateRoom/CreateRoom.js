@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { createRoom, setRooms } from "../../Redux/Reducers/RoomReducer";
 import axios from "axios";
@@ -159,7 +159,7 @@ class CreateRoom extends Component {
                     <label className="form-check-label" htmlFor="gridCheck1">
                       Gaming
                     </label>
-                  </div>{" "}
+                  </div>
                   <div>
                     <input
                       className="form-check-input"
@@ -170,7 +170,7 @@ class CreateRoom extends Component {
                     <label className="form-check-label" htmlFor="gridCheck1">
                       Education
                     </label>
-                  </div>{" "}
+                  </div>
                   <div>
                     <input
                       className="form-check-input"
@@ -202,15 +202,14 @@ class CreateRoom extends Component {
             className="btn btn-primary shadow"
             onClick={() => {
               this.createRoomBtn();
-            }}
-          >
+            }}>
             Create Room
           </button>
           <Link
-            className="btn btn-danger shadow"
             to="/dashboard"
-            style={{ marginLeft: "10px" }}
-          >
+            className="btn btn-danger shadow"
+            data-dismiss="modal"
+            style={{ marginLeft: "10px" }}>
             Cancel
           </Link>
         </div>
@@ -241,6 +240,6 @@ const mapDispatchToProps = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(CreateRoom);
+)(withRouter(CreateRoom));
 
 // export default CreateRoom;

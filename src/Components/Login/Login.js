@@ -1,9 +1,11 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { setUser } from "../../Redux/Reducers/UserReducer";
-import "./Login.css";
 import axios from "axios";
+
+import Register from "../Register/Register";
+import "./Login.css";
 
 class Login extends Component {
   constructor(props) {
@@ -12,20 +14,23 @@ class Login extends Component {
       username: "",
       password: "",
       errorMessage: ""
+      // userCheck: false
+      // displayCheck: true
     };
   }
 
   loginUser = () => {
+    // console.log("RESPONSE", response.data);
     const { username, password } = this.state;
     const userInfo = { username, password };
     axios
       .post("/api/login", userInfo)
       .then(response => {
-        this.props.setUser(response.data.username);
-        this.props.history.push("/dashboard");
+        this.props.setUser(response.data);
+        // this.props.setBackdrop(false);
       })
       .catch(err => {
-        console.log(err)
+        console.log(err.response);
         this.setState({
           errorMessage: err.response.data.message
         });
@@ -45,9 +50,34 @@ class Login extends Component {
       : (passwordInput.type = "password");
   };
 
+  checkCredentials() {
+    // console.log("USER CHECK", this.state.userCheck);
+    const { username, password, userCheck } = this.state;
+    if (userCheck === true) {
+      return "modal";
+    } else if (!username && !password) {
+      return null;
+    } else {
+      return null;
+    }
+  }
+
+  // componentWillUnmount() {
+  //   console.log("this lifecycle was hit");
+  //   this.setState({
+  //     displayCheck: 0
+  //   });
+  // }
+
   render() {
+    console.log("PROPS", this.state);
     return (
-      <div className="container login-container border border-secondary rounded-sm shadow p-4 mb-5">
+      <div
+        // data-hide={`${this.state.displayCheck}`}
+        // id="loginModal"
+        className="container login-container"
+        // style={{ opacity: `${this.state.displayCheck}` }}
+      >
         {this.errorCheck()}
         <form>
           <div className="form-group">
@@ -91,19 +121,48 @@ class Login extends Component {
           </div>
           <button
             className="btn btn-primary mr-3 button-container"
+            data-dismiss={this.checkCredentials()}
             onClick={e => {
               this.loginUser();
-            }}
-          >
+            }}>
             Submit
           </button>
-          <Link to="/dashboard" className="btn btn-danger button-container">
+          <Link
+            to="/dashboard"
+            className="btn btn-danger button-container"
+            data-dismiss="modal">
             Cancel
           </Link>
         </form>
         <div className="register-account-container">
-          <span className="span-login">Need an account?</span>
-          <Link to="/register">Click Here</Link>
+          <span className="span-register">Need an account?</span>
+          <button
+            type="button"
+            class="btn btn-link"
+            data-toggle="modal"
+            data-target="#modal-register"
+            style={{
+              textDecoration: "none",
+              border: "none",
+              background: "none"
+            }}>
+            Click here
+          </button>
+
+          <div
+            class="modal fade bd-example-modal-lg shadow-lg"
+            data-backdrop="false"
+            id="modal-register"
+            tabindex="-1"
+            role="dialog"
+            aria-labelledby="myLargeModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+              <div class="modal-content shadow-lg p-3 mb-5 bg-white rounded">
+                <Register />
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     );
@@ -113,4 +172,4 @@ class Login extends Component {
 export default connect(
   null,
   { setUser }
-)(Login);
+)(withRouter(Login));
