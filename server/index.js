@@ -35,7 +35,7 @@ massive(process.env.CONNECTION_STRING)
     console.log(err);
   });
 
-// app.use( express.static( `${__dirname}/../build` ) );
+app.use(express.static(`${__dirname}/../build`));
 
 app.get("/api/rooms", roomController.getRooms);
 app.post("/api/rooms", roomController.newRoom);
@@ -54,9 +54,9 @@ app.get("/api/friends/:username", friendsController.getFriends);
 app.post("/api/friend", friendsController.addFriend);
 app.delete("/api/friend/:username/:friend", friendsController.removeFriend);
 
-// app.get('*', function (req, res) {
-//   res.sendFile(path.join(__dirname, '../build/index.html'));
-// });
+app.get("*", function(req, res) {
+  res.sendFile(path.join(__dirname, "../build/index.html"));
+});
 
 // const port = process.env.PORT || 4000;
 // const io = socket(
@@ -143,12 +143,10 @@ io.on("connection", socket => {
 
   socket.on("pause or play video", data => {
     console.log(data);
-    socket
-      .in(data.room)
-      .emit("room owner has paused or resumed the video", {
-        time: data.time,
-        pause: data.pause
-      });
+    socket.in(data.room).emit("room owner has paused or resumed the video", {
+      time: data.time,
+      pause: data.pause
+    });
   });
   socket.on("user leaving", data => {
     console.log(data);
