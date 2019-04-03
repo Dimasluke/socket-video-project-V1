@@ -77,13 +77,15 @@ class VideoPlayer extends Component {
     let { user } = this.props;
     console.log(url);
     return (
-      <div className="video-component card mb-3">
+      <div className="container">
         <iframe
+          width="600"
+          height="500"
           allow="autoplay"
           src={
             "https://" + url + `?${this.props.pause}start=${this.props.time}`
           }
-          className="video-container card-img-top"
+          className=""
         />
         {user == owner ? (
           <div className="toolbar">

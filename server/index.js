@@ -1,6 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const app = express();
+const server = require('http').createServer(app)
 const socket = require("socket.io");
 const massive = require("massive");
 const session = require("express-session");
@@ -8,9 +9,12 @@ const userController = require("./controllers/UserController");
 const roomController = require("./controllers/RoomController");
 const socketController = require("./controllers/SocketController");
 const friendsController = require("./controllers/FriendsController");
+const path = require('path')
 
 app.use(bodyParser.json());
 require("dotenv").config();
+
+
 
 app.use(
   session({
@@ -33,6 +37,10 @@ massive(process.env.CONNECTION_STRING)
     console.log(err);
   });
 
+app.use( express.static( `${__dirname}/../build` ) );
+
+
+
 app.get("/api/rooms", roomController.getRooms);
 app.post("/api/rooms", roomController.newRoom);
 app.delete("/api/rooms/:id", roomController.deleteRoom);
@@ -50,14 +58,26 @@ app.get("/api/friends/:username", friendsController.getFriends);
 app.post("/api/friend", friendsController.addFriend);
 app.delete("/api/friend/:username/:friend", friendsController.removeFriend);
 
-const port = process.env.PORT || 4000;
-const io = socket(
-  app.listen(port, () => {
-    console.log(`Server listening on port ${port}`);
-  })
-);
+app.get('*', function (req, res) {
+  res.sendFile(path.join(__dirname, '../build/index.html'));
+});
+
+// const port = process.env.PORT || 4000;
+// const io = socket(
+//   app.listen(port, () => {
+//     console.log(`Server listening on port ${port}`);
+//   })
+// );
+const io = require('socket.io')(server)
+
 const roomManagement = {};
 
+
+server.listen(4000, () => {
+  console.log('server listening on 4000')
+})
+
+io.set('origins', '*:*');
 io.on("connection", socket => {
   console.log("User Connected");
 
@@ -122,5 +142,11 @@ io.on("connection", socket => {
   socket.on('pause or play video', data => {
     console.log(data)
     socket.in(data.room).emit('room owner has paused or resumed the video', {time: data.time, pause: data.pause})
+  })
+  socket.on('user leaving', data => {
+    console.log(data)
+  })
+  socket.on('disconnect', (data) => {
+    console.log('bye bye', data)
   })
 });

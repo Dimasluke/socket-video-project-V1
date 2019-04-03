@@ -94,6 +94,7 @@ class Messenger extends Component {
         io.on('room owner has paused or resumed the video', data => {
             this.props.playPauseVideo(data.time)
         })
+        io.on('disconnect', {room: this.props.match.params.roomId, user: this.props.user})
     }
 
     scrollToBottom = () => {
@@ -112,6 +113,9 @@ class Messenger extends Component {
         if(this.props.newRoom.id){
             io.emit('new room', {newRoom: this.props.newRoom})
         }
+        window.addEventListener('unload', () => {
+            io.emit('user leaving', {room: this.props.match.params.roomId, user: this.props.user})
+        })
     }
       
     componentDidUpdate(prevProps, prevState) {
@@ -147,6 +151,7 @@ class Messenger extends Component {
 
     componentWillUnmount(){
         io.emit('leave room', {room: this.props.match.params.roomId, user: this.props.user})
+        
     }
 
     sendMessage = () => {
