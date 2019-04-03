@@ -4,8 +4,6 @@ import { connect } from "react-redux";
 import { setUser, userLogOut } from "../../Redux/Reducers/UserReducer";
 import axios from "axios";
 
-import CreateRoom from "../CreateRoom/CreateRoom";
-import Login from "../Login/Login";
 import Search from "../Search/Search";
 import "./Navbar.css";
 class Navbar extends Component {
@@ -37,32 +35,18 @@ class Navbar extends Component {
     if (this.props.user) {
       return (
         <li className="nav-item mr-3">
-          <button
-            type="button"
-            class="btn btn-link"
-            data-toggle="modal"
-            data-target="#modal-create-room"
-            style={{
+        <button
+          style={{
               textDecoration: "none",
               border: "none",
               background: "none"
-            }}>
-            Create Room
-          </button>
-          <div
-            class="modal fade bd-example-modal-lg shadow-lg"
-            data-backdrop="false"
-            id="modal-create-room"
-            tabindex="-1"
-            role="dialog"
-            aria-labelledby="myLargeModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog modal-lg">
-              <div class="modal-content">
-                <CreateRoom />
-              </div>
-            </div>
-          </div>
+          }}
+          className='nav-link'
+        >
+            <Link to="/createroom" className="nav-item">
+              Create Room
+            </Link>
+        </button>
         </li>
       );
     } else {
@@ -102,12 +86,12 @@ class Navbar extends Component {
       return (
         <li className="nav-item mr-3">
           <button
-            style={{
-              textDecoration: "none",
-              border: "none",
-              background: "none",
-              color: "red"
-            }}
+          style={{
+            textDecoration: "none",
+            border: "none",
+            background: "none",
+            color: 'red'
+          }}
             onClick={() => {
               this.props.userLogOut(this.props.user);
               this.logout();
@@ -121,31 +105,16 @@ class Navbar extends Component {
       return (
         <li className="nav-item mr-3">
           <button
-            type="button"
-            class="btn btn-link"
-            data-toggle="modal"
-            data-target="#modal-login"
-            style={{
+            style={{ 
               textDecoration: "none",
               border: "none",
               background: "none"
-            }}>
-            Log in
+            }}
+          >
+            <Link className="nav-link" to="/login">
+              Login
+            </Link>
           </button>
-          <div
-            class="modal fade bd-example-modal-lg shadow-lg"
-            data-backdrop="false"
-            id="modal-login"
-            tabindex="-1"
-            role="dialog"
-            aria-labelledby="myLargeModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog modal-lg">
-              <div class="modal-content shadow-lg p-3 mb-5 bg-white rounded">
-                <Login />
-              </div>
-            </div>
-          </div>
         </li>
       );
     }
@@ -174,7 +143,7 @@ class Navbar extends Component {
             id="navbarSupportedContent">
             <div className="">
               <ul className="nav">
-                <Search className="search-nav" />
+                <Search className='search-nav' />
                 {this.createAuthority()}
                 {this.loggedIn()}
               </ul>
@@ -188,7 +157,6 @@ class Navbar extends Component {
 
 const mapStateToProps = state => {
   return {
-    // backdrop: state.user.backdrop,
     user: state.user.username
   };
 };
