@@ -16,23 +16,23 @@ class Search extends Component {
 
   componentDidMount() {
     axios.get("/api/users").then(getAllUsers => {
-      console.log("DATA", getAllUsers.data);
+      // console.log("DATA", getAllUsers.data);
       this.setState({ friends: getAllUsers.data });
     });
   }
 
   searchFriends = e => {
     const value = e.target.value;
-    console.log("RENDER SUGGESTIONS", value);
+    // console.log("RENDER SUGGESTIONS", value);
     let suggestions = [];
     if (value.length > 0) {
-      console.log("hello");
+      // console.log("hello");
       const regex = new RegExp(`^${value}`, "i");
-      console.log("REGEX", regex);
+      // console.log("REGEX", regex);
       suggestions = this.state.friends
         .sort()
         .filter(friend => regex.test(friend.username));
-      console.log("SUGGESTIONS SEARCH", suggestions);
+      // console.log("SUGGESTIONS SEARCH", suggestions);
     }
     this.setState(() => ({ suggestions, text: value }));
   };
@@ -54,7 +54,8 @@ class Search extends Component {
         {suggestions.map(friend => (
           <div
             key={friend.username}
-            onClick={() => this.suggestionSelected(friend.username)}>
+            onClick={() => this.suggestionSelected(friend.username)}
+          >
             <div>
               <img src={friend.imageurl} />
               {friend.username}
@@ -66,22 +67,23 @@ class Search extends Component {
   }
 
   render() {
-    console.log("ALL USERS STATE", this.state);
-    console.log("FRIENDS", this.state.friends);
-    console.log("SUGGESTIONS", this.state.suggestions);
+    // console.log("ALL USERS STATE", this.state);
+    // console.log("FRIENDS", this.state.friends);
+    // console.log("SUGGESTIONS", this.state.suggestions);
     const { text } = this.state;
 
     return (
       <div className="search-container">
         <div
           className="collapse navbar-collapse justify-content-end"
-          id="navbarSupportedContent">
+          id="navbarSupportedContent"
+        >
           <form className="form-inline my-2 my-lg-0 mr-4">
-            <div class="input-group">
+            <div className="input-group">
               <input
                 onChange={this.searchFriends}
                 value={text}
-                class="form-control form-control-sm"
+                className="form-control form-control-sm"
                 type="text"
                 placeholder="Search Friends"
               />

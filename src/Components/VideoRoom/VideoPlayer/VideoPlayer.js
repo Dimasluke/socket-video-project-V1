@@ -1,8 +1,12 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import { setRooms } from '../../../Redux/Reducers/RoomReducer'
-import { sendTime, playPauseVideo, updateInput } from '../../../Redux/Reducers/timeReducer'
+import { setRooms } from "../../../Redux/Reducers/RoomReducer";
+import {
+  sendTime,
+  playPauseVideo,
+  updateInput
+} from "../../../Redux/Reducers/timeReducer";
 import { FaPause, FaPlay, FaFastForward } from "react-icons/fa";
 import "./VideoPlayer.css";
 import axios from "axios";
@@ -12,52 +16,58 @@ class VideoPlayer extends Component {
     super(props);
     this.state = {
       selectedRoom: {},
-      time: 1,
-      pause: "",
-      userInput: ""
+      time: 0,
+      pause: "autoplay=1&"
     };
   }
 
   componentDidMount() {
-    console.log(this.props)
-    console.log(this.props.rooms)
-    axios.get('/api/rooms').then(response => {
-      console.log(response)
+    console.log(this.props);
+    console.log(this.props.rooms);
+    axios.get("/api/rooms").then(response => {
+      console.log(response);
       const selectedRoom = response.data.filter(room => {
-        console.log(this.props.match.params.roomId)
-        return room.id == this.props.match.params.roomId
-      })
-      console.log(selectedRoom)
-      if(selectedRoom[0]){
+        console.log(this.props.match.params.roomId);
+        return room.id == this.props.match.params.roomId;
+      });
+      console.log(selectedRoom);
+      if (selectedRoom[0]) {
         this.setState({
           selectedRoom: selectedRoom[0]
         });
       } else {
-        this.props.history.push('/dashboard')
+        this.props.history.push("/dashboard");
       }
-     
-    })  
+    });
   }
+
+  // componentDidUpdate(prevState) {
+  //   if (prevState.pause) {
+  //     if (prevState.pause !== this.state.pause) {
+  //       console.log(prevState.pause);
+  //       console.log(this.state.pause);
+  //       console.log("this made it");
+  //       this.setState({
+  //         pause: this.state.pause || "autoplay=1&"
+  //       });
+  //     }
+  //   }
+  // }
+
   sendTime = newTime => {
     this.setState({
       time: newTime
     });
   };
 
-
   playPauseVideo = () => {
-    // let {} = this.state.selectedRoom;
-    console.log();
-    // io.emit("video", { time: data, room: 1, pause: this.state.pause });
     let { pause } = this.state;
     pause == "autoplay=1&"
       ? this.setState({
-          pause: "",
-          time: this.state.userInput
+          pause: ""
         })
       : this.setState({
-          pause: "autoplay=1&",
-          time: this.state.userInput
+          pause: "autoplay=1&"
         });
   };
 
@@ -65,13 +75,13 @@ class VideoPlayer extends Component {
     let { url, description, owner } = this.state.selectedRoom;
     let { time, pause, userInput } = this.state;
     let { user } = this.props;
-    console.log(this.props.pause)
-    console.log(this.state.selectedRoom);
+    console.log(url);
     return (
       <div className="container">
         <iframe
-          width="600" 
+          width="600"
           height="500"
+
           allow='autoplay'
           src={url + `?${this.props.pause}start=${this.props.time}`}
           className="shadow"
@@ -105,6 +115,7 @@ class VideoPlayer extends Component {
               </div> 
             </div>
           </div>   
+
         ) : null}
 
         <div className="card-body">
@@ -128,5 +139,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  {setRooms, sendTime, playPauseVideo, updateInput}
+  { setRooms, sendTime, playPauseVideo, updateInput }
 )(withRouter(VideoPlayer));

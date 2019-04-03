@@ -35,18 +35,18 @@ class Navbar extends Component {
     if (this.props.user) {
       return (
         <li className="nav-item mr-3">
-        <button
-          style={{
+          <button
+            style={{
               textDecoration: "none",
               border: "none",
               background: "none"
-          }}
-          className='nav-link'
-        >
+            }}
+            className="nav-link"
+          >
             <Link to="/createroom" className="nav-item">
               Create Room
             </Link>
-        </button>
+          </button>
         </li>
       );
     } else {
@@ -60,7 +60,8 @@ class Navbar extends Component {
             }}
             data-toggle="tooltip"
             data-placement="bottom"
-            title="Must be logged in to do this.">
+            title="Must be logged in to do this."
+          >
             <Link to="/createroom" className="nav-link disabled">
               Create Room
             </Link>
@@ -87,17 +88,18 @@ class Navbar extends Component {
       return (
         <li className="nav-item mr-3">
           <button
-          style={{
-            textDecoration: "none",
-            border: "none",
-            background: "none",
-            color: 'red'
-          }}
+            style={{
+              textDecoration: "none",
+              border: "none",
+              background: "none",
+              color: "red"
+            }}
             onClick={() => {
               this.props.userLogOut(this.props.user);
               this.logout();
             }}
-            className="nav-link">
+            className="nav-link"
+          >
             Logout
           </button>
         </li>
@@ -106,7 +108,7 @@ class Navbar extends Component {
       return (
         <li className="nav-item mr-3">
           <button
-            style={{ 
+            style={{
               textDecoration: "none",
               border: "none",
               background: "none"
@@ -136,15 +138,17 @@ class Navbar extends Component {
             data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent"
             aria-expanded="false"
-            aria-label="Toggle navigation">
+            aria-label="Toggle navigation"
+          >
             <span className="navbar-toggler-icon" />
           </button>
           <div
             className="collapse navbar-collapse justify-content-end"
-            id="navbarSupportedContent">
+            id="navbarSupportedContent"
+          >
             <div className="">
               <ul className="nav">
-                <Search className='search-nav' />
+                <Search className="search-nav" />
                 {this.createAuthority()}
                 {this.loggedIn()}
               </ul>
