@@ -71,6 +71,7 @@ app.get('*', function (req, res) {
 const io = require('socket.io')(server)
 
 const roomManagement = {};
+const clientManagement = {}
 
 
 server.listen(4000, () => {
@@ -79,7 +80,13 @@ server.listen(4000, () => {
 
 io.set('origins', '*:*');
 io.on("connection", socket => {
+
   console.log("User Connected");
+
+  socket.on('logged in user', data => {
+    clientManagement[data.user] = data.user
+    console.log('clientManagement', clientManagement)
+  })
 
   socket.on("join room", data => {
     if (data.user) {

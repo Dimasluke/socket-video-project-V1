@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { setUser, userLogOut } from "../../Redux/Reducers/UserReducer";
 import axios from "axios";
@@ -94,6 +94,7 @@ class Navbar extends Component {
       .post("/api/logout")
       .then(response => {
         this.props.setUser(response.data);
+        this.props.history.push('/dashboard')
       })
       .catch(err => {
         console.log(err);
@@ -203,4 +204,4 @@ const mapStateToProps = state => {
 export default connect(
   mapStateToProps,
   { setUser, userLogOut }
-)(Navbar);
+)(withRouter(Navbar));

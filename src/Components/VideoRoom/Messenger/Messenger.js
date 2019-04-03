@@ -116,6 +116,7 @@ class Messenger extends Component {
         window.addEventListener('unload', () => {
             io.emit('user leaving', {room: this.props.match.params.roomId, user: this.props.user})
         })
+
     }
       
     componentDidUpdate(prevProps, prevState) {
@@ -151,7 +152,6 @@ class Messenger extends Component {
 
     componentWillUnmount(){
         io.emit('leave room', {room: this.props.match.params.roomId, user: this.props.user})
-        
     }
 
     sendMessage = () => {
