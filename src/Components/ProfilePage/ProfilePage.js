@@ -113,10 +113,12 @@ class ProfilePage extends Component {
         </Link>
         <div className="container  border border-secondary rounded-sm shadow p-4">
           {/* USER INFO DROPDOWNS */}
+
           <div className="accordion profile-dropdown">
             <div class="media">
               <img src={imageurl} alt="" class="mr-3" />
             </div>
+
             <button
               class="btn btn-secondary col"
               type="button"
@@ -127,6 +129,7 @@ class ProfilePage extends Component {
             >
               Show profile: {username}
             </button>
+
             <form className="form-profile">
               <div class="collapse show" id="collapseExample">
                 <div class="card card-body">
@@ -193,12 +196,14 @@ class ProfilePage extends Component {
                         value={bio}
                       />
                     </div>
+
                     {this.userCheck()}
                   </div>
                 </div>
               </div>
             </form>
           </div>
+
           {/* SUBSCRIPTION, FRIENDS, VIDEOS DROPDOWNS */}
           <div className="accordion friends " id="dropDownFriends">
             <div className="card">
