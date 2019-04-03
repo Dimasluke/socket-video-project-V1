@@ -74,28 +74,37 @@ class VideoPlayer extends Component {
           height="500"
           allow='autoplay'
           src={url + `?${this.props.pause}start=${this.props.time}`}
-          className=""
+          className="shadow"
         />
         {user == owner ? (
-          <form>
-            <div className="form-group row">
-              <button onClick={() => this.props.playPauseVideo(this.props.userInput)}>
+          <div className='btn-toolbar mb-3 mt-3' role='toolbar' aria-label='Toolbar to handle video controls'>
+            <div className="btn-group mr-5" role='group' aria-label='Play/Pause Controls'>
+              <button 
+                type='button'
+                className='btn btn-primary shadow'
+                onClick={() => this.props.playPauseVideo(this.props.userInput)}>
                 {this.props.pause === "" ? <FaPlay /> : <FaPause />}
               </button>
             </div>
-            <div>
-            <input
-                placeholder="Start Time"
-                type="text"
-                onChange={event => {
-                  this.props.updateInput(event.target.value)
-                }}
-              />
-              <button onClick={() => this.props.sendTime(this.props.userInput)}>
+            <div className='btn-group mr-2'>
+              <button
+                type='button'
+                className='btn btn-success shadow'
+                onClick={() => this.props.sendTime(this.props.userInput)}>
                 <FaFastForward />
               </button>
+              <div className='input-group'>
+                <input
+                    className='form-control shadow'
+                    placeholder="Start Time"
+                    type="text"
+                    onChange={event => {
+                      this.props.updateInput(event.target.value)
+                    }}
+                  /> 
+              </div> 
             </div>
-          </form>   
+          </div>   
         ) : null}
 
         <div className="card-body">
