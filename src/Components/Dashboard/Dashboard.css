@@ -2,8 +2,37 @@
     display: flex;
     margin-top: 10vh;
     flex-wrap: wrap;
+    justify-content: space-between;
+    width: 90%
 }
 
 .dashboard-cards {
     margin: 10px;
+}
+
+
+@media (min-width: 1070px) and (max-width: 1200px) {
+    .dashboard-room-card {
+        margin-left: 50px;
+        margin-right: 75px;
+    }
+}
+
+@media (min-width: 895px) and (max-width: 1069px) {
+    .dashboard-room-card {
+        margin-left: 40px;
+        margin-right: 40px
+    }
+}
+
+@media (min-width: 899px) and (max-width: 995px) {
+    .dashboard-room-card {
+        margin-left: 200px;
+    }
+}
+
+@media (max-width: 791px) {
+    .dashboard-room-card {
+        margin: 0 auto
+    }
 }

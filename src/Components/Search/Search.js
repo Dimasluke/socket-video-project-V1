@@ -54,7 +54,8 @@ class Search extends Component {
         {suggestions.map(friend => (
           <div
             key={friend.username}
-            onClick={() => this.suggestionSelected(friend.username)}>
+            onClick={() => this.suggestionSelected(friend.username)}
+          >
             <div>
               <img src={friend.imageurl} />
               {friend.username}
@@ -75,13 +76,14 @@ class Search extends Component {
       <div className="search-container">
         <div
           className="collapse navbar-collapse justify-content-end"
-          id="navbarSupportedContent">
+          id="navbarSupportedContent"
+        >
           <form className="form-inline my-2 my-lg-0 mr-4">
-            <div class="input-group">
+            <div className="input-group">
               <input
                 onChange={this.searchFriends}
                 value={text}
-                class="form-control form-control-sm"
+                className="form-control form-control-sm"
                 type="text"
                 placeholder="Search Friends"
               />

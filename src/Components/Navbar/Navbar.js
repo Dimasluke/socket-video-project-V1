@@ -38,6 +38,7 @@ class Navbar extends Component {
       return (
         <li className="nav-item mr-3">
           <button
+
             type="button"
             class="btn btn-link"
             data-toggle="modal"
@@ -46,6 +47,7 @@ class Navbar extends Component {
               textDecoration: "none",
               border: "none",
               background: "none"
+
             }}>
             Create Room
           </button>
@@ -76,7 +78,8 @@ class Navbar extends Component {
             }}
             data-toggle="tooltip"
             data-placement="bottom"
-            title="Must be logged in to do this.">
+            title="Must be logged in to do this."
+          >
             <Link to="/createroom" className="nav-link disabled">
               Create Room
             </Link>
@@ -112,7 +115,8 @@ class Navbar extends Component {
               this.props.userLogOut(this.props.user);
               this.logout();
             }}
-            className="nav-link">
+            className="nav-link"
+          >
             Logout
           </button>
         </li>
@@ -125,6 +129,7 @@ class Navbar extends Component {
             class="btn btn-link"
             data-toggle="modal"
             data-target="#modal-login"
+
             style={{
               textDecoration: "none",
               border: "none",
@@ -166,12 +171,14 @@ class Navbar extends Component {
             data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent"
             aria-expanded="false"
-            aria-label="Toggle navigation">
+            aria-label="Toggle navigation"
+          >
             <span className="navbar-toggler-icon" />
           </button>
           <div
             className="collapse navbar-collapse justify-content-end"
-            id="navbarSupportedContent">
+            id="navbarSupportedContent"
+          >
             <div className="">
               <ul className="nav">
                 <Search className="search-nav" />

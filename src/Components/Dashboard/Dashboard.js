@@ -22,7 +22,8 @@ class Dashboard extends Component {
   }
 
   render() {
-    const mappedRooms = this.props.rooms.map((room, index) => {
+    let reversedRooms = this.props.rooms.reverse();
+    const mappedRooms = reversedRooms.map((room, index) => {
       return (
         <div key={index} className="dashboard-room-card">
           <RoomCard
