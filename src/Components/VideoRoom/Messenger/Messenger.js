@@ -38,6 +38,13 @@ class Messenger extends Component {
             this.setState({
                 messages: messagesCopy
             })
+            io.emit('i need current time info', {user: this.props.user, room: this.props.match.params.roomId})
+        })
+
+        io.on('current time info', data => {
+            if(this.props.user === this.props.match.params.roomId){
+                io.emit('time info', {room: this.props.match.params, pause: this.props.pause, time: this.props.time})
+            }
         })
         
         io.on('room left', data => {

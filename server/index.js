@@ -151,6 +151,14 @@ io.on("connection", socket => {
   socket.on("user leaving", data => {
     console.log(data);
   });
+
+  socket.on('i need current time info', data => {
+    io.in(data.room).emit('current time info')
+  })
+
+  socket.on('time info', data => {
+    io.in(data.room).emit('time and pause update',  {pause: data.pause, time: data.time} )
+  })
   socket.on("disconnect", data => {
     console.log("bye bye", data);
   });
