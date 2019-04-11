@@ -83,6 +83,8 @@ io.on("connection", socket => {
   });
 
   socket.on("join room", data => {
+    console.log(socket.id)
+    socket.id = data.user
     if (data.user) {
       if (roomManagement[data.room]) {
         roomManagement[data.room].push(data.user);
