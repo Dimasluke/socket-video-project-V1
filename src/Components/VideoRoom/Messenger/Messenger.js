@@ -25,6 +25,7 @@ class Messenger extends Component {
       });
     });
 
+<<<<<<< HEAD
     io.on("join room", data => {
       this.setState({
         users: data.userList
@@ -39,6 +40,42 @@ class Messenger extends Component {
         messages: messagesCopy
       });
     });
+=======
+        io.on('join room', data => {
+            this.setState({
+                users: data.userList
+            })
+            let messagesCopy = this.state.messages.map(message => {
+                return message
+            })   
+            if(data.user){
+                messagesCopy.push(data.user + ' has joined the room.')
+            }
+            this.setState({
+                messages: messagesCopy
+            })
+            io.emit('i need current time info', {user: this.props.user, room: this.props.match.params.roomId})
+        })
+
+        io.on('current time info', data => {
+            if(this.props.user === this.props.match.params.roomId){
+                io.emit('time info', {room: this.props.match.params, pause: this.props.pause, time: this.props.time})
+            }
+        })
+        
+        io.on('room left', data => {
+            console.log('room left heard on client side', data)
+            let mappedUsers = this.state.users.map(user => {
+                return user
+            })
+            let findUser = this.state.users.indexOf(data.user)
+            mappedUsers.splice(findUser, 1)
+            console.log('mapped users',mappedUsers)
+            this.setState({
+                users: mappedUsers
+            })
+        })
+>>>>>>> 2780626ba1922d02b20f509d972a7ec265d3a77e
 
     io.on("room left", data => {
       console.log("room left heard on client side", data);

@@ -83,7 +83,7 @@ class VideoPlayer extends Component {
           height="500"
           allow="autoplay"
           src={
-            "https://" + url + `?${this.props.pause}start=${this.props.time}`
+            "https://" + url + `?${this.props.pause}start=${this.props.time}&controls=0&disablekb=1&showinfo=0`
           }
           className="shadow"
         />
