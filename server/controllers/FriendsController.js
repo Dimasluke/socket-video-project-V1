@@ -9,6 +9,7 @@ module.exports = {
   },
   addFriend: (req, res, next) => {
     const db = req.app.get("db");
+    console.log(req.body);
     const { username, friend } = req.body;
     console.log("addFriend ===> ", username, friend);
     db.add_friend([username, friend]).then(friends => {
